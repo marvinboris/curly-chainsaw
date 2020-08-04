@@ -18,11 +18,11 @@ class Event extends Model
 
     public function getStartTimeAttribute($value)
     {
-        return $value ? Carbon::createFromTimestamp($value) : null;
+        return $value ? Carbon::createFromFormat("Y-m-d H:i:s", $value) : null;
     }
 
     public function getFinishTimeAttribute($value)
     {
-        return $value ? Carbon::createFromTimestamp($value) : null;
+        return $value ? Carbon::createFromFormat("Y-m-d H:i:s", $value) : null;
     }
 }

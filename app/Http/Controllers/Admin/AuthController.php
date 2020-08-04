@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Admin;
 
 use App\Admin;
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\UtilController;
+use App\Mail\VerificationCode;
 use App\User;
 use Carbon\Carbon;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
@@ -47,7 +49,8 @@ class AuthController extends Controller
                 //     ]);
 
                 //     $budget->send('+' . $admin->phone, 'Your Admin Login Code is ' . $code);
-                // } else if ($request->otp === 'email') Mail::to($admin->email)->send(new VerificationCode($code));
+                // } else 
+                if ($request->otp === 'email') Mail::to($admin->email)->send(new VerificationCode($code));
                 $hash = Crypt::encryptString(json_encode([
                     'id' => $admin->id,
                     'code' => $code,
@@ -58,10 +61,7 @@ class AuthController extends Controller
             }
         }
         return response()->json([
-            'message' => [
-                'type' => 'danger',
-                'content' => 'These credentials do not match our records.'
-            ]
+            'message' => UtilController::message('These credentials do not match our records.', 'danger')
         ], 403);
     }
 
@@ -71,7 +71,7 @@ class AuthController extends Controller
         $admin = Admin::findOrFail($data->id);
 
         $code = User::generateNewRef();
-        // Mail::to($admin->email)->send(new VerificationCode($code));
+        Mail::to($admin->email)->send(new VerificationCode($code));
         // $budget = new BudgetSMS([
         //     'username' => env('BUDGET_USERNAME'),
         //     'userid' => env('BUDGET_USER_ID'),
@@ -86,10 +86,7 @@ class AuthController extends Controller
         ]));
 
         return response()->json([
-            'message' => [
-                'type' => 'success',
-                'content' => 'Verification code successfully sent.'
-            ],
+            'message' => UtilController::message('Verification code successfully sent.', 'success'),
             'hash' => $hash
         ]);
     }

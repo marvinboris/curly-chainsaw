@@ -61,6 +61,6 @@ class Handler extends ExceptionHandler
             return response()->json(['errors' => $exception->errors()], 422);
         }
 
-        return response()->json(parent::convertExceptionToArray($exception), 500);
+        return response()->json(['error' => parent::convertExceptionToArray($exception)], 500);
     }
 }

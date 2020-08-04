@@ -2,6 +2,8 @@ export const updateObject = (oldObject, updatedProps) => ({
     ...oldObject, ...updatedProps
 });
 
+export const parseMoment = item => item.format('YYYY-MM-DD HH:mm:ss');
+
 export const convertDate = date => {
     const d = new Date(date)
     const dtf = new Intl.DateTimeFormat('en', { year: 'numeric', month: 'short', day: '2-digit' });

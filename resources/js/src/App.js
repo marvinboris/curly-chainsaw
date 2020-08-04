@@ -24,8 +24,28 @@ const asyncUserInboxMessages = asyncComponent(() => import('./containers/Backend
 const asyncUserSentMessages = asyncComponent(() => import('./containers/Backend/User/Messages/Sent'));
 const asyncUserArchiveMessages = asyncComponent(() => import('./containers/Backend/User/Messages/Archive'));
 
+
+
+// Admin routes
+const asyncAdminDashboard = asyncComponent(() => import('./containers/Backend/Admin/Dashboard/Dashboard'));
+
+const asyncAdminEmployees = asyncComponent(() => import('./containers/Backend/Admin/Employees'));
+
+const asyncAdminTasks = asyncComponent(() => import('./containers/Backend/Admin/Tasks'));
+
+const asyncAdminAgencies = asyncComponent(() => import('./containers/Backend/Admin/Agencies'));
+
+const asyncAdminEventTypes = asyncComponent(() => import('./containers/Backend/Admin/EventTypes'));
+
+const asyncAdminJobs = asyncComponent(() => import('./containers/Backend/Admin/Jobs'));
+
+const asyncAdminPriorities = asyncComponent(() => import('./containers/Backend/Admin/Priorities'));
+
+
+
 // Common routes
 const asyncUserLogin = asyncComponent(() => import('./containers/Auth/User/Login/Login'));
+const asyncAdminLogin = asyncComponent(() => import('./containers/Auth/Admin/Login/Login'));
 const asyncAdminVerify = asyncComponent(() => import('./containers/Auth/Admin/Verify/Verify'));
 
 class App extends Component {
@@ -36,13 +56,14 @@ class App extends Component {
     }
 
     render() {
-        const { auth: { token } } = this.props;
+        const { auth: { token, role } } = this.props;
 
         let routes = (
             <Switch>
                 <Route path="/auth/admin/verify" component={asyncAdminVerify} />
+                <Route path="/auth/admin/login" component={asyncAdminLogin} />
                 <Redirect path="/admin" to="/auth/admin/login" />
-                
+
                 <Route path="/auth/user/login" component={asyncUserLogin} />
 
                 <Redirect to="/auth/user/login" />
@@ -61,7 +82,15 @@ class App extends Component {
                     <Route path="/user/messages/archive" component={asyncUserArchiveMessages} />
                     <Route path="/user/messages" component={asyncUserMessages} />
 
-                    <Redirect to="/user/dashboard" />
+                    <Route path="/admin/dashboard" component={asyncAdminDashboard} />
+                    <Route path="/admin/tasks" component={asyncAdminTasks} />
+                    <Route path="/admin/employees" component={asyncAdminEmployees} />
+                    <Route path="/admin/agencies" component={asyncAdminAgencies} />
+                    <Route path="/admin/event-types" component={asyncAdminEventTypes} />
+                    <Route path="/admin/jobs" component={asyncAdminJobs} />
+                    <Route path="/admin/priorities" component={asyncAdminPriorities} />
+
+                    <Redirect to={`/${role}/dashboard`} />
                 </Switch>
             );
         }

@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { Link, withRouter } from 'react-router-dom';
 import { Col, Row, Spinner, Label, Input, Button, Badge, Form, FormGroup, CustomInput, Alert } from 'reactstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTachometerAlt, faEnvelope, faTicketAlt, faTasks, faArrowsAlt, faTimes, faEye, faEdit, faTrash, faClock, faLandmark, faCalendarAlt, faDownload, faSpinner, faTimesCircle, faCheckCircle, faFileArchive, faFilePdf, faFileImage, faUser, faBook, faCheck } from '@fortawesome/free-solid-svg-icons';
+import { faTachometerAlt, faEnvelope, faTicketAlt, faTasks, faArrowsAlt, faTimes, faEye, faEdit, faTrash, faClock, faLandmark, faCalendarAlt, faDownload, faSpinner, faTimesCircle, faCheckCircle, faFileArchive, faFilePdf, faFileImage, faUser, faBook, faCheck, faReply } from '@fortawesome/free-solid-svg-icons';
 
 // Components
 import Breadcrumb from '../../../../../components/Backend/UI/Breadcrumb/Breadcrumb';
@@ -18,8 +18,8 @@ import Delete from '../../../../../components/Backend/UI/Delete/Delete';
 import View from '../../../../../components/Backend/UI/View/View';
 import Counter from '../../../../../components/Backend/UI/Counter/Counter';
 
-import Edit from '../Actions/Edit';
-import Description from '../Actions/Description';
+import Reply from '../Actions/Reply';
+import Add from '../Actions/Add';
 import RawView from '../Actions/View';
 
 import * as actions from '../../../../../store/actions';
@@ -27,11 +27,11 @@ import { updateObject, convertDate } from '../../../../../shared/utility';
 
 class Inbox extends Component {
     componentDidMount() {
-        this.props.onGetMessages();
+        this.props.get();
     }
 
     componentWillUnmount() {
-        this.props.onResetMessages();
+        this.props.reset();
     }
 
     render() {
@@ -54,24 +54,24 @@ class Inbox extends Component {
                 const messagesData = messages.map(message => {
                     const viewContent = <RawView message={message} />;
 
-                    const editContent = <Edit message={message} />;
+                    const replyContent = <Reply message={message} />;
 
                     return updateObject(message, {
                         created_at: convertDate(message.created_at),
                         action: <div className="text-center">
-                            <View title={'Message details: ' + message.title} content={viewContent}>
+                            <View title={`Message details: ${message.object}`} content={viewContent}>
                                 <Button size="sm" color="orange" className="mr-2">
                                     <FontAwesomeIcon icon={faEye} className="mr-2" fixedWidth />
                                     View
                                 </Button>
                             </View>
-                            <View title={'Message edit: ' + message.title} content={editContent}>
+                            <View title={`Message reply: ${message.object}`} content={replyContent}>
                                 <Button size="sm" color="blue">
                                     <FontAwesomeIcon icon={faReply} className="mr-2" fixedWidth />
                                     Reply
                                 </Button>
                             </View>
-                            <Delete deleteAction={() => alert(message.id)}><FontAwesomeIcon icon={faTrash} className="text-red mr-2" fixedWidth /></Delete>
+                            <Delete deleteAction={() => this.props.delete(message.id)}><FontAwesomeIcon icon={faTrash} className="text-red mr-2" fixedWidth /></Delete>
                         </div>,
                     });
                 });
@@ -79,7 +79,7 @@ class Inbox extends Component {
                 content = (
                     <>
                         <Row>
-                            <List array={messagesData} data={JSON.stringify(messages)} bordered add="New Message" link="/user/messages/add" icon={faEnvelope} title="Received Messages" className="bg-white shadow-sm"
+                            <List array={messagesData} data={JSON.stringify(messages)} bordered add="New Message" content={<Add />} icon={faEnvelope} title="Received Messages" className="bg-white shadow-sm"
                                 fields={[
                                     { name: 'Received Date', key: 'created_at' },
                                     { name: 'Sender', key: 'sender' },
@@ -113,10 +113,10 @@ class Inbox extends Component {
 const mapStateToProps = state => ({ ...state });
 
 const mapDispatchToProps = dispatch => ({
-    onGetMessages: () => dispatch(actions.getInboxMessages()),
-    onPostMessageDelete: id => dispatch(actions.postMessageDelete(id)),
-    onPostMessageUpdate: (id, data) => dispatch(actions.postMessageUpdate(id, data)),
-    onResetMessages: () => dispatch(actions.resetMessages()),
+    get: () => dispatch(actions.getInboxMessages()),
+    delete: id => dispatch(actions.deleteMessages(id)),
+    patch: (id, data) => dispatch(actions.patchMessages(id, data)),
+    reset: () => dispatch(actions.messagesReset()),
 });
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Inbox));

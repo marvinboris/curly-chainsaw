@@ -1,107 +1,74 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { faCheck, faTimes } from '@fortawesome/free-solid-svg-icons';
-import { FormGroup, Label, CustomInput, Form, Input, Alert, Button } from 'reactstrap';
+import { faCheck, faTimes, faPaperPlane, faClock, faCode, faSignature, faList } from '@fortawesome/free-solid-svg-icons';
+import { FormGroup, Label, CustomInput, Form, Alert, Button } from 'reactstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Parser } from 'html-to-react';
+import moment from 'moment';
 
-import TinyMCE from '../../../../../components/UI/TinyMCE/TinyMCE';
+import Input from '../../../../../components/Backend/UI/Input/Input';
+import BetweenButton from '../../../../../components/UI/Button/BetweenButton/BetweenButton';
 
 import * as actions from '../../../../../store/actions';
-import { updateObject } from '../../../../../shared/utility';
+import { updateObject, parseMoment } from '../../../../../shared/utility';
 
 const parser = new Parser();
 
 class Edit extends Component {
     state = {
-        page_status: '',
-        status: 0,
-        comments: '',
-        admin_files: []
+        title: '',
+        start_time: new Date(),
+        finish_time: new Date(),
+        event_type_id: 0,
+        description: '',
     }
 
     static getDerivedStateFromProps(nextProps, prevState) {
-        if (nextProps.request && prevState.page_status === '') return updateObject(prevState, { ...nextProps.request });
+        if (nextProps.event && prevState.title === '') return updateObject(prevState, { ...nextProps.event });
         return prevState;
     }
 
     inputChangedHandler = e => {
-        const { name, value, files, targetElm } = e.target;
-        if (targetElm) {
-            document.getElementById(targetElm.id).value = e.target.getContent();
-            return this.setState({ [targetElm.name]: e.target.getContent() });
-        }
-        if (name === 'admin_files') return this.setState({ [name]: files });
+        const { name, value, type, files } = e.target;
+        if (type === 'file') return this.setState({ [name]: files });
         this.setState({ [name]: value });
     }
 
     submitHandler = e => {
         e.preventDefault();
-        this.props.onPostRequestUpdate(e.target.id, e.target);
+        this.props.submit(this.state.id, updateObject(this.state, { start_time: parseMoment(moment(this.state.start_time)), finish_time: parseMoment(moment(this.state.finish_time)) }));
     }
 
     render() {
-        const { page_status, status, comments, admin_files, id } = this.state;
-        const { request } = this.props;
-        const colors = ['orange', 'primary', 'danger', 'success'];
+        const { title, description, event_type_id, start_time, finish_time, id } = this.state;
+        let { backend: { calendar: { types } } } = this.props;
 
-        let additionalContent;
-        switch (request.status) {
-            case 0:
-                additionalContent = <>
-                    <Button color="green">Confirm<FontAwesomeIcon icon={faCheck} fixedWidth className="ml-2" /></Button>{' '}
-                    <Button color="danger">Cancel<FontAwesomeIcon icon={faTimes} fixedWidth className="ml-2" /></Button>
-                </>;
-                break;
-            case 1:
-                additionalContent = <>
-                    <Alert color={colors[request.status]} className={'pb-3'}>This request is under process. Would you like to update it?</Alert>
+        if (!types) types = [];
 
-                    <Button color="green">Yes<FontAwesomeIcon icon={faCheck} fixedWidth className="ml-2" /></Button>{' '}
-                    <Button color="danger">No<FontAwesomeIcon icon={faTimes} fixedWidth className="ml-2" /></Button>
-                </>;
-                break;
-        }
+        const options = types.map(type => <option value={type.id} key={JSON.stringify(type)}>{type.name}</option>);
 
-        return <Form id={id} onSubmit={this.submitHandler}>
-            <FormGroup className="d-flex align-items-center">
-                <div className='text-700 pr-4'>Status</div>
-                <Label check>
-                    <CustomInput type="radio" name="status" id="status-3" onChange={this.inputChangedHandler} value={3} defaultChecked={request.status === 3} className={request.status === 3 ? 'text-700 text-' + colors[request.status] : ''} label="Solved" inline />
-                </Label>
-                <Label check>
-                    <CustomInput type="radio" name="status" id="status-2" onChange={this.inputChangedHandler} value={1} defaultChecked={request.status === 1} className={request.status === 1 ? 'text-700 text-' + colors[request.status] : ''} label="Processing" inline />
-                </Label>
-                <Label check>
-                    <CustomInput type="radio" name="status" id="status-1" onChange={this.inputChangedHandler} value={2} defaultChecked={request.status === 2} className={request.status === 2 ? 'text-700 text-' + colors[request.status] : ''} label="Cancelled" inline />
-                </Label>
+        return <Form id={id} onSubmit={this.submitHandler} className="row">
+            <Input className="col-lg-6" type="text" name="title" placeholder="Title" onChange={this.inputChangedHandler} icon={faSignature} validation={{ required: true }} required value={title} />
+            <Input className="col-lg-6" type="select" name="event_type_id" onChange={this.inputChangedHandler} icon={faList} validation={{ required: true }} required value={event_type_id}>
+                <option>Select an event type</option>
+                {options}
+            </Input>
+            <Input className="col-lg-6" type="datetime-local" name="start_time" placeholder="Start Time" onChange={this.inputChangedHandler} icon={faClock} validation={{ required: true }} required value={start_time} />
+            <Input className="col-lg-6" type="datetime-local" name="finish_time" placeholder="Finish Time" onChange={this.inputChangedHandler} icon={faClock} validation={{ required: true }} required value={finish_time} />
+            <Input className="col" type="textarea" name="description" placeholder="Description" onChange={this.inputChangedHandler} icon={faCode} validation={{ required: true }} required value={description} />
+
+            <FormGroup className="col-12">
+                <BetweenButton color="brokenblue" icon={faPaperPlane}>Submit</BetweenButton>
             </FormGroup>
-            <FormGroup>
-                <Label className="text-700" for="description">Issue description</Label>
-                <div className="bg-soft rounded p-3">{parser.parse(request.description)}</div>
-            </FormGroup>
-            {(+request.status < 2 && +status > 0) && <>
-                <FormGroup>
-                    <Label className="text-700" for="comments">{+status === 2 ? 'Reason' : 'Reply'}</Label>
-                    <TinyMCE name="comments" onChange={this.inputChangedHandler} value={comments} />
-                </FormGroup>
-                <FormGroup>
-                    <Label className="text-700" for="admin_files">Attach files</Label>
-                    <CustomInput type="file" id="admin_files" name="admin_files[]" multiple accept=".png,.jpg,.jpeg,.pdf" onChange={this.inputChangedHandler} files={admin_files} />
-                </FormGroup>
-            </>}
-            <input type="hidden" name="page_status" value={page_status} />
-
-            <div className="mt-4">
-                {additionalContent}
-            </div>
         </Form>;
     }
 }
 
+const mapStateToProps = state => ({ ...state });
+
 const mapDispatchToProps = dispatch => ({
-    onPostRequestUpdate: (id, data) => dispatch(actions.postRequestUpdate(id, data)),
+    submit: (id, data) => dispatch(actions.patchCalendar(id, data)),
 });
 
-export default withRouter(connect(null, mapDispatchToProps)(Edit));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Edit));

@@ -5,11 +5,18 @@ namespace App\Http\Controllers\User;
 use App\Event;
 use App\EventType;
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\UtilController;
 use Illuminate\Http\Request;
 
 class CalendarController extends Controller
 {
-    public function index()
+    private $rules = [
+        'event_type_id' => 'required|numeric',
+        'title' => 'required|string',
+        'description' => 'required|string',
+    ];
+
+    private function data()
     {
         $events = [];
         foreach (Event::all() as $event) {
@@ -18,43 +25,34 @@ class CalendarController extends Controller
             ]);
         }
 
-        return response()->json([
-            'events' => $events
-        ]);
+        return $events;
     }
 
-    public function eventTypes()
+
+
+    public function index()
     {
+        $events = $this->data();
+
         $types = EventType::all();
 
         return response()->json([
-            'types' => $types
+            'events' => $events,
+            'types' => $types,
         ]);
     }
 
     public function store(Request $request)
     {
-        $request->validate([
-            'event_type_id' => 'required|numeric',
-            'title' => 'required|string',
-            'description' => 'required|string',
-        ]);
+        $request->validate($this->rules);
 
-        Event::create($request->only(['event_type_id', 'title', 'description', 'start_time', 'finish_time']));
+        Event::create($request->all());
 
-        $events = [];
-        foreach (Event::all() as $event) {
-            $events[] = array_merge($event->toArray(), [
-                'event_type' => $event->event_type->name,
-            ]);
-        }
+        $events = $this->data();
 
         return response()->json([
-            'message' => [
-                'type' => 'success',
-                'content' => 'Successfully created event.'
-            ],
-            'events' => $events
+            'message' => UtilController::message('Successfully created event.', 'success'),
+            'events' => $events,
         ]);
     }
 
@@ -62,20 +60,14 @@ class CalendarController extends Controller
     {
         $event = Event::find($id);
         if (!$event) return response()->json([
-            'message' => [
-                'type' => 'danger',
-                'content' => 'Event does not exist.'
-            ]
+            'message' => UtilController::message('Event does not exist.', 'danger'),
         ]);
 
-        $event->update($request->only(['status', 'comments']));
+        $request->validate($this->rules);
 
-        $events = [];
-        foreach (Event::all() as $event) {
-            $events[] = array_merge($event->toArray(), [
-                'event_type' => $event->event_type->name,
-            ]);
-        }
+        $event->update($request->all());
+
+        $events = $this->data();
 
         return response()->json([
             'message' => [
@@ -86,30 +78,19 @@ class CalendarController extends Controller
         ]);
     }
 
-    public function delete(Request $request, $id)
+    public function destroy($id)
     {
         $event = Event::find($id);
         if (!$event) return response()->json([
-            'message' => [
-                'type' => 'danger',
-                'content' => 'Event does not exist.'
-            ]
+            'message' => UtilController::message('Event does not exist.', 'danger'),
         ]);
 
         $event->delete();
 
-        $events = [];
-        foreach (Event::all() as $event) {
-            $events[] = array_merge($event->toArray(), [
-                'event_type' => $event->event_type->name,
-            ]);
-        }
+        $events = $this->data();
 
         return response()->json([
-            'message' => [
-                'type' => 'success',
-                'content' => 'Successfully deleted event.'
-            ],
+            'message' => UtilController::message('Successfully deleted event.', 'success'),
             'events' => $events
         ]);
     }

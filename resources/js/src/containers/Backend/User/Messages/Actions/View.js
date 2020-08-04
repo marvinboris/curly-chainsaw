@@ -5,12 +5,14 @@ import { Row, Col } from 'reactstrap';
 
 import Download from '../../../../../components/Backend/UI/Download/Download';
 
+import { convertDate } from '../../../../../shared/utility';
+
 const I = ({ size = 6, label = null, children }) => <Col lg={size} className="pb-3">
     {label ? (label + ': ') : ''}<span className="text-green text-500">{children}</span>
 </Col>;
 
-export default ({ request, country }) => {
-    const documentsContent = request.documents.filter(d => d).map(doc => {
+export default ({ message }) => {
+    const filesContent = message.files.filter(d => d).map(doc => {
         const arr1 = doc.split('.');
         const format = arr1[arr1.length - 1];
 
@@ -42,62 +44,32 @@ export default ({ request, country }) => {
         </Col>
     });
 
-    const issueFilesContent = request.issue_files.filter(d => d).map(issue_file => {
-        const arr1 = issue_file.split('.');
-        const format = arr1[arr1.length - 1];
-
-        const arr2 = issue_file.split('/');
-        const arr3 = arr2[arr2.length - 1].split('.');
-        const formatlessName = arr3.filter((n, i) => i < arr3.length - 1).join('.');
-
-        let icon;
-        switch (format.toLowerCase()) {
-            case 'pdf':
-                icon = faFilePdf
-                break;
-            default:
-                icon = faFileImage
-                break;
-        }
-
-        return <div key={formatlessName + Math.random()} className="pr-3 d-inline-block" style={{ maxWidth: 200 }}>
-            <Download link={issue_file} name={formatlessName + '.' + format}>
-                <div className="rounded-2 p-2 bg-light text-darkblue text-uppercase text-truncate text-nowrap">
-                    <FontAwesomeIcon icon={icon} className="mr-2" />{formatlessName}
-                </div>
-            </Download>
-        </div>
-    });
-
     return <>
         <Row className="m-0 p-3 rounded bg-green-20">
             <Col xs={12}>
                 <div className="text-green text-700 mb-2">
                     <FontAwesomeIcon icon={faUser} className="mr-2" fixedWidth />
-                        User info Gathering
+                        Message info
                     </div>
                 <hr />
             </Col>
-            <I label="Full Name">{request.name}</I>
-            <I label="Platform">{request.platform}</I>
-            <I label="E-Mail Address">{request.email}</I>
-            <I label="User ID">{request.ref}</I>
-            <I label="Country">{country ? country.name : null}</I>
-            <I label="Phone Number">{request.phone}</I>
-            <I label="Issue">{request.issue}</I>
+            <I label="Sender">{message.sender}</I>
+            <I label="Receiver">{message.receiver}</I>
+            <I label="Creation Date">{convertDate(message.created_at)}</I>
+            <I label="Object">{message.object}</I>
         </Row>
 
         <Row className="mt-4 mx-0 p-3 rounded bg-orange-20">
             <Col xs={12}>
                 <div className="text-orange text-700 mb-2">
                     <FontAwesomeIcon icon={faBook} className="mr-2" fixedWidth />
-                    User documents
+                    Message files
                 </div>
                 <hr />
             </Col>
             <Col xs={12}>
                 <Row>
-                    {documentsContent}
+                    {filesContent}
                 </Row>
             </Col>
         </Row>
@@ -106,14 +78,13 @@ export default ({ request, country }) => {
             <Col xs={12}>
                 <div className="text-black text-700 mb-2">
                     <FontAwesomeIcon icon={faEdit} className="mr-2" fixedWidth />
-                        Issue description
+                        Message content
                     </div>
                 <hr />
             </Col>
             <Col xs={12}>
                 <Row>
-                    <Col xs={12} className="pb-3" dangerouslySetInnerHTML={{ __html: request.description }} />
-                    <Col xl={12}>{issueFilesContent}</Col>
+                    <Col xs={12} className="pb-3" dangerouslySetInnerHTML={{ __html: message.content }} />
                 </Row>
             </Col>
         </Row>

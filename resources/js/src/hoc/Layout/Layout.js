@@ -30,7 +30,7 @@ class Layout extends Component {
 
         let content = null;
         if (url.includes('auth')) content = <Auth>{children}</Auth>;
-        else if (url.includes('user')) content = <Backend>{children}</Backend>;
+        else if (url.includes('user') || url.includes('admin')) content = <Backend>{children}</Backend>;
         else content = children;
 
         return content;

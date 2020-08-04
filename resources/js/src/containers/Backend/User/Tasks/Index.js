@@ -19,19 +19,19 @@ import View from '../../../../components/Backend/UI/View/View';
 import Counter from '../../../../components/Backend/UI/Counter/Counter';
 
 import Edit from './Actions/Edit';
-import Description from './Actions/Description';
+import Add from './Actions/Add';
 import RawView from './Actions/View';
 
 import * as actions from '../../../../store/actions';
-import { updateObject, convertDate } from '../../../../shared/utility';
+import { updateObject, convertDate, convertTime } from '../../../../shared/utility';
 
 class Index extends Component {
     componentDidMount() {
-        this.props.onGetTasks();
+        this.props.get();
     }
 
     componentWillUnmount() {
-        this.props.onResetTasks();
+        this.props.reset();
     }
 
     render() {
@@ -56,8 +56,6 @@ class Index extends Component {
                     const texts = ['Pending', 'Unachieved', 'Achieved'];
                     const icons = [faSpinner, faTimesCircle, faCheckCircle];
 
-                    const descriptionContent = <Description task={task} />;
-
                     const viewContent = <RawView task={task} />;
 
                     const editContent = <Edit task={task} />;
@@ -65,7 +63,9 @@ class Index extends Component {
                     return updateObject(task, {
                         created_at: convertDate(task.created_at),
                         date_due: convertDate(task.date_due),
+                        time_due: convertTime(task.date_due),
                         status: <Badge color={colors[task.status]} className="badge-block position-static"><FontAwesomeIcon icon={icons[task.status]} className={[0].includes(task.status) ? "fa-spin" : ""} fixedWidth /> {texts[task.status]}</Badge>,
+                        documents: <Badge color="nightblue" className="badge-block position-static"><FontAwesomeIcon icon={faFileArchive} className="text-orange" fixedWidth /> {task.documents.length} Document{task.documents.length > 1 ? 's' : ''}</Badge>,
                         action: <div className="text-center">
                             <View title={'Task details: ' + convertDate(task.created_at)} content={viewContent}>
                                 <FontAwesomeIcon icon={faEye} className="text-green mr-2" fixedWidth />
@@ -73,8 +73,7 @@ class Index extends Component {
                             <View title={'Task edit: ' + convertDate(task.created_at)} content={editContent}>
                                 <FontAwesomeIcon icon={faEdit} className="text-brokenblue" fixedWidth />
                             </View>
-                            <Delete deleteAction={() => alert(task.id)}><FontAwesomeIcon icon={faTrash} className="text-red mr-2" fixedWidth /></Delete>
-                            <FontAwesomeIcon icon={faDownload} className="text-darkblue" fixedWidth />
+                            <Delete deleteAction={() => this.props.delete(task.id)}><FontAwesomeIcon icon={faTrash} className="text-red mr-2" fixedWidth /></Delete>
                         </div>,
                     });
                 });
@@ -82,13 +81,15 @@ class Index extends Component {
                 content = (
                     <>
                         <Row>
-                            <List array={tasksData} data={JSON.stringify(tasks)} bordered add="Add Task" link="/user/calendar/add" icon={faTasks} title="My Tasks" className="bg-white shadow-sm"
+                            <List array={tasksData} data={JSON.stringify(tasks)} bordered add="Add Task" content={<Add />} icon={faTasks} title="My Tasks" className="bg-white shadow-sm"
                                 fields={[
                                     { name: 'Creation Date', key: 'created_at' },
                                     { name: 'Author', key: 'author' },
                                     { name: 'Date Due', key: 'date_due' },
+                                    { name: 'Time Due', key: 'time_due' },
                                     { name: 'Comment', key: 'comment' },
                                     { name: 'Priority', key: 'priority' },
+                                    { name: 'Documents', key: 'documents', minWidth: 150 },
                                     { name: 'Status', key: 'status', minWidth: 140 },
                                     { name: 'Action', key: 'action', fixed: true }
                                 ]} />
@@ -118,10 +119,10 @@ class Index extends Component {
 const mapStateToProps = state => ({ ...state });
 
 const mapDispatchToProps = dispatch => ({
-    onGetTasks: () => dispatch(actions.getTasks()),
-    onPostTaskDelete: id => dispatch(actions.postTaskDelete(id)),
-    onPostTaskUpdate: (id, data) => dispatch(actions.postTaskUpdate(id, data)),
-    onResetTasks: () => dispatch(actions.resetTasks()),
+    get: () => dispatch(actions.getTasks()),
+    delete: id => dispatch(actions.deleteTasks(id)),
+    patch: (id, data) => dispatch(actions.patchTasks(id, data)),
+    reset: () => dispatch(actions.tasksReset()),
 });
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Index));

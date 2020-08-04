@@ -36,6 +36,11 @@ class Auth extends Component {
         this.setState({ interval });
     }
 
+    componentWillUnmount() {
+        clearInterval(this.state.interval);
+    }
+    
+
     render() {
         const { date: { weekDay, day, month, year }, clock: { hours, minutes, seconds } } = this.state;
         const { children } = this.props;

@@ -16,8 +16,8 @@ export default ({ fields, array, limit, bordered, xs, sm, md, lg, xl, className 
         if (select) inside.unshift(<th className="text-center align-middle" key={'secondary' + index}>
             <input type="checkbox" value={item._id} />
         </th>);
-        fields.forEach(({ key }) => {
-            inside.push(<td className="align-middle text-nowrap" key={key}>{item[key]}</td>);
+        fields.forEach(({ key, minWidth }) => {
+            inside.push(<td className="align-middle text-nowrap" style={{ minWidth }} key={key}>{item[key]}</td>);
         });
 
         return <tr className="align-middle" key={index + 1}>{inside}</tr>;

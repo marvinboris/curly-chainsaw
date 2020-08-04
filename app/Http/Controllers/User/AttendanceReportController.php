@@ -35,7 +35,87 @@ class AttendanceReportController extends Controller
             ];
         }
 
+        $year = Carbon::today()->year;
+
+        $weeksObject = [];
+        // $DAYS_OF_WEEK = Carbon::DAYS_PER_WEEK;
+
+        // $weekOfYear = Carbon::today()->weekOfYear;
+
+        // for ($i = 2; $i <= $weekOfYear; $i++) {
+        //     $subWeeks = $weekOfYear - $i;
+
+        //     $workedTime = 0;
+
+        //     for ($j = 0; $j < $DAYS_OF_WEEK; $j++) {
+        //         $subDays = $DAYS_OF_WEEK * $subWeeks + $DAYS_OF_WEEK - $j;
+
+        //         $dayTime = 0;
+        //         $cycles = $user->cycles()->whereDate('created_at', Carbon::today()->subDays($subDays))->get();
+
+        //         if (count($cycles) > 0) {
+        //             foreach ($cycles as $cycle) {
+        //                 $diff = $cycle->updated_at->timestamp - $cycle->created_at->timestamp;
+        //                 if ($diff > 0) $dayTime += $diff;
+        //                 else {
+        //                     $dayTime += time() - $cycle->created_at->timestamp;
+        //                 }
+        //             }
+        //         }
+
+        //         $workedTime += $dayTime;
+        //     }
+
+        //     $weeks[$i - 2] = [
+        //         'time' => $workedTime,
+        //         'year' => $year,
+        //     ];
+        // }
+
+        $DAYS_PER_WEEK = Carbon::DAYS_PER_WEEK;
+        $WEEKS_PER_YEAR = Carbon::WEEKS_PER_YEAR;
+
+        $workedTime = 0;
+
+        for ($i = 0; $i <= $WEEKS_PER_YEAR; $i++) {
+            $addWeeks = $i;
+
+            for ($j = 0; $j < $DAYS_PER_WEEK; $j++) {
+                $addDays = $j;
+
+                $day = Carbon::today()->firstOfYear()->addWeeks($addWeeks)->addDays($addDays);
+
+                if ($day->year === Carbon::today()->year) {
+                    $dayTime = 0;
+                    $cycles = $user->cycles()->whereDate('created_at', $day)->get();
+
+                    if (count($cycles) > 0) {
+                        foreach ($cycles as $cycle) {
+                            $diff = $cycle->updated_at->timestamp - $cycle->created_at->timestamp;
+                            if ($diff > 0) $dayTime += $diff;
+                            else {
+                                $dayTime += time() - $cycle->created_at->timestamp;
+                            }
+                        }
+                    }
+
+                    $workedTime += $dayTime;
+
+                    if ($day->dayOfWeek === 0) {
+                        $weeksObject[$day->weekOfYear - 1] = [
+                            'time' => $workedTime,
+                            'year' => $year,
+                        ];
+                        $workedTime = 0;
+                    }
+                }
+            }
+        }
+
         $weeks = [];
+        foreach ($weeksObject as $week) {
+            $weeks[] = $week;
+        }
 
         return response()->json([
             'attendanceReport' => $attendanceReport,

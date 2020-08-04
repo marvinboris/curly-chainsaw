@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { FormGroup, InputGroup, InputGroupAddon, InputGroupText, Input } from 'reactstrap';
+import { FormGroup, InputGroup, InputGroupAddon, InputGroupText, Input, CustomInput } from 'reactstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { checkValidity } from '../../../shared/utility';
@@ -21,7 +21,7 @@ export default ({ icon, addon, onChange, className = '', name, type = 'text', re
             </InputGroupAddon>
 
             {children ?
-                <Input valid={touched && checkValidity(value, validation)} invalid={touched && !checkValidity(value, validation)} onChange={inputChangedHandler} type={type} name={name} required={required} readOnly={readonly} value={value} className={"bg-black-20 border-right-0 border-top-0 border-bottom-0 border-border text-small text-light h-100 px-4 py-3"} placeholder={placeholder}>{children}</Input>
+                <CustomInput valid={touched && checkValidity(value, validation)} invalid={touched && !checkValidity(value, validation)} onChange={inputChangedHandler} type={type} name={name} required={required} readOnly={readonly} value={value} className={"bg-black-20 border-right-0 border-top-0 border-bottom-0 border-border text-small text-light h-100 px-4 py-3"} placeholder={placeholder}>{children}</CustomInput>
                 :
                 <Input valid={touched && checkValidity(value, validation)} invalid={touched && !checkValidity(value, validation)} onChange={inputChangedHandler} type={type} name={name} required={required} readOnly={readonly} value={value} className={"bg-transparent border-0 text-small text-light h-100 px-4 py-3"} placeholder={placeholder} />
             }

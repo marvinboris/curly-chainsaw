@@ -67,7 +67,7 @@ class DashboardController extends Controller
         $unreadMessages = $user->messages()->whereNotNull('read_at')->get();
 
         $tasks = [];
-        foreach ($user->tasks()->latest()->limit(5)->get() as $task) {
+        foreach (Task::latest()->limit(5)->get() as $task) {
             $tasks[] = array_merge($task->toArray(), [
                 'author' => $task->user->job->name
             ]);

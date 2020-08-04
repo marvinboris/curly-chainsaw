@@ -27,11 +27,11 @@ import { updateObject, convertDate, convertTime } from '../../../../shared/utili
 
 class Index extends Component {
     componentDidMount() {
-        this.props.onGetCalendar();
+        this.props.get();
     }
 
     componentWillUnmount() {
-        this.props.onResetCalendar();
+        this.props.reset();
     }
 
     render() {
@@ -62,8 +62,8 @@ class Index extends Component {
 
                     return updateObject(event, {
                         start_date: convertDate(event.start_time),
-                        start_time: convertTime(event.start_time),
-                        finish_time: convertTime(event.finish_time),
+                        start_time: <span className="text-700">{convertTime(event.start_time)}</span>,
+                        finish_time: <span className="text-700">{convertTime(event.finish_time)}</span>,
                         finish_date: convertDate(event.finish_time),
                         status: <Badge color={colors[event.status]} className="badge-block position-static"><FontAwesomeIcon icon={icons[event.status]} className={[0].includes(event.status) ? "fa-spin" : ""} fixedWidth /> {texts[event.status]}</Badge>,
                         action: <div className="text-center">
@@ -119,10 +119,10 @@ class Index extends Component {
 const mapStateToProps = state => ({ ...state });
 
 const mapDispatchToProps = dispatch => ({
-    onGetCalendar: () => dispatch(actions.getCalendar()),
-    onPostCalendarDelete: id => dispatch(actions.postCalendarDelete(id)),
-    onPostCalendarUpdate: (id, data) => dispatch(actions.postCalendarUpdate(id, data)),
-    onResetCalendar: () => dispatch(actions.resetCalendar()),
+    get: () => dispatch(actions.getCalendar()),
+    delete: id => dispatch(actions.deleteCalendar(id)),
+    patch: (id, data) => dispatch(actions.patchCalendar(id, data)),
+    reset: () => dispatch(actions.calendarReset()),
 });
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Index));

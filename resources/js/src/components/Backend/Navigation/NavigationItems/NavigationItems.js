@@ -145,7 +145,7 @@ export default ({ data, sidedrawerToggle, logoutHandler, role, comments = [], me
             <ModalBody className="text-center">
                 <p>Are you sure you want to logout?</p>
                 <div>
-                    <Button color="darkblue" onClick={logoutHandler}>Logout <FontAwesomeIcon icon={faPowerOff} fixedWidth /></Button>{' '}
+                    <Button color="brokenblue" onClick={logoutHandler}>Logout <FontAwesomeIcon icon={faPowerOff} fixedWidth /></Button>{' '}
                     <Button color="orange" onClick={toggle}>Close <FontAwesomeIcon icon={faTimes} fixedWidth /></Button>
                 </div>
             </ModalBody>

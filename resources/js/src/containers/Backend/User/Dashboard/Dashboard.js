@@ -3,13 +3,10 @@ import { connect } from 'react-redux';
 import { Link, withRouter } from 'react-router-dom';
 import { Col, Row, Spinner, Label, Input, Button, Badge } from 'reactstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTachometerAlt, faEnvelope, faTicketAlt, faTasks, faArrowsAlt, faTimes, faEye, faEdit, faTrash, faClock, faLandmark, faFilePdf, faFileImage, faUser, faBook, faSpinner, faTimesCircle, faCheckCircle, faStopwatch, faSignInAlt, faCalendarAlt, faComments } from '@fortawesome/free-solid-svg-icons';
+import { faTachometerAlt, faEnvelope, faTicketAlt, faTasks, faArrowsAlt, faTimes, faEye, faEdit, faTrash, faClock, faLandmark, faFilePdf, faFileImage, faUser, faBook, faSpinner, faTimesCircle, faCheckCircle, faStopwatch, faSignInAlt, faCalendarAlt, faComments, faReply } from '@fortawesome/free-solid-svg-icons';
 import Calendar from 'react-calendar';
 
 // Components
-import Edit from '../Requests/Actions/Edit';
-import RequestView from '../Requests/Actions/View';
-
 import WorkTimeTracker from './WorkTimeTracker/WorkTimeTracker';
 import Breadcrumb from '../../../../components/Backend/UI/Breadcrumb/Breadcrumb';
 import SpecialTitle from '../../../../components/UI/Titles/SpecialTitle/SpecialTitle';
@@ -50,7 +47,7 @@ class Dashboard extends Component {
     }
 
     componentDidMount() {
-        this.props.onGetDashboard();
+        this.props.get();
     }
 
     componentDidUpdate(prevProps, prevState) {
@@ -99,7 +96,8 @@ class Dashboard extends Component {
     }
 
     componentWillUnmount() {
-        this.props.onResetDashboard();
+        clearInterval(this.state.interval);
+        this.props.reset();
     }
 
     render() {
@@ -239,7 +237,6 @@ class Dashboard extends Component {
 
                     return updateObject(message, {
                         created_at: convertDate(message.created_at),
-                        sender: message.user,
                         action: <div className="text-center">
                             <Button size="sm" color="orange" className="mr-2">
                                 <FontAwesomeIcon icon={faEye} className="mr-2" fixedWidth />
@@ -269,7 +266,7 @@ class Dashboard extends Component {
                                     { name: 'Author', key: 'author' },
                                     { name: 'Date Due', key: 'date_due' },
                                     { name: 'Comment', key: 'comment' },
-                                    { name: 'Status', key: 'status' },
+                                    { name: 'Status', key: 'status', minWidth: 130 },
                                     { name: 'Action', key: 'action' }
                                 ]}>
                                 <Link to="/user/tasks" className="text-secondary">{'View full task list | >'}</Link>
@@ -381,8 +378,8 @@ class Dashboard extends Component {
 const mapStateToProps = state => ({ ...state });
 
 const mapDispatchToProps = dispatch => ({
-    onGetDashboard: () => dispatch(actions.getUserDashboard()),
-    onResetDashboard: () => dispatch(actions.resetDashboard()),
+    get: () => dispatch(actions.getUserDashboard()),
+    reset: () => dispatch(actions.dashboardReset()),
     onPostClock: () => dispatch(actions.postClock()),
 });
 

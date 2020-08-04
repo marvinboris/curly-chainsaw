@@ -3,19 +3,23 @@ import { connect } from 'react-redux';
 import { Form, FormGroup } from 'reactstrap';
 import { faSignInAlt, faCode } from '@fortawesome/free-solid-svg-icons';
 
-import Layout from '../../Layout';
-
 import MyInput from '../../../../components/UI/Input/Input';
 import BetweenButton from '../../../../components/UI/Button/BetweenButton/BetweenButton';
 import Error from '../../../../components/Error/Error';
 import Feedback from '../../../../components/Feedback/Feedback';
 import CustomSpinner from '../../../../components/UI/CustomSpinner/CustomSpinner';
+import Title from '../../../../components/UI/Titles/Title/Title';
 
 import * as actions from '../../../../store/actions/index';
 
 export class Verify extends Component {
     state = {
         code: '',
+    }
+
+    componentDidMount() {
+        const { auth: { hash }, history } = this.props;
+        if (!hash) history.push('/auth/admin/login');
     }
 
     componentWillUnmount() {
@@ -35,8 +39,7 @@ export class Verify extends Component {
 
     render() {
         const { code } = this.state;
-        const { auth: { hash, loading, error, message }, history, onResendCode } = this.props;
-        if (!hash) history.push('/auth/login');
+        const { auth: { hash, loading, error, message }, onResendCode } = this.props;
 
         const errors = <Error err={error} />;
         const feedback = <Feedback message={message} />;
@@ -47,13 +50,16 @@ export class Verify extends Component {
             <MyInput type="text" icon={faCode} onChange={this.inputChangeHandler} value={code} name="code" required placeholder="Verification code" />
             <input type="hidden" name="hash" value={hash} />
             <FormGroup className="ml-2 mb-5 mt-4">
-                <p className="text-darkblue text-right">Didn't receive code? <strong className="text-yellow" style={{ cursor: 'pointer' }} onClick={() => onResendCode(hash)}>Resend</strong></p>
+                <p className="text-white text-right">Didn't receive code? <strong className="text-yellow" style={{ cursor: 'pointer' }} onClick={() => onResendCode(hash)}>Resend</strong></p>
             </FormGroup>
 
-            <BetweenButton color="yellow" pill className="py-3 px-4 btn-block" icon={faSignInAlt}>Continue</BetweenButton>
+            <BetweenButton color="yellow" size="lg" className="py-3 px-4 btn-block" icon={faSignInAlt}>Continue</BetweenButton>
         </Form>;
+
         return <>
-            <div className="h4 mb-4 text-darkblue text-sm-left">Enter <span className="text-yellow">Verification code</span></div>
+            <Title>
+                Enter <span className="text-yellow">Verification Code</span>
+            </Title>
             {errors}
             {feedback}
             {content}

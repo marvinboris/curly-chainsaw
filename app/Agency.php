@@ -14,4 +14,9 @@ class Agency extends Model
     {
         return $this->hasMany('App\User');
     }
+
+    public function getPositionAttribute($value)
+    {
+        return json_decode($value);
+    }
 }

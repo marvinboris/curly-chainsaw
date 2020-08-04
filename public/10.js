@@ -1,5 +1,24 @@
 (window["webpackJsonp"] = window["webpackJsonp"] || []).push([[10],{
 
+/***/ "./node_modules/css-loader/index.js?!./node_modules/postcss-loader/src/index.js?!./resources/js/src/components/UI/Titles/Title/Title.css":
+/*!***********************************************************************************************************************************************!*\
+  !*** ./node_modules/css-loader??ref--6-1!./node_modules/postcss-loader/src??ref--6-2!./resources/js/src/components/UI/Titles/Title/Title.css ***!
+  \***********************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(/*! ../../../../../../../node_modules/css-loader/lib/css-base.js */ "./node_modules/css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, ".Title {\r\n    width: 100%;\r\n}\r\n\r\n@media (max-width: 992px) {\r\n    .Title {\r\n        width: 100%;\r\n    }   \r\n}", ""]);
+
+// exports
+
+
+/***/ }),
+
 /***/ "./resources/js/src/components/Error/Error.js":
 /*!****************************************************!*\
   !*** ./resources/js/src/components/Error/Error.js ***!
@@ -158,7 +177,7 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
     className: "text-yellow mx-1",
     fixedWidth: true,
     icon: icon
-  }) : addon)), children ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_1__["Input"], {
+  }) : addon)), children ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_1__["CustomInput"], {
     valid: touched && Object(_shared_utility__WEBPACK_IMPORTED_MODULE_3__["checkValidity"])(value, validation),
     invalid: touched && !Object(_shared_utility__WEBPACK_IMPORTED_MODULE_3__["checkValidity"])(value, validation),
     onChange: inputChangedHandler,
@@ -189,22 +208,109 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 /***/ }),
 
-/***/ "./resources/js/src/containers/Auth/Admin/Verify/Verify.js":
-/*!*****************************************************************!*\
-  !*** ./resources/js/src/containers/Auth/Admin/Verify/Verify.js ***!
-  \*****************************************************************/
-/*! exports provided: Verify, default */
+/***/ "./resources/js/src/components/UI/Titles/Title/Title.css":
+/*!***************************************************************!*\
+  !*** ./resources/js/src/components/UI/Titles/Title/Title.css ***!
+  \***************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+
+var content = __webpack_require__(/*! !../../../../../../../node_modules/css-loader??ref--6-1!../../../../../../../node_modules/postcss-loader/src??ref--6-2!./Title.css */ "./node_modules/css-loader/index.js?!./node_modules/postcss-loader/src/index.js?!./resources/js/src/components/UI/Titles/Title/Title.css");
+
+if(typeof content === 'string') content = [[module.i, content, '']];
+
+var transform;
+var insertInto;
+
+
+
+var options = {"hmr":true}
+
+options.transform = transform
+options.insertInto = undefined;
+
+var update = __webpack_require__(/*! ../../../../../../../node_modules/style-loader/lib/addStyles.js */ "./node_modules/style-loader/lib/addStyles.js")(content, options);
+
+if(content.locals) module.exports = content.locals;
+
+if(false) {}
+
+/***/ }),
+
+/***/ "./resources/js/src/components/UI/Titles/Title/Title.js":
+/*!**************************************************************!*\
+  !*** ./resources/js/src/components/UI/Titles/Title/Title.js ***!
+  \**************************************************************/
+/*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Verify", function() { return Verify; });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @fortawesome/free-solid-svg-icons */ "./node_modules/@fortawesome/free-solid-svg-icons/index.es.js");
+/* harmony import */ var _fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @fortawesome/react-fontawesome */ "./node_modules/@fortawesome/react-fontawesome/index.es.js");
+/* harmony import */ var _Title_css__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Title.css */ "./resources/js/src/components/UI/Titles/Title/Title.css");
+/* harmony import */ var _Title_css__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_Title_css__WEBPACK_IMPORTED_MODULE_3__);
+
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = (function (_ref) {
+  var children = _ref.children,
+      className = _ref.className,
+      style = _ref.style,
+      check = _ref.check,
+      _ref$mt = _ref.mt,
+      mt = _ref$mt === void 0 ? 5 : _ref$mt;
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "mt-" + mt + " Title position-relative d-none d-sm-flex " + className,
+    style: style
+  }, check ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "pr-4"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_2__["FontAwesomeIcon"], {
+    icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_1__["faCheckCircle"],
+    className: "text-green",
+    size: "3x"
+  })) : null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h4", {
+    className: "text-left text-white text-700 flex-fill overflow-hidden pb-3"
+  }, children, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "border-bottom border-border position-relative pt-3 mw-100",
+    style: {
+      width: 613,
+      maxWidth: '100%'
+    }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "bg-yellow rounded-circle position-absolute",
+    style: {
+      width: 20,
+      height: 20,
+      bottom: 0,
+      left: 97.5,
+      transform: 'translateY(50%)'
+    }
+  }))));
+});
+
+/***/ }),
+
+/***/ "./resources/js/src/containers/Auth/Admin/Login/Login.js":
+/*!***************************************************************!*\
+  !*** ./resources/js/src/containers/Auth/Admin/Login/Login.js ***!
+  \***************************************************************/
+/*! exports provided: Login, default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Login", function() { return Login; });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
 /* harmony import */ var reactstrap__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! reactstrap */ "./node_modules/reactstrap/es/index.js");
 /* harmony import */ var _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @fortawesome/free-solid-svg-icons */ "./node_modules/@fortawesome/free-solid-svg-icons/index.es.js");
-/* harmony import */ var _Layout__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../Layout */ "./resources/js/src/containers/Auth/Layout.js");
+/* harmony import */ var _components_UI_Titles_Title_Title__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../../../components/UI/Titles/Title/Title */ "./resources/js/src/components/UI/Titles/Title/Title.js");
 /* harmony import */ var _components_UI_Input_Input__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../../../components/UI/Input/Input */ "./resources/js/src/components/UI/Input/Input.js");
 /* harmony import */ var _components_UI_Button_BetweenButton_BetweenButton__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../../../components/UI/Button/BetweenButton/BetweenButton */ "./resources/js/src/components/UI/Button/BetweenButton/BetweenButton.js");
 /* harmony import */ var _components_Error_Error__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../../../components/Error/Error */ "./resources/js/src/components/Error/Error.js");
@@ -250,15 +356,15 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 
 
-var Verify = /*#__PURE__*/function (_Component) {
-  _inherits(Verify, _Component);
+var Login = /*#__PURE__*/function (_Component) {
+  _inherits(Login, _Component);
 
-  var _super = _createSuper(Verify);
+  var _super = _createSuper(Login);
 
-  function Verify() {
+  function Login() {
     var _this;
 
-    _classCallCheck(this, Verify);
+    _classCallCheck(this, Login);
 
     for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
       args[_key] = arguments[_key];
@@ -267,7 +373,9 @@ var Verify = /*#__PURE__*/function (_Component) {
     _this = _super.call.apply(_super, [this].concat(args));
 
     _defineProperty(_assertThisInitialized(_this), "state", {
-      code: ''
+      email: '',
+      password: '',
+      otp: 'email'
     });
 
     _defineProperty(_assertThisInitialized(_this), "submitHandler", function (e) {
@@ -287,25 +395,29 @@ var Verify = /*#__PURE__*/function (_Component) {
     return _this;
   }
 
-  _createClass(Verify, [{
-    key: "componentWillUnmount",
-    value: function componentWillUnmount() {
-      var onSetHash = this.props.onSetHash;
-      onSetHash(null);
+  _createClass(Login, [{
+    key: "componentDidUpdate",
+    value: function componentDidUpdate() {
+      var _this$props = this.props,
+          hash = _this$props.auth.hash,
+          onSetHash = _this$props.onSetHash,
+          history = _this$props.history;
+
+      if (hash) {
+        onSetHash(hash);
+        history.push('/auth/admin/verify');
+      }
     }
   }, {
     key: "render",
     value: function render() {
-      var code = this.state.code;
-      var _this$props = this.props,
-          _this$props$auth = _this$props.auth,
-          hash = _this$props$auth.hash,
+      var _this$state = this.state,
+          email = _this$state.email,
+          password = _this$state.password;
+      var _this$props$auth = this.props.auth,
           loading = _this$props$auth.loading,
           error = _this$props$auth.error,
-          message = _this$props$auth.message,
-          history = _this$props.history,
-          onResendCode = _this$props.onResendCode;
-      if (!hash) history.push('/auth/login');
+          message = _this$props$auth.message;
       var errors = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Error_Error__WEBPACK_IMPORTED_MODULE_7__["default"], {
         err: error
       });
@@ -316,46 +428,70 @@ var Verify = /*#__PURE__*/function (_Component) {
       if (loading) content = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "h-100 d-flex justify-content-center align-items-center"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_UI_CustomSpinner_CustomSpinner__WEBPACK_IMPORTED_MODULE_9__["default"], null));else content = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_2__["Form"], {
-        onSubmit: this.submitHandler
+        onSubmit: this.submitHandler,
+        className: "row"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_2__["Col"], {
+        xl: 10
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_UI_Input_Input__WEBPACK_IMPORTED_MODULE_5__["default"], {
         type: "text",
-        icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_3__["faCode"],
+        icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_3__["faUser"],
         onChange: this.inputChangeHandler,
-        value: code,
-        name: "code",
-        required: true,
-        placeholder: "Verification code"
-      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
-        type: "hidden",
-        name: "hash",
-        value: hash
-      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_2__["FormGroup"], {
-        className: "ml-2 mb-5 mt-4"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
-        className: "text-darkblue text-right"
-      }, "Didn't receive code? ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("strong", {
-        className: "text-yellow",
-        style: {
-          cursor: 'pointer'
+        validation: {
+          required: true,
+          isEmail: true
         },
-        onClick: function onClick() {
-          return onResendCode(hash);
-        }
-      }, "Resend"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_UI_Button_BetweenButton_BetweenButton__WEBPACK_IMPORTED_MODULE_6__["default"], {
+        value: email,
+        name: "email",
+        required: true,
+        placeholder: "E-mail address"
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_UI_Input_Input__WEBPACK_IMPORTED_MODULE_5__["default"], {
+        type: "password",
+        icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_3__["faLock"],
+        onChange: this.inputChangeHandler,
+        validation: {
+          required: true
+        },
+        value: password,
+        name: "password",
+        required: true,
+        placeholder: "Password"
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_2__["FormGroup"], {
+        className: "ml-2 mt-4 mb-5 d-flex align-items-center text-white"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "text-700 pr-4"
+      }, "OTP Method"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_2__["Label"], {
+        check: true
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_2__["CustomInput"], {
+        type: "radio",
+        id: "sms",
+        name: "otp",
+        value: "sms",
+        label: "SMS",
+        disabled: true,
+        inline: true
+      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_2__["Label"], {
+        check: true
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_2__["CustomInput"], {
+        type: "radio",
+        id: "email",
+        defaultChecked: true,
+        name: "otp",
+        value: "email",
+        label: "Email",
+        inline: true
+      }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_UI_Button_BetweenButton_BetweenButton__WEBPACK_IMPORTED_MODULE_6__["default"], {
         color: "yellow",
-        pill: true,
+        size: "lg",
         className: "py-3 px-4 btn-block",
         icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_3__["faSignInAlt"]
-      }, "Continue"));
-      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "h4 mb-4 text-darkblue text-sm-left"
-      }, "Enter ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+      }, "Sign In")));
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_UI_Titles_Title_Title__WEBPACK_IMPORTED_MODULE_4__["default"], null, "Sign In to ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
         className: "text-yellow"
-      }, "Verification code")), errors, feedback, content);
+      }, "Admin Panel")), errors, feedback, content);
     }
   }]);
 
-  return Verify;
+  return Login;
 }(react__WEBPACK_IMPORTED_MODULE_0__["Component"]);
 
 var mapStateToProps = function mapStateToProps(state) {
@@ -365,18 +501,15 @@ var mapStateToProps = function mapStateToProps(state) {
 var mapDispatchToProps = function mapDispatchToProps(dispatch) {
   return {
     onAuth: function onAuth(data) {
-      return dispatch(_store_actions_index__WEBPACK_IMPORTED_MODULE_10__["authAdminVerify"](data));
+      return dispatch(_store_actions_index__WEBPACK_IMPORTED_MODULE_10__["authAdminLogin"](data));
     },
     onSetHash: function onSetHash(hash) {
       return dispatch(_store_actions_index__WEBPACK_IMPORTED_MODULE_10__["setHash"](hash));
-    },
-    onResendCode: function onResendCode(hash) {
-      return dispatch(_store_actions_index__WEBPACK_IMPORTED_MODULE_10__["resendCode"](hash));
     }
   };
 };
 
-/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_1__["connect"])(mapStateToProps, mapDispatchToProps)(Verify));
+/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_1__["connect"])(mapStateToProps, mapDispatchToProps)(Login));
 
 /***/ })
 

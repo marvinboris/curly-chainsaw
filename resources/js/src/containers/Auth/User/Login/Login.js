@@ -4,7 +4,7 @@ import { Form, FormGroup, Label, CustomInput, Col } from 'reactstrap';
 import { faLock, faSignInAlt, faUser } from '@fortawesome/free-solid-svg-icons';
 
 import Title from '../../../../components/UI/Titles/Title/Title';
-import MyInput from '../../../../components/UI/Input/Input';
+import Input from '../../../../components/UI/Input/Input';
 import BetweenButton from '../../../../components/UI/Button/BetweenButton/BetweenButton';
 import Error from '../../../../components/Error/Error';
 import Feedback from '../../../../components/Feedback/Feedback';
@@ -48,29 +48,17 @@ export class Login extends Component {
         if (loading) content = <div className="h-100 d-flex justify-content-center align-items-center"><CustomSpinner /></div>;
         else content = <Form onSubmit={this.submitHandler} className="row">
             <Col xl={10}>
-                <MyInput type="text" icon={faUser} onChange={this.inputChangeHandler} validation={{ required: true, isEmail: true }} value={email} name="email" required placeholder="E-mail address" />
-                <MyInput type="password" icon={faLock} onChange={this.inputChangeHandler} validation={{ required: true }} value={password} name="password" required placeholder="Password" />
-
-                <FormGroup className="ml-2 mt-4 mb-5 d-flex align-items-center text-white">
-                    <div className='text-700 pr-4'>OTP Method</div>
-                    <Label check>
-                        <CustomInput type="radio" id="sms" name="otp" value="sms" label="SMS" disabled inline />
-                    </Label>
-                    <Label check>
-                        <CustomInput type="radio" id="email" defaultChecked name="otp" value="email" label="Email" inline />
-                    </Label>
-                </FormGroup>
+                <Input type="text" icon={faUser} onChange={this.inputChangeHandler} validation={{ required: true, isEmail: true }} value={email} name="email" required placeholder="E-mail address" />
+                <Input type="password" icon={faLock} onChange={this.inputChangeHandler} validation={{ required: true }} value={password} name="password" required placeholder="Password" />
 
                 <BetweenButton color="yellow" size="lg" className="py-3 px-4 btn-block" icon={faSignInAlt}>Sign In</BetweenButton>
             </Col>
         </Form>;
 
         return <>
-            {/* <div className="pt-md-5"> */}
             <Title>
                 Don't be late! <span className="text-yellow">Sign In</span>
             </Title>
-            {/* </div> */}
             {errors}
             {feedback}
             {content}

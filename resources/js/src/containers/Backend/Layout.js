@@ -53,6 +53,9 @@ class BackEnd extends Component {
     }
 
     componentDidUpdate(prevProps) {
+        const isAuthenticated = localStorage.getItem('token') !== null;
+
+        if (!isAuthenticated) this.props.history.push('/auth/user/login');
         if (this.props.auth.data.notifications && !prevProps.auth.data.notifications) {
             const audio = new Audio('/audio/swiftly.mp3');
             const channel = Echo.channel('public');
@@ -74,7 +77,7 @@ class BackEnd extends Component {
     }
 
     componentWillUnmount() {
-        if (this.state.interval) clearInterval(this.state.interval);
+        clearInterval(this.state.interval);
     }
 
     logoutHandler = () => {
@@ -91,11 +94,7 @@ class BackEnd extends Component {
     render() {
         const { isOpen, date, clock, selectedItem, notifications } = this.state;
         const {
-            auth: { loading, data, role },
-            history, children } = this.props;
-        const isAuthenticated = localStorage.getItem('token') !== null;
-
-        if (!isAuthenticated) history.push('/auth/user/login');
+            auth: { loading, data, role }, children } = this.props;
 
         return <div className="BackEnd text-left">
             <Toolbar notifications={notifications} data={data} toggle={this.toggle} logoutHandler={this.logoutHandler} date={date} clock={clock} />

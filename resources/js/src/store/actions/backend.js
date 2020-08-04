@@ -2,7 +2,7 @@ import * as actionTypes from './actionTypes';
 
 const prefix = '/api/';
 
-export const resetDashboard = () => ({ type: actionTypes.RESET_DASHBOARD });
+export const dashboardReset = () => ({ type: actionTypes.DASHBOARD_RESET });
 const dashboardStart = () => ({ type: actionTypes.DASHBOARD_START });
 const dashboardSuccess = data => ({ type: actionTypes.DASHBOARD_SUCCESS, ...data });
 const dashboardFail = error => ({ type: actionTypes.DASHBOARD_FAIL, error });
@@ -24,144 +24,27 @@ export const getUserDashboard = () => async dispatch => {
     }
 };
 
-export const resetRequests = () => ({ type: actionTypes.RESET_REQUESTS });
-const requestsStart = () => ({ type: actionTypes.REQUESTS_START });
-const requestsSuccess = data => ({ type: actionTypes.REQUESTS_SUCCESS, ...data });
-const requestsFail = error => ({ type: actionTypes.REQUESTS_FAIL, error });
-export const getRequests = () => async dispatch => {
-    dispatch(requestsStart());
+export const getAdminDashboard = () => async dispatch => {
+    dispatch(dashboardStart());
 
     try {
         const token = localStorage.getItem('token');
-        const res = await fetch(prefix + 'requests', {
+        const res = await fetch(prefix + 'admin/dashboard', {
             headers: {
                 Authorization: token
             }
         });
         const resData = await res.json();
-        dispatch(requestsSuccess(resData));
+        dispatch(dashboardSuccess(resData));
     } catch (error) {
         console.log(error);
-        dispatch(requestsFail(error));
-    }
-};
-
-export const getImportantRequests = () => async dispatch => {
-    dispatch(requestsStart());
-
-    try {
-        const token = localStorage.getItem('token');
-        const res = await fetch(prefix + 'requests/important', {
-            headers: {
-                Authorization: token
-            }
-        });
-        const resData = await res.json();
-        dispatch(requestsSuccess(resData));
-    } catch (error) {
-        console.log(error);
-        dispatch(requestsFail(error));
-    }
-};
-
-export const getPendingRequests = () => async dispatch => {
-    dispatch(requestsStart());
-
-    try {
-        const token = localStorage.getItem('token');
-        const res = await fetch(prefix + 'requests/pending', {
-            headers: {
-                Authorization: token
-            }
-        });
-        const resData = await res.json();
-        dispatch(requestsSuccess(resData));
-    } catch (error) {
-        console.log(error);
-        dispatch(requestsFail(error));
-    }
-};
-
-export const getSolvedRequests = () => async dispatch => {
-    dispatch(requestsStart());
-
-    try {
-        const token = localStorage.getItem('token');
-        const res = await fetch(prefix + 'requests/solved', {
-            headers: {
-                Authorization: token
-            }
-        });
-        const resData = await res.json();
-        dispatch(requestsSuccess(resData));
-    } catch (error) {
-        console.log(error);
-        dispatch(requestsFail(error));
-    }
-};
-
-export const getCancelledRequests = () => async dispatch => {
-    dispatch(requestsStart());
-
-    try {
-        const token = localStorage.getItem('token');
-        const res = await fetch(prefix + 'requests/cancelled', {
-            headers: {
-                Authorization: token
-            }
-        });
-        const resData = await res.json();
-        dispatch(requestsSuccess(resData));
-    } catch (error) {
-        console.log(error);
-        dispatch(requestsFail(error));
-    }
-};
-
-export const postRequestUpdate = (id, data) => async dispatch => {
-    dispatch(requestsStart());
-
-    try {
-        const token = localStorage.getItem('token');
-        const form = new FormData(data);
-        const res = await fetch(prefix + 'requests/' + id, {
-            method: 'POST',
-            body: form,
-            headers: {
-                Authorization: token
-            }
-        });
-        const resData = await res.json();
-        if (res.status === 422) throw new Error(Object.values(resData.errors).join('\n'));
-        dispatch(requestsSuccess(resData));
-    } catch (error) {
-        console.log(error);
-        dispatch(requestsFail(error));
-    }
-};
-
-export const postRequestDelete = id => async dispatch => {
-    dispatch(requestsStart());
-
-    try {
-        const res = await fetch(prefix + 'requests/' + id + '/delete', {
-            method: 'POST',
-            headers: {
-                Authorization: token
-            }
-        });
-        const resData = await res.json();
-        if (res.status === 422) throw new Error(Object.values(resData.errors).join('\n'));
-        dispatch(requestsSuccess(resData));
-    } catch (error) {
-        console.log(error);
-        dispatch(requestsFail(error));
+        dispatch(dashboardFail(error));
     }
 };
 
 
 
-export const resetAttendanceReport = () => ({ type: actionTypes.RESET_ATTENDANCE_REPORT });
+export const attendanceReportReset = () => ({ type: actionTypes.ATTENDANCE_REPORT_RESET });
 const attendanceReportStart = () => ({ type: actionTypes.ATTENDANCE_REPORT_START });
 const attendanceReportSuccess = data => ({ type: actionTypes.ATTENDANCE_REPORT_SUCCESS, ...data });
 const attendanceReportFail = error => ({ type: actionTypes.ATTENDANCE_REPORT_FAIL, error });
@@ -205,7 +88,7 @@ export const postClock = () => async dispatch => {
 
 
 
-export const resetTasks = () => ({ type: actionTypes.RESET_TASKS });
+export const tasksReset = () => ({ type: actionTypes.TASKS_RESET });
 const tasksStart = () => ({ type: actionTypes.TASKS_START });
 const tasksSuccess = data => ({ type: actionTypes.TASKS_SUCCESS, ...data });
 const tasksFail = error => ({ type: actionTypes.TASKS_FAIL, error });
@@ -227,13 +110,13 @@ export const getTasks = () => async dispatch => {
     }
 };
 
-export const postTaskUpdate = (id, data) => async dispatch => {
+export const postTasks = data => async dispatch => {
     dispatch(tasksStart());
 
     try {
         const token = localStorage.getItem('token');
         const form = new FormData(data);
-        const res = await fetch(prefix + 'user/tasks/' + id, {
+        const res = await fetch(prefix + 'user/tasks', {
             method: 'POST',
             body: form,
             headers: {
@@ -242,6 +125,7 @@ export const postTaskUpdate = (id, data) => async dispatch => {
         });
         const resData = await res.json();
         if (res.status === 422) throw new Error(Object.values(resData.errors).join('\n'));
+        else if (res.status !== 200 && res.status !== 201) throw new Error(resData.error.message);
         dispatch(tasksSuccess(resData));
     } catch (error) {
         console.log(error);
@@ -249,12 +133,35 @@ export const postTaskUpdate = (id, data) => async dispatch => {
     }
 };
 
-export const postTaskDelete = id => async dispatch => {
+export const patchTasks = (id, data) => async dispatch => {
     dispatch(tasksStart());
 
     try {
-        const res = await fetch(prefix + 'user/tasks/' + id + '/delete', {
-            method: 'POST',
+        const token = localStorage.getItem('token');
+        const res = await fetch(prefix + 'user/tasks/' + id, {
+            method: 'PATCH',
+            body: JSON.stringify(data),
+            headers: {
+                Authorization: token,
+                'Content-Type': 'application/json'
+            }
+        });
+        const resData = await res.json();
+        if (res.status === 422) throw new Error(Object.values(resData.errors).join('\n'));
+        dispatch(tasksSuccess(resData));
+    } catch (error) {
+        console.log(error);
+        dispatch(tasksFail(error));
+    }
+};
+
+export const deleteTasks = id => async dispatch => {
+    dispatch(tasksStart());
+
+    try {
+        const token = localStorage.getItem('token');
+        const res = await fetch(prefix + 'user/tasks/' + id, {
+            method: 'DELETE',
             headers: {
                 Authorization: token
             }
@@ -270,7 +177,452 @@ export const postTaskDelete = id => async dispatch => {
 
 
 
-export const resetMessages = () => ({ type: actionTypes.RESET_MESSAGES });
+export const agenciesReset = () => ({ type: actionTypes.AGENCIES_RESET });
+const agenciesStart = () => ({ type: actionTypes.AGENCIES_START });
+const agenciesSuccess = data => ({ type: actionTypes.AGENCIES_SUCCESS, ...data });
+const agenciesFail = error => ({ type: actionTypes.AGENCIES_FAIL, error });
+export const getAgencies = () => async dispatch => {
+    dispatch(agenciesStart());
+
+    try {
+        const token = localStorage.getItem('token');
+        const res = await fetch(prefix + 'admin/agencies', {
+            headers: {
+                Authorization: token
+            }
+        });
+        const resData = await res.json();
+        dispatch(agenciesSuccess(resData));
+    } catch (error) {
+        console.log(error);
+        dispatch(agenciesFail(error));
+    }
+};
+
+export const postAgencies = data => async dispatch => {
+    dispatch(agenciesStart());
+
+    try {
+        const token = localStorage.getItem('token');
+        const form = new FormData(data);
+        const res = await fetch(prefix + 'admin/agencies', {
+            method: 'POST',
+            body: form,
+            headers: {
+                Authorization: token
+            }
+        });
+        const resData = await res.json();
+        if (res.status === 422) throw new Error(Object.values(resData.errors).join('\n'));
+        else if (res.status !== 200 && res.status !== 201) throw new Error(resData.error.message);
+        dispatch(agenciesSuccess(resData));
+    } catch (error) {
+        console.log(error);
+        dispatch(agenciesFail(error));
+    }
+};
+
+export const patchAgencies = (id, data) => async dispatch => {
+    dispatch(agenciesStart());
+
+    try {
+        const token = localStorage.getItem('token');
+        const res = await fetch(prefix + 'admin/agencies/' + id, {
+            method: 'PATCH',
+            body: JSON.stringify(data),
+            headers: {
+                Authorization: token,
+                'Content-Type': 'application/json'
+            }
+        });
+        const resData = await res.json();
+        if (res.status === 422) throw new Error(Object.values(resData.errors).join('\n'));
+        dispatch(agenciesSuccess(resData));
+    } catch (error) {
+        console.log(error);
+        dispatch(agenciesFail(error));
+    }
+};
+
+export const deleteAgencies = id => async dispatch => {
+    dispatch(agenciesStart());
+
+    try {
+        const token = localStorage.getItem('token');
+        const res = await fetch(prefix + 'admin/agencies/' + id, {
+            method: 'DELETE',
+            headers: {
+                Authorization: token
+            }
+        });
+        const resData = await res.json();
+        if (res.status === 422) throw new Error(Object.values(resData.errors).join('\n'));
+        dispatch(agenciesSuccess(resData));
+    } catch (error) {
+        console.log(error);
+        dispatch(agenciesFail(error));
+    }
+};
+
+
+
+export const employeesReset = () => ({ type: actionTypes.EMPLOYEES_RESET });
+const employeesStart = () => ({ type: actionTypes.EMPLOYEES_START });
+const employeesSuccess = data => ({ type: actionTypes.EMPLOYEES_SUCCESS, ...data });
+const employeesFail = error => ({ type: actionTypes.EMPLOYEES_FAIL, error });
+export const getEmployees = () => async dispatch => {
+    dispatch(employeesStart());
+
+    try {
+        const token = localStorage.getItem('token');
+        const res = await fetch(prefix + 'admin/employees', {
+            headers: {
+                Authorization: token
+            }
+        });
+        const resData = await res.json();
+        dispatch(employeesSuccess(resData));
+    } catch (error) {
+        console.log(error);
+        dispatch(employeesFail(error));
+    }
+};
+
+export const postEmployees = data => async dispatch => {
+    dispatch(employeesStart());
+
+    try {
+        const token = localStorage.getItem('token');
+        const form = new FormData(data);
+        const res = await fetch(prefix + 'admin/employees', {
+            method: 'POST',
+            body: form,
+            headers: {
+                Authorization: token
+            }
+        });
+        const resData = await res.json();
+        if (res.status === 422) throw new Error(Object.values(resData.errors).join('\n'));
+        else if (res.status !== 200 && res.status !== 201) throw new Error(resData.error.message);
+        dispatch(employeesSuccess(resData));
+    } catch (error) {
+        console.log(error);
+        dispatch(employeesFail(error));
+    }
+};
+
+export const patchEmployees = (id, data) => async dispatch => {
+    dispatch(employeesStart());
+
+    try {
+        const token = localStorage.getItem('token');
+        const res = await fetch(prefix + 'admin/employees/' + id, {
+            method: 'PATCH',
+            body: JSON.stringify(data),
+            headers: {
+                Authorization: token,
+                'Content-Type': 'application/json'
+            }
+        });
+        const resData = await res.json();
+        if (res.status === 422) throw new Error(Object.values(resData.errors).join('\n'));
+        dispatch(employeesSuccess(resData));
+    } catch (error) {
+        console.log(error);
+        dispatch(employeesFail(error));
+    }
+};
+
+export const deleteEmployees = id => async dispatch => {
+    dispatch(employeesStart());
+
+    try {
+        const token = localStorage.getItem('token');
+        const res = await fetch(prefix + 'admin/employees/' + id, {
+            method: 'DELETE',
+            headers: {
+                Authorization: token
+            }
+        });
+        const resData = await res.json();
+        if (res.status === 422) throw new Error(Object.values(resData.errors).join('\n'));
+        dispatch(employeesSuccess(resData));
+    } catch (error) {
+        console.log(error);
+        dispatch(employeesFail(error));
+    }
+};
+
+
+
+export const eventTypesReset = () => ({ type: actionTypes.EVENT_TYPES_RESET });
+const eventTypesStart = () => ({ type: actionTypes.EVENT_TYPES_START });
+const eventTypesSuccess = data => ({ type: actionTypes.EVENT_TYPES_SUCCESS, ...data });
+const eventTypesFail = error => ({ type: actionTypes.EVENT_TYPES_FAIL, error });
+export const getEventTypes = () => async dispatch => {
+    dispatch(eventTypesStart());
+
+    try {
+        const token = localStorage.getItem('token');
+        const res = await fetch(prefix + 'admin/event-types', {
+            headers: {
+                Authorization: token
+            }
+        });
+        const resData = await res.json();
+        dispatch(eventTypesSuccess(resData));
+    } catch (error) {
+        console.log(error);
+        dispatch(eventTypesFail(error));
+    }
+};
+
+export const postEventTypes = data => async dispatch => {
+    dispatch(eventTypesStart());
+
+    try {
+        const token = localStorage.getItem('token');
+        const form = new FormData(data);
+        const res = await fetch(prefix + 'admin/event-types', {
+            method: 'POST',
+            body: form,
+            headers: {
+                Authorization: token
+            }
+        });
+        const resData = await res.json();
+        if (res.status === 422) throw new Error(Object.values(resData.errors).join('\n'));
+        else if (res.status !== 200 && res.status !== 201) throw new Error(resData.error.message);
+        dispatch(eventTypesSuccess(resData));
+    } catch (error) {
+        console.log(error);
+        dispatch(eventTypesFail(error));
+    }
+};
+
+export const patchEventTypes = (id, data) => async dispatch => {
+    dispatch(eventTypesStart());
+
+    try {
+        const token = localStorage.getItem('token');
+        const res = await fetch(prefix + 'admin/event-types/' + id, {
+            method: 'PATCH',
+            body: JSON.stringify(data),
+            headers: {
+                Authorization: token,
+                'Content-Type': 'application/json'
+            }
+        });
+        const resData = await res.json();
+        if (res.status === 422) throw new Error(Object.values(resData.errors).join('\n'));
+        dispatch(eventTypesSuccess(resData));
+    } catch (error) {
+        console.log(error);
+        dispatch(eventTypesFail(error));
+    }
+};
+
+export const deleteEventTypes = id => async dispatch => {
+    dispatch(eventTypesStart());
+
+    try {
+        const token = localStorage.getItem('token');
+        const res = await fetch(prefix + 'admin/event-types/' + id, {
+            method: 'DELETE',
+            headers: {
+                Authorization: token
+            }
+        });
+        const resData = await res.json();
+        if (res.status === 422) throw new Error(Object.values(resData.errors).join('\n'));
+        dispatch(eventTypesSuccess(resData));
+    } catch (error) {
+        console.log(error);
+        dispatch(eventTypesFail(error));
+    }
+};
+
+
+
+export const jobsReset = () => ({ type: actionTypes.JOBS_RESET });
+const jobsStart = () => ({ type: actionTypes.JOBS_START });
+const jobsSuccess = data => ({ type: actionTypes.JOBS_SUCCESS, ...data });
+const jobsFail = error => ({ type: actionTypes.JOBS_FAIL, error });
+export const getJobs = () => async dispatch => {
+    dispatch(jobsStart());
+
+    try {
+        const token = localStorage.getItem('token');
+        const res = await fetch(prefix + 'admin/jobs', {
+            headers: {
+                Authorization: token
+            }
+        });
+        const resData = await res.json();
+        dispatch(jobsSuccess(resData));
+    } catch (error) {
+        console.log(error);
+        dispatch(jobsFail(error));
+    }
+};
+
+export const postJobs = data => async dispatch => {
+    dispatch(jobsStart());
+
+    try {
+        const token = localStorage.getItem('token');
+        const form = new FormData(data);
+        const res = await fetch(prefix + 'admin/jobs', {
+            method: 'POST',
+            body: form,
+            headers: {
+                Authorization: token
+            }
+        });
+        const resData = await res.json();
+        if (res.status === 422) throw new Error(Object.values(resData.errors).join('\n'));
+        else if (res.status !== 200 && res.status !== 201) throw new Error(resData.error.message);
+        dispatch(jobsSuccess(resData));
+    } catch (error) {
+        console.log(error);
+        dispatch(jobsFail(error));
+    }
+};
+
+export const patchJobs = (id, data) => async dispatch => {
+    dispatch(jobsStart());
+
+    try {
+        const token = localStorage.getItem('token');
+        const res = await fetch(prefix + 'admin/jobs/' + id, {
+            method: 'PATCH',
+            body: JSON.stringify(data),
+            headers: {
+                Authorization: token,
+                'Content-Type': 'application/json'
+            }
+        });
+        const resData = await res.json();
+        if (res.status === 422) throw new Error(Object.values(resData.errors).join('\n'));
+        dispatch(jobsSuccess(resData));
+    } catch (error) {
+        console.log(error);
+        dispatch(jobsFail(error));
+    }
+};
+
+export const deleteJobs = id => async dispatch => {
+    dispatch(jobsStart());
+
+    try {
+        const token = localStorage.getItem('token');
+        const res = await fetch(prefix + 'admin/jobs/' + id, {
+            method: 'DELETE',
+            headers: {
+                Authorization: token
+            }
+        });
+        const resData = await res.json();
+        if (res.status === 422) throw new Error(Object.values(resData.errors).join('\n'));
+        dispatch(jobsSuccess(resData));
+    } catch (error) {
+        console.log(error);
+        dispatch(jobsFail(error));
+    }
+};
+
+
+
+export const prioritiesReset = () => ({ type: actionTypes.PRIORITIES_RESET });
+const prioritiesStart = () => ({ type: actionTypes.PRIORITIES_START });
+const prioritiesSuccess = data => ({ type: actionTypes.PRIORITIES_SUCCESS, ...data });
+const prioritiesFail = error => ({ type: actionTypes.PRIORITIES_FAIL, error });
+export const getPriorities = () => async dispatch => {
+    dispatch(prioritiesStart());
+
+    try {
+        const token = localStorage.getItem('token');
+        const res = await fetch(prefix + 'admin/priorities', {
+            headers: {
+                Authorization: token
+            }
+        });
+        const resData = await res.json();
+        dispatch(prioritiesSuccess(resData));
+    } catch (error) {
+        console.log(error);
+        dispatch(prioritiesFail(error));
+    }
+};
+
+export const postPriorities = data => async dispatch => {
+    dispatch(prioritiesStart());
+
+    try {
+        const token = localStorage.getItem('token');
+        const form = new FormData(data);
+        const res = await fetch(prefix + 'admin/priorities', {
+            method: 'POST',
+            body: form,
+            headers: {
+                Authorization: token
+            }
+        });
+        const resData = await res.json();
+        if (res.status === 422) throw new Error(Object.values(resData.errors).join('\n'));
+        else if (res.status !== 200 && res.status !== 201) throw new Error(resData.error.message);
+        dispatch(prioritiesSuccess(resData));
+    } catch (error) {
+        console.log(error);
+        dispatch(prioritiesFail(error));
+    }
+};
+
+export const patchPriorities = (id, data) => async dispatch => {
+    dispatch(prioritiesStart());
+
+    try {
+        const token = localStorage.getItem('token');
+        const res = await fetch(prefix + 'admin/priorities/' + id, {
+            method: 'PATCH',
+            body: JSON.stringify(data),
+            headers: {
+                Authorization: token,
+                'Content-Type': 'application/json'
+            }
+        });
+        const resData = await res.json();
+        if (res.status === 422) throw new Error(Object.values(resData.errors).join('\n'));
+        dispatch(prioritiesSuccess(resData));
+    } catch (error) {
+        console.log(error);
+        dispatch(prioritiesFail(error));
+    }
+};
+
+export const deletePriorities = id => async dispatch => {
+    dispatch(prioritiesStart());
+
+    try {
+        const token = localStorage.getItem('token');
+        const res = await fetch(prefix + 'admin/priorities/' + id, {
+            method: 'DELETE',
+            headers: {
+                Authorization: token
+            }
+        });
+        const resData = await res.json();
+        if (res.status === 422) throw new Error(Object.values(resData.errors).join('\n'));
+        dispatch(prioritiesSuccess(resData));
+    } catch (error) {
+        console.log(error);
+        dispatch(prioritiesFail(error));
+    }
+};
+
+
+
+export const messagesReset = () => ({ type: actionTypes.MESSAGES_RESET });
 const messagesStart = () => ({ type: actionTypes.MESSAGES_START });
 const messagesSuccess = data => ({ type: actionTypes.MESSAGES_SUCCESS, ...data });
 const messagesFail = error => ({ type: actionTypes.MESSAGES_FAIL, error });
@@ -346,7 +698,30 @@ export const getArchiveMessages = () => async dispatch => {
     }
 };
 
-export const postMessageUpdate = (id, data) => async dispatch => {
+export const postMessages = data => async dispatch => {
+    dispatch(messagesStart());
+
+    try {
+        const token = localStorage.getItem('token');
+        const form = new FormData(data);
+        const res = await fetch(prefix + 'user/messages', {
+            method: 'POST',
+            body: form,
+            headers: {
+                Authorization: token
+            }
+        });
+        const resData = await res.json();
+        if (res.status === 422) throw new Error(Object.values(resData.errors).join('\n'));
+        else if (res.status !== 200 && res.status !== 201) throw new Error(resData.error.message);
+        dispatch(messagesSuccess(resData));
+    } catch (error) {
+        console.log(error);
+        dispatch(messagesFail(error));
+    }
+};
+
+export const patchMessages = (id, data) => async dispatch => {
     dispatch(messagesStart());
 
     try {
@@ -368,12 +743,13 @@ export const postMessageUpdate = (id, data) => async dispatch => {
     }
 };
 
-export const postMessageDelete = id => async dispatch => {
+export const deleteMessages = id => async dispatch => {
     dispatch(messagesStart());
 
     try {
-        const res = await fetch(prefix + 'user/messages/' + id + '/delete', {
-            method: 'POST',
+        const token = localStorage.getItem('token');
+        const res = await fetch(prefix + 'user/messages/' + id, {
+            method: 'DELETE',
             headers: {
                 Authorization: token
             }
@@ -389,7 +765,7 @@ export const postMessageDelete = id => async dispatch => {
 
 
 
-export const resetCalendar = () => ({ type: actionTypes.RESET_CALENDAR });
+export const calendarReset = () => ({ type: actionTypes.CALENDAR_RESET });
 const calendarStart = () => ({ type: actionTypes.CALENDAR_START });
 const calendarSuccess = data => ({ type: actionTypes.CALENDAR_SUCCESS, ...data });
 const calendarFail = error => ({ type: actionTypes.CALENDAR_FAIL, error });
@@ -411,29 +787,13 @@ export const getCalendar = () => async dispatch => {
     }
 };
 
-export const getEventTypes = () => async dispatch => {
-    try {
-        const token = localStorage.getItem('token');
-        const res = await fetch(prefix + 'user/calendar/event-types', {
-            headers: {
-                Authorization: token
-            }
-        });
-        const resData = await res.json();
-        dispatch(calendarSuccess(resData));
-    } catch (error) {
-        console.log(error);
-        dispatch(calendarFail(error));
-    }
-}
-
-export const postEventAdd = data => async dispatch => {
+export const postCalendar = data => async dispatch => {
     dispatch(calendarStart());
 
     try {
         const token = localStorage.getItem('token');
         const form = new FormData(data);
-        const res = await fetch(prefix + 'user/calendar/', {
+        const res = await fetch(prefix + 'user/calendar', {
             method: 'POST',
             body: form,
             headers: {
@@ -442,6 +802,7 @@ export const postEventAdd = data => async dispatch => {
         });
         const resData = await res.json();
         if (res.status === 422) throw new Error(Object.values(resData.errors).join('\n'));
+        else if (res.status !== 200 && res.status !== 201) throw new Error(resData.error.message);
         dispatch(calendarSuccess(resData));
     } catch (error) {
         console.log(error);
@@ -449,17 +810,17 @@ export const postEventAdd = data => async dispatch => {
     }
 };
 
-export const postCalendarUpdate = (id, data) => async dispatch => {
+export const patchCalendar = (id, data) => async dispatch => {
     dispatch(calendarStart());
 
     try {
         const token = localStorage.getItem('token');
-        const form = new FormData(data);
         const res = await fetch(prefix + 'user/calendar/' + id, {
-            method: 'POST',
-            body: form,
+            method: 'PATCH',
+            body: JSON.stringify(data),
             headers: {
-                Authorization: token
+                Authorization: token,
+                'Content-Type': 'application/json'
             }
         });
         const resData = await res.json();
@@ -471,12 +832,13 @@ export const postCalendarUpdate = (id, data) => async dispatch => {
     }
 };
 
-export const postCalendarDelete = id => async dispatch => {
+export const deleteCalendar = id => async dispatch => {
     dispatch(calendarStart());
 
     try {
-        const res = await fetch(prefix + 'user/calendar/' + id + '/delete', {
-            method: 'POST',
+        const token = localStorage.getItem('token');
+        const res = await fetch(prefix + 'user/calendar/' + id, {
+            method: 'DELETE',
             headers: {
                 Authorization: token
             }
@@ -492,7 +854,7 @@ export const postCalendarDelete = id => async dispatch => {
 
 
 // Chat
-export const resetChat = () => ({ type: actionTypes.RESET_CHAT });
+export const chatReset = () => ({ type: actionTypes.CHAT_RESET });
 const chatStart = () => ({ type: actionTypes.CHAT_START });
 const chatSuccess = data => ({ type: actionTypes.CHAT_SUCCESS, ...data });
 const chatMessageSuccess = data => ({ type: actionTypes.CHAT_MESSAGE_SUCCESS, data });

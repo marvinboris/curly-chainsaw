@@ -1,7 +1,7 @@
 import React from 'react';
 import { Col, Badge, ButtonGroup, Button, Collapse } from 'reactstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTachometerAlt, faUserTie, faCalendarAlt, faEnvelope, faTasks, faCog, faEdit, faComments, faBriefcase } from '@fortawesome/free-solid-svg-icons';
+import { faTachometerAlt, faUserTie, faCalendarAlt, faEnvelope, faTasks, faCog, faEdit, faComments, faBriefcase, faBell, faBuilding, faCalendarWeek, faUserTag, faLayerGroup } from '@fortawesome/free-solid-svg-icons';
 import { faCheckCircle } from '@fortawesome/free-regular-svg-icons';
 
 import SideDrawerItem from './SideDrawerItem/SideDrawerItem';
@@ -12,7 +12,7 @@ import './SideDrawer.css';
 
 const roles = {
     user: 'System User',
-    admin: 'Administrator'
+    admin: 'Administrator',
 };
 
 export default ({ data, role = 'user', messages = [], tasks = [], toggle, isOpen, selectItem, selectedItem }) => {
@@ -60,23 +60,21 @@ export default ({ data, role = 'user', messages = [], tasks = [], toggle, isOpen
 
         case 'admin':
             sideDrawerItems = <>
-                <SideDrawerItem icon={faTachometerAlt} href="/admin/dashboard">Dashboard</SideDrawerItem>
-                <SideDrawerItem icon={faUserTie} dropdown path="/admin/finances" items={[
-                    { link: '/admin/finances/sales-report', text: 'Sales Report' },
-                    { link: '/admin/finances/limo-payments', text: 'Limo Payments' },
-                    { link: '/admin/finances/credits/add', text: 'Add Credit' },
-                    { link: '/admin/finances/credits', text: 'Credit List' },
-                ]}>Finances</SideDrawerItem>
-                <SideDrawerItem icon={faCalendarAlt} dropdown path="/admin/users" items={[
-                    { link: '/admin/users/add', text: 'Add User' },
-                    { link: '/admin/users', text: 'User List' },
-                ]}>Users</SideDrawerItem>
-                <SideDrawerItem icon={faEnvelope} href="/following">Contact us<Badge color="green" className="position-relative rounded-circle text-x-small text-700 d-inline-flex justify-content-center align-items-center" style={{ width: 18, height: 18, top: -7, transform: 'translateX(-40px)' }}>12</Badge></SideDrawerItem>
-                <SideDrawerItem icon={faTasks} dropdown path="/admin/plans" items={[
-                    { link: '/admin/plans/add', text: 'Add Plan' },
-                    { link: '/admin/plans', text: 'Plan List' },
-                    { link: '/admin/plans/deposit', text: 'Plan Deposit' },
-                ]}>Subscription Plan</SideDrawerItem>
+                <SideDrawerItem id="Dashboard" sideDrawerToggle={toggle} select={selectItem} selected={selectedItem} icon={faTachometerAlt} href="/admin/dashboard">Dashboard</SideDrawerItem>
+                <SideDrawerItem id="Agencies" sideDrawerToggle={toggle} select={selectItem} selected={selectedItem} icon={faBuilding} href="/admin/agencies">Agencies</SideDrawerItem>
+                <SideDrawerItem id="Employees" sideDrawerToggle={toggle} select={selectItem} selected={selectedItem} icon={faUserTie} href="/admin/employees">Employees</SideDrawerItem>
+                <SideDrawerItem id="Event Types" sideDrawerToggle={toggle} select={selectItem} selected={selectedItem} icon={faCalendarWeek} href="/admin/event-types">Event Types</SideDrawerItem>
+                <SideDrawerItem id="Jobs" sideDrawerToggle={toggle} select={selectItem} selected={selectedItem} icon={faUserTag} href="/admin/jobs">Jobs</SideDrawerItem>
+                <SideDrawerItem id="Priorities" sideDrawerToggle={toggle} select={selectItem} selected={selectedItem} icon={faLayerGroup} href="/admin/priorities">Priorities</SideDrawerItem>
+                <SideDrawerItem id="Tasks" sideDrawerToggle={toggle} select={selectItem} selected={selectedItem} icon={faTasks} href="/admin/tasks">
+                    Tasks{' '}
+                    <Badge color="pink" className="position-relative rounded-circle text-x-small text-700 d-inline-flex justify-content-center align-items-center" style={{ width: 18, height: 18, top: -7 }}><b className="text-white">{tasks.length}</b></Badge>
+                </SideDrawerItem>
+                <SideDrawerItem id="Notifications" sideDrawerToggle={toggle} select={selectItem} selected={selectedItem} icon={faBell} href="/admin/notifications">Notifications</SideDrawerItem>
+                <SideDrawerItem id="System Settings" sideDrawerToggle={toggle} select={selectItem} selected={selectedItem} icon={faCog} dropdown path="/admin/settings" items={[
+                    { link: '/admin/settings/cms', text: 'CMS' },
+                    { link: '/admin/settings/language', text: 'Language Settings' },
+                ]}>System Settings</SideDrawerItem>
             </>;
             break;
 

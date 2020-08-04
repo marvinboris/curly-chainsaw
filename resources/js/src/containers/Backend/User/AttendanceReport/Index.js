@@ -4,6 +4,7 @@ import { withRouter } from 'react-router-dom';
 import { Col, Row, Badge } from 'reactstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faClock, faSpinner, faCheckCircle, faCalendarAlt, faCalendarCheck } from '@fortawesome/free-solid-svg-icons';
+import OwlCarousel from 'react-owl-carousel2';
 
 // Components
 import Breadcrumb from '../../../../components/Backend/UI/Breadcrumb/Breadcrumb';
@@ -22,16 +23,21 @@ import * as actions from '../../../../store/actions';
 import { updateObject, convertDate, timeFromTimestamp, convertTime } from '../../../../shared/utility';
 
 class Index extends Component {
+    state = {
+        year: new Date().getFullYear()
+    }
+
     componentDidMount() {
-        this.props.onGetAttendanceReport();
+        this.props.get();
     }
 
     componentWillUnmount() {
-        this.props.onResetAttendanceReport();
+        this.props.reset();
     }
 
     render() {
         let { backend: { attendanceReport: { loading, error, message, attendanceReport, weeks } } } = this.props;
+        const { year } = this.state;
 
         let content;
         let errors;
@@ -53,21 +59,21 @@ class Index extends Component {
             if (attendanceReport) {
                 feedback = <Feedback message={message} />;
 
-                const weeksData = weeks.map((week, index) => <Col md={6} xl={3} key={JSON.stringify(week)}>
-                    <div className="h-100 p-3 bg-white shadow-sm d-flex flex-column">
+                const weeksData = weeks.map((week, index) => <div className="py-3" key={JSON.stringify(updateObject(week, { index }))}>
+                    <div className="h-100 p-3 bg-white shadow-sm rounded-4 d-flex flex-column">
                         <div className="text-large text-brokenblue">
-                            <FontAwesomeIcon icon={faCalendarCheck} className={"mr-2 bg-" + cardColors[index]} />
+                            <FontAwesomeIcon icon={faCalendarCheck} className={"mr-2 text-" + cardColors[index % cardColors.length]} />
                             Week {index + 1} - Year {week.year}
                         </div>
 
                         <div className="flex-fill d-flex align-items-center">
                             <div>
-                                <div className="text-soft text-700 text-large">{timeFromTimestamp(week.time)}</div>
+                                <div className="text-secondary text-700 text-large">{timeFromTimestamp(week.time)}</div>
                                 <div className="text-300">Hours</div>
                             </div>
                         </div>
                     </div>
-                </Col>);
+                </div>);
 
                 const attendanceReportData = attendanceReport.map(day => {
                     return updateObject(day, {
@@ -86,19 +92,21 @@ class Index extends Component {
                             <div className="p-3 border-right border-soft text-nowrap">
                                 <FontAwesomeIcon icon={faCalendarAlt} className="text-yellow mr-2" />
                                 <span>
-                                    {["January", "February", "March", "April", "May", "June",
-                                        "July", "August", "September", "October", "November", "December"
-                                    ][new Date().getMonth()]}
+                                    Year
                                 </span>
                             </div>
 
                             <div className="p-3">
-                                {new Date().getFullYear()}
+                                {year}
                             </div>
                         </div>
 
-                        <Row className="py-5">
-                            {weeksData}
+                        <Row className="py-4">
+                            <Col xs={12}>
+                                <OwlCarousel ref="Weeks Data" options={{ responsive: { 0: { items: 1 }, 1100: { items: 2 }, 1550: { items: 4 } }, loop: false, dots: false, margin: 20 }}>
+                                    {weeksData}
+                                </OwlCarousel>
+                            </Col>
                         </Row>
 
                         <Row>
@@ -136,10 +144,8 @@ class Index extends Component {
 const mapStateToProps = state => ({ ...state });
 
 const mapDispatchToProps = dispatch => ({
-    onGetAttendanceReport: () => dispatch(actions.getAttendanceReport()),
-    onPostTaskDelete: id => dispatch(actions.postTaskDelete(id)),
-    onPostTaskUpdate: (id, data) => dispatch(actions.postTaskUpdate(id, data)),
-    onResetAttendanceReport: () => dispatch(actions.resetAttendanceReport()),
+    get: () => dispatch(actions.getAttendanceReport()),
+    reset: () => dispatch(actions.attendanceReportReset()),
 });
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Index));
