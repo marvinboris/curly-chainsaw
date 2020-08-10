@@ -30,6 +30,24 @@ export {
     patchTasks,
     deleteTasks,
 
+    companiesReset,
+    getCompanies,
+    postCompanies,
+    patchCompanies,
+    deleteCompanies,
+
+    countriesReset,
+    getCountries,
+    postCountries,
+    patchCountries,
+    deleteCountries,
+
+    citiesReset,
+    getCities,
+    postCities,
+    patchCities,
+    deleteCities,
+
     agenciesReset,
     getAgencies,
     postAgencies,

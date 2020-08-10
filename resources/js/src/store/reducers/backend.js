@@ -18,6 +18,18 @@ const initialState = {
         loading: false,
         error: null
     },
+    companies: {
+        loading: false,
+        error: null
+    },
+    countries: {
+        loading: false,
+        error: null
+    },
+    cities: {
+        loading: false,
+        error: null
+    },
     agencies: {
         loading: false,
         error: null
@@ -67,6 +79,21 @@ const tasksReset = (state, action) => updateObject(state, { tasks: initialState.
 const tasksStart = (state, action) => updateObject(state, { tasks: updateObject(state.tasks, { loading: true, message: null }) });
 const tasksSuccess = (state, action) => updateObject(state, { tasks: updateObject(state.tasks, { loading: false, error: null, ...action }) });
 const tasksFail = (state, action) => updateObject(state, { tasks: updateObject(state.tasks, { loading: false, ...action }) });
+
+const companiesReset = (state, action) => updateObject(state, { companies: initialState.companies });
+const companiesStart = (state, action) => updateObject(state, { companies: updateObject(state.companies, { loading: true, message: null }) });
+const companiesSuccess = (state, action) => updateObject(state, { companies: updateObject(state.companies, { loading: false, error: null, ...action }) });
+const companiesFail = (state, action) => updateObject(state, { companies: updateObject(state.companies, { loading: false, ...action }) });
+
+const countriesReset = (state, action) => updateObject(state, { countries: initialState.countries });
+const countriesStart = (state, action) => updateObject(state, { countries: updateObject(state.countries, { loading: true, message: null }) });
+const countriesSuccess = (state, action) => updateObject(state, { countries: updateObject(state.countries, { loading: false, error: null, ...action }) });
+const countriesFail = (state, action) => updateObject(state, { countries: updateObject(state.countries, { loading: false, ...action }) });
+
+const citiesReset = (state, action) => updateObject(state, { cities: initialState.cities });
+const citiesStart = (state, action) => updateObject(state, { cities: updateObject(state.cities, { loading: true, message: null }) });
+const citiesSuccess = (state, action) => updateObject(state, { cities: updateObject(state.cities, { loading: false, error: null, ...action }) });
+const citiesFail = (state, action) => updateObject(state, { cities: updateObject(state.cities, { loading: false, ...action }) });
 
 const agenciesReset = (state, action) => updateObject(state, { agencies: initialState.agencies });
 const agenciesStart = (state, action) => updateObject(state, { agencies: updateObject(state.agencies, { loading: true, message: null }) });
@@ -120,6 +147,21 @@ export default (state = initialState, action) => {
         case actionTypes.TASKS_START: return tasksStart(state, action);
         case actionTypes.TASKS_SUCCESS: return tasksSuccess(state, action);
         case actionTypes.TASKS_FAIL: return tasksFail(state, action);
+
+        case actionTypes.COMPANIES_RESET: return companiesReset(state, action);
+        case actionTypes.COMPANIES_START: return companiesStart(state, action);
+        case actionTypes.COMPANIES_SUCCESS: return companiesSuccess(state, action);
+        case actionTypes.COMPANIES_FAIL: return companiesFail(state, action);
+
+        case actionTypes.COUNTRIES_RESET: return countriesReset(state, action);
+        case actionTypes.COUNTRIES_START: return countriesStart(state, action);
+        case actionTypes.COUNTRIES_SUCCESS: return countriesSuccess(state, action);
+        case actionTypes.COUNTRIES_FAIL: return countriesFail(state, action);
+
+        case actionTypes.CITIES_RESET: return citiesReset(state, action);
+        case actionTypes.CITIES_START: return citiesStart(state, action);
+        case actionTypes.CITIES_SUCCESS: return citiesSuccess(state, action);
+        case actionTypes.CITIES_FAIL: return citiesFail(state, action);
 
         case actionTypes.AGENCIES_RESET: return agenciesReset(state, action);
         case actionTypes.AGENCIES_START: return agenciesStart(state, action);

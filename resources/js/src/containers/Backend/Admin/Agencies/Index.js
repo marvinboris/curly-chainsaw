@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { Link, withRouter } from 'react-router-dom';
 import { Col, Row, Spinner, Label, Input, Button, Badge, Form, FormGroup, CustomInput, Alert } from 'reactstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTachometerAlt, faEnvelope, faTicketAlt, faTasks, faArrowsAlt, faTimes, faEye, faEdit, faTrash, faClock, faLandmark, faCalendarAlt, faDownload, faSpinner, faTimesCircle, faCheckCircle, faFileArchive, faFilePdf, faFileImage, faUser, faBook, faCheck, faBuilding } from '@fortawesome/free-solid-svg-icons';
+import { faTachometerAlt, faEnvelope, faTicketAlt, faTasks, faArrowsAlt, faTimes, faEye, faEdit, faTrash, faClock, faLandmark, faCalendarAlt, faDownload, faSpinner, faTimesCircle, faCheckCircle, faFileArchive, faFilePdf, faFileImage, faUser, faBook, faCheck, faBuilding, faCodeBranch } from '@fortawesome/free-solid-svg-icons';
 
 // Components
 import Breadcrumb from '../../../../components/Backend/UI/Breadcrumb/Breadcrumb';
@@ -65,10 +65,10 @@ class Index extends Component {
                         lat: agency.position.lat,
                         lng: agency.position.lng,
                         action: <div className="text-center">
-                            <View title={'Agency details: ' + agency.name} content={viewContent}>
+                            <View title={'Branch details: ' + agency.name} content={viewContent}>
                                 <FontAwesomeIcon icon={faEye} className="text-green mr-2" fixedWidth />
                             </View>
-                            <View title={'Agency edit: ' + agency.name} content={editContent}>
+                            <View title={'Branch edit: ' + agency.name} content={editContent}>
                                 <FontAwesomeIcon icon={faEdit} className="text-brokenblue" fixedWidth />
                             </View>
                             <Delete deleteAction={() => this.props.delete(agency.id)}><FontAwesomeIcon icon={faTrash} className="text-red mr-2" fixedWidth /></Delete>
@@ -79,8 +79,9 @@ class Index extends Component {
                 content = (
                     <>
                         <Row>
-                            <List array={data} data={JSON.stringify(agencies)} bordered add="Add Agency" content={<Add />} icon={faBuilding} title="Agencies" className="bg-white shadow-sm"
+                            <List array={data} data={JSON.stringify(agencies)} bordered add="Add Branch" content={<Add />} icon={faCodeBranch} title="Branches" className="bg-white shadow-sm"
                                 fields={[
+                                    { name: 'City', key: 'city' },
                                     { name: 'Name', key: 'name' },
                                     { name: 'Latitude', key: 'lat' },
                                     { name: 'Longitude', key: 'lng' },
@@ -97,9 +98,9 @@ class Index extends Component {
         return (
             <>
                 <div className="bg-white py-4 pl-5 pr-4 position-relative">
-                    <Breadcrumb main="Agencies" icon={faBuilding} />
-                    <SpecialTitle user icon={faBuilding}>Admin panel</SpecialTitle>
-                    <Subtitle user>Agencies</Subtitle>
+                    <Breadcrumb main="Branches" icon={faCodeBranch} />
+                    <SpecialTitle user icon={faCodeBranch}>Admin panel</SpecialTitle>
+                    <Subtitle user>Branches</Subtitle>
                 </div>
                 <div className="p-4 pb-0">
                     {errors}

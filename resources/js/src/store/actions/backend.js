@@ -355,6 +355,273 @@ export const deleteEmployees = id => async dispatch => {
 
 
 
+export const companiesReset = () => ({ type: actionTypes.COMPANIES_RESET });
+const companiesStart = () => ({ type: actionTypes.COMPANIES_START });
+const companiesSuccess = data => ({ type: actionTypes.COMPANIES_SUCCESS, ...data });
+const companiesFail = error => ({ type: actionTypes.COMPANIES_FAIL, error });
+export const getCompanies = () => async dispatch => {
+    dispatch(companiesStart());
+
+    try {
+        const token = localStorage.getItem('token');
+        const res = await fetch(prefix + 'admin/companies', {
+            headers: {
+                Authorization: token
+            }
+        });
+        const resData = await res.json();
+        dispatch(companiesSuccess(resData));
+    } catch (error) {
+        console.log(error);
+        dispatch(companiesFail(error));
+    }
+};
+
+export const postCompanies = data => async dispatch => {
+    dispatch(companiesStart());
+
+    try {
+        const token = localStorage.getItem('token');
+        const form = new FormData(data);
+        const res = await fetch(prefix + 'admin/companies', {
+            method: 'POST',
+            body: form,
+            headers: {
+                Authorization: token
+            }
+        });
+        const resData = await res.json();
+        if (res.status === 422) throw new Error(Object.values(resData.errors).join('\n'));
+        else if (res.status !== 200 && res.status !== 201) throw new Error(resData.error.message);
+        dispatch(companiesSuccess(resData));
+    } catch (error) {
+        console.log(error);
+        dispatch(companiesFail(error));
+    }
+};
+
+export const patchCompanies = (id, data) => async dispatch => {
+    dispatch(companiesStart());
+
+    try {
+        const token = localStorage.getItem('token');
+        const res = await fetch(prefix + 'admin/companies/' + id, {
+            method: 'PATCH',
+            body: JSON.stringify(data),
+            headers: {
+                Authorization: token,
+                'Content-Type': 'application/json'
+            }
+        });
+        const resData = await res.json();
+        if (res.status === 422) throw new Error(Object.values(resData.errors).join('\n'));
+        dispatch(companiesSuccess(resData));
+    } catch (error) {
+        console.log(error);
+        dispatch(companiesFail(error));
+    }
+};
+
+export const deleteCompanies = id => async dispatch => {
+    dispatch(companiesStart());
+
+    try {
+        const token = localStorage.getItem('token');
+        const res = await fetch(prefix + 'admin/companies/' + id, {
+            method: 'DELETE',
+            headers: {
+                Authorization: token
+            }
+        });
+        const resData = await res.json();
+        if (res.status === 422) throw new Error(Object.values(resData.errors).join('\n'));
+        dispatch(companiesSuccess(resData));
+    } catch (error) {
+        console.log(error);
+        dispatch(companiesFail(error));
+    }
+};
+
+
+
+export const countriesReset = () => ({ type: actionTypes.COUNTRIES_RESET });
+const countriesStart = () => ({ type: actionTypes.COMPANIES_START });
+const countriesSuccess = data => ({ type: actionTypes.COUNTRIES_SUCCESS, ...data });
+const countriesFail = error => ({ type: actionTypes.COUNTRIES_FAIL, error });
+export const getCountries = () => async dispatch => {
+    dispatch(countriesStart());
+
+    try {
+        const token = localStorage.getItem('token');
+        const res = await fetch(prefix + 'admin/countries', {
+            headers: {
+                Authorization: token
+            }
+        });
+        const resData = await res.json();
+        dispatch(countriesSuccess(resData));
+    } catch (error) {
+        console.log(error);
+        dispatch(countriesFail(error));
+    }
+};
+
+export const postCountries = data => async dispatch => {
+    dispatch(countriesStart());
+
+    try {
+        const token = localStorage.getItem('token');
+        const form = new FormData(data);
+        const res = await fetch(prefix + 'admin/countries', {
+            method: 'POST',
+            body: form,
+            headers: {
+                Authorization: token
+            }
+        });
+        const resData = await res.json();
+        if (res.status === 422) throw new Error(Object.values(resData.errors).join('\n'));
+        else if (res.status !== 200 && res.status !== 201) throw new Error(resData.error.message);
+        dispatch(countriesSuccess(resData));
+    } catch (error) {
+        console.log(error);
+        dispatch(countriesFail(error));
+    }
+};
+
+export const patchCountries = (id, data) => async dispatch => {
+    dispatch(countriesStart());
+
+    try {
+        const token = localStorage.getItem('token');
+        const res = await fetch(prefix + 'admin/countries/' + id, {
+            method: 'PATCH',
+            body: JSON.stringify(data),
+            headers: {
+                Authorization: token,
+                'Content-Type': 'application/json'
+            }
+        });
+        const resData = await res.json();
+        if (res.status === 422) throw new Error(Object.values(resData.errors).join('\n'));
+        dispatch(countriesSuccess(resData));
+    } catch (error) {
+        console.log(error);
+        dispatch(countriesFail(error));
+    }
+};
+
+export const deleteCountries = id => async dispatch => {
+    dispatch(countriesStart());
+
+    try {
+        const token = localStorage.getItem('token');
+        const res = await fetch(prefix + 'admin/countries/' + id, {
+            method: 'DELETE',
+            headers: {
+                Authorization: token
+            }
+        });
+        const resData = await res.json();
+        if (res.status === 422) throw new Error(Object.values(resData.errors).join('\n'));
+        dispatch(countriesSuccess(resData));
+    } catch (error) {
+        console.log(error);
+        dispatch(countriesFail(error));
+    }
+};
+
+
+
+export const citiesReset = () => ({ type: actionTypes.CITIES_RESET });
+const citiesStart = () => ({ type: actionTypes.CITIES_START });
+const citiesSuccess = data => ({ type: actionTypes.CITIES_SUCCESS, ...data });
+const citiesFail = error => ({ type: actionTypes.CITIES_FAIL, error });
+export const getCities = () => async dispatch => {
+    dispatch(citiesStart());
+
+    try {
+        const token = localStorage.getItem('token');
+        const res = await fetch(prefix + 'admin/cities', {
+            headers: {
+                Authorization: token
+            }
+        });
+        const resData = await res.json();
+        dispatch(citiesSuccess(resData));
+    } catch (error) {
+        console.log(error);
+        dispatch(citiesFail(error));
+    }
+};
+
+export const postCities = data => async dispatch => {
+    dispatch(citiesStart());
+
+    try {
+        const token = localStorage.getItem('token');
+        const form = new FormData(data);
+        const res = await fetch(prefix + 'admin/cities', {
+            method: 'POST',
+            body: form,
+            headers: {
+                Authorization: token
+            }
+        });
+        const resData = await res.json();
+        if (res.status === 422) throw new Error(Object.values(resData.errors).join('\n'));
+        else if (res.status !== 200 && res.status !== 201) throw new Error(resData.error.message);
+        dispatch(citiesSuccess(resData));
+    } catch (error) {
+        console.log(error);
+        dispatch(citiesFail(error));
+    }
+};
+
+export const patchCities = (id, data) => async dispatch => {
+    dispatch(citiesStart());
+
+    try {
+        const token = localStorage.getItem('token');
+        const res = await fetch(prefix + 'admin/cities/' + id, {
+            method: 'PATCH',
+            body: JSON.stringify(data),
+            headers: {
+                Authorization: token,
+                'Content-Type': 'application/json'
+            }
+        });
+        const resData = await res.json();
+        if (res.status === 422) throw new Error(Object.values(resData.errors).join('\n'));
+        dispatch(citiesSuccess(resData));
+    } catch (error) {
+        console.log(error);
+        dispatch(citiesFail(error));
+    }
+};
+
+export const deleteCities = id => async dispatch => {
+    dispatch(citiesStart());
+
+    try {
+        const token = localStorage.getItem('token');
+        const res = await fetch(prefix + 'admin/cities/' + id, {
+            method: 'DELETE',
+            headers: {
+                Authorization: token
+            }
+        });
+        const resData = await res.json();
+        if (res.status === 422) throw new Error(Object.values(resData.errors).join('\n'));
+        dispatch(citiesSuccess(resData));
+    } catch (error) {
+        console.log(error);
+        dispatch(citiesFail(error));
+    }
+};
+
+
+
 export const eventTypesReset = () => ({ type: actionTypes.EVENT_TYPES_RESET });
 const eventTypesStart = () => ({ type: actionTypes.EVENT_TYPES_START });
 const eventTypesSuccess = data => ({ type: actionTypes.EVENT_TYPES_SUCCESS, ...data });

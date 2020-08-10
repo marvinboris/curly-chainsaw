@@ -1,6 +1,7 @@
 <?php
 
 use App\Agency;
+use App\City;
 use Illuminate\Database\Seeder;
 
 class AgenciesTableSeeder extends Seeder
@@ -14,6 +15,7 @@ class AgenciesTableSeeder extends Seeder
     {
         $agencies = [
             [
+                'city_id' => City::first()->id,
                 'name' => 'Direction Générale',
                 'position' => json_encode([
                     'lat' => 4.392967,

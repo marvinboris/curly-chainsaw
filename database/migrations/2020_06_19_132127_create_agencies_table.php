@@ -15,6 +15,7 @@ class CreateAgenciesTable extends Migration
     {
         Schema::create('agencies', function (Blueprint $table) {
             $table->id();
+            $table->integer('city_id')->unsigned()->index();
             $table->string('name');
             $table->text('position');
             $table->float('radius');

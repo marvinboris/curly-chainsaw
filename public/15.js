@@ -37,10 +37,10 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./resources/js/src/containers/Backend/User/Tasks/Actions/Add.js":
-/*!***********************************************************************!*\
-  !*** ./resources/js/src/containers/Backend/User/Tasks/Actions/Add.js ***!
-  \***********************************************************************/
+/***/ "./resources/js/src/containers/Backend/Admin/Tasks/Actions/Add.js":
+/*!************************************************************************!*\
+  !*** ./resources/js/src/containers/Backend/Admin/Tasks/Actions/Add.js ***!
+  \************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -275,10 +275,10 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
 
 /***/ }),
 
-/***/ "./resources/js/src/containers/Backend/User/Tasks/Actions/Edit.js":
-/*!************************************************************************!*\
-  !*** ./resources/js/src/containers/Backend/User/Tasks/Actions/Edit.js ***!
-  \************************************************************************/
+/***/ "./resources/js/src/containers/Backend/Admin/Tasks/Actions/Edit.js":
+/*!*************************************************************************!*\
+  !*** ./resources/js/src/containers/Backend/Admin/Tasks/Actions/Edit.js ***!
+  \*************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -527,10 +527,10 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
 
 /***/ }),
 
-/***/ "./resources/js/src/containers/Backend/User/Tasks/Actions/View.js":
-/*!************************************************************************!*\
-  !*** ./resources/js/src/containers/Backend/User/Tasks/Actions/View.js ***!
-  \************************************************************************/
+/***/ "./resources/js/src/containers/Backend/Admin/Tasks/Actions/View.js":
+/*!*************************************************************************!*\
+  !*** ./resources/js/src/containers/Backend/Admin/Tasks/Actions/View.js ***!
+  \*************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -682,10 +682,10 @@ var I = function I(_ref) {
 
 /***/ }),
 
-/***/ "./resources/js/src/containers/Backend/User/Tasks/index.js":
-/*!*****************************************************************!*\
-  !*** ./resources/js/src/containers/Backend/User/Tasks/index.js ***!
-  \*****************************************************************/
+/***/ "./resources/js/src/containers/Backend/Admin/Tasks/index.js":
+/*!******************************************************************!*\
+  !*** ./resources/js/src/containers/Backend/Admin/Tasks/index.js ***!
+  \******************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -709,9 +709,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_Backend_UI_Delete_Delete__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../../../../components/Backend/UI/Delete/Delete */ "./resources/js/src/components/Backend/UI/Delete/Delete.js");
 /* harmony import */ var _components_Backend_UI_View_View__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ../../../../components/Backend/UI/View/View */ "./resources/js/src/components/Backend/UI/View/View.js");
 /* harmony import */ var _components_Backend_UI_Counter_Counter__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ../../../../components/Backend/UI/Counter/Counter */ "./resources/js/src/components/Backend/UI/Counter/Counter.js");
-/* harmony import */ var _Actions_Edit__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./Actions/Edit */ "./resources/js/src/containers/Backend/User/Tasks/Actions/Edit.js");
-/* harmony import */ var _Actions_Add__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./Actions/Add */ "./resources/js/src/containers/Backend/User/Tasks/Actions/Add.js");
-/* harmony import */ var _Actions_View__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./Actions/View */ "./resources/js/src/containers/Backend/User/Tasks/Actions/View.js");
+/* harmony import */ var _Actions_Edit__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./Actions/Edit */ "./resources/js/src/containers/Backend/Admin/Tasks/Actions/Edit.js");
+/* harmony import */ var _Actions_Add__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./Actions/Add */ "./resources/js/src/containers/Backend/Admin/Tasks/Actions/Add.js");
+/* harmony import */ var _Actions_View__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./Actions/View */ "./resources/js/src/containers/Backend/Admin/Tasks/Actions/View.js");
 /* harmony import */ var _store_actions__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ../../../../store/actions */ "./resources/js/src/store/actions/index.js");
 /* harmony import */ var _shared_utility__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ../../../../shared/utility */ "./resources/js/src/shared/utility.js");
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
@@ -875,7 +875,7 @@ var Index = /*#__PURE__*/function (_Component) {
             add: "Add Task",
             content: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Actions_Add__WEBPACK_IMPORTED_MODULE_18__["default"], null),
             icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_5__["faTasks"],
-            title: "My Tasks",
+            title: "Tasks",
             className: "bg-white shadow-sm",
             fields: [{
               name: 'Creation Date',
@@ -914,14 +914,14 @@ var Index = /*#__PURE__*/function (_Component) {
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "bg-white py-4 pl-5 pr-4 position-relative"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Backend_UI_Breadcrumb_Breadcrumb__WEBPACK_IMPORTED_MODULE_6__["default"], {
-        main: "My Tasks",
+        main: "Tasks",
         icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_5__["faTasks"]
       }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_UI_Titles_SpecialTitle_SpecialTitle__WEBPACK_IMPORTED_MODULE_7__["default"], {
         user: true,
         icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_5__["faTasks"]
-      }, "Employee panel"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_UI_Titles_Subtitle_Subtitle__WEBPACK_IMPORTED_MODULE_8__["default"], {
+      }, "Admin panel"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_UI_Titles_Subtitle_Subtitle__WEBPACK_IMPORTED_MODULE_8__["default"], {
         user: true
-      }, "My Tasks")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, "Tasks")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "p-4 pb-0"
       }, errors, feedback, content));
     }

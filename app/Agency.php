@@ -7,8 +7,13 @@ use Illuminate\Database\Eloquent\Model;
 class Agency extends Model
 {
     protected $fillable = [
-        'name', 'position', 'radius'
+        'city_id', 'name', 'position', 'radius'
     ];
+
+    public function city()
+    {
+        return $this->belongsTo('App\City');
+    }
 
     public function users()
     {

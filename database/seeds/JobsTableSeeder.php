@@ -33,6 +33,10 @@ class JobsTableSeeder extends Seeder
                 'name' => 'I.T. Manager',
                 'hours_per_week' => 50
             ],
+            [
+                'name' => 'Technical Support',
+                'hours_per_week' => 50
+            ],
         ];
 
         foreach ($types as $type) {

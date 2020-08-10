@@ -25,10 +25,19 @@ class EmployeeController extends Controller
     private function get()
     {
         $employees = [];
-        foreach (User::all() as $employee) {
-            $employees[] = array_merge($employee->toArray(), [
-                'job' => $employee->job->name,
-            ]);
+        foreach (request()->user()->companies as $company) {
+            foreach ($company->countries as $country) {
+                foreach ($country->cities as $city) {
+                    foreach ($city->agencies as $agency) {
+                        foreach ($agency->users as $employee) {
+                            $employees[] = array_merge($employee->toArray(), [
+                                'job' => $employee->job->name,
+                                'agency' => $employee->agency->name . ', ' . $employee->agency->city->name . ', ' . $employee->agency->city->country->name . ', ' . $employee->agency->city->country->company->name
+                            ]);
+                        }
+                    }
+                }
+            }
         }
 
         return $employees;
@@ -40,7 +49,19 @@ class EmployeeController extends Controller
     {
         $employees = $this->get();
 
-        $agencies = Agency::all();
+        $agencies = [];
+        foreach (request()->user()->companies as $company) {
+            foreach ($company->countries as $country) {
+                foreach ($country->cities as $city) {
+                    foreach ($city->agencies as $agency) {
+                        $agencies[] = [
+                            'name' => $agency->name . ', ' . $agency->city->name . ', ' . $agency->city->country->name . ', ' . $agency->city->country->company->name
+                        ];
+                    }
+                }
+            }
+        }
+
         $jobs = Job::all();
 
         return response()->json([

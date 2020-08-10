@@ -1,7 +1,7 @@
 import React from 'react';
 import { Col, Badge, ButtonGroup, Button, Collapse } from 'reactstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTachometerAlt, faUserTie, faCalendarAlt, faEnvelope, faTasks, faCog, faEdit, faComments, faBriefcase, faBell, faBuilding, faCalendarWeek, faUserTag, faLayerGroup } from '@fortawesome/free-solid-svg-icons';
+import { faTachometerAlt, faUserTie, faCalendarAlt, faEnvelope, faTasks, faCog, faEdit, faComments, faBriefcase, faBell, faBuilding, faCalendarWeek, faUserTag, faLayerGroup, faFlag, faCity, faCodeBranch } from '@fortawesome/free-solid-svg-icons';
 import { faCheckCircle } from '@fortawesome/free-regular-svg-icons';
 
 import SideDrawerItem from './SideDrawerItem/SideDrawerItem';
@@ -61,7 +61,10 @@ export default ({ data, role = 'user', messages = [], tasks = [], toggle, isOpen
         case 'admin':
             sideDrawerItems = <>
                 <SideDrawerItem id="Dashboard" sideDrawerToggle={toggle} select={selectItem} selected={selectedItem} icon={faTachometerAlt} href="/admin/dashboard">Dashboard</SideDrawerItem>
-                <SideDrawerItem id="Agencies" sideDrawerToggle={toggle} select={selectItem} selected={selectedItem} icon={faBuilding} href="/admin/agencies">Agencies</SideDrawerItem>
+                <SideDrawerItem id="Companies" sideDrawerToggle={toggle} select={selectItem} selected={selectedItem} icon={faBuilding} href="/admin/companies">Companies</SideDrawerItem>
+                <SideDrawerItem id="Countries" sideDrawerToggle={toggle} select={selectItem} selected={selectedItem} icon={faFlag} href="/admin/countries">Countries</SideDrawerItem>
+                <SideDrawerItem id="Cities" sideDrawerToggle={toggle} select={selectItem} selected={selectedItem} icon={faCity} href="/admin/cities">Cities</SideDrawerItem>
+                <SideDrawerItem id="Branches" sideDrawerToggle={toggle} select={selectItem} selected={selectedItem} icon={faCodeBranch} href="/admin/agencies">Branches</SideDrawerItem>
                 <SideDrawerItem id="Employees" sideDrawerToggle={toggle} select={selectItem} selected={selectedItem} icon={faUserTie} href="/admin/employees">Employees</SideDrawerItem>
                 <SideDrawerItem id="Event Types" sideDrawerToggle={toggle} select={selectItem} selected={selectedItem} icon={faCalendarWeek} href="/admin/event-types">Event Types</SideDrawerItem>
                 <SideDrawerItem id="Jobs" sideDrawerToggle={toggle} select={selectItem} selected={selectedItem} icon={faUserTag} href="/admin/jobs">Jobs</SideDrawerItem>

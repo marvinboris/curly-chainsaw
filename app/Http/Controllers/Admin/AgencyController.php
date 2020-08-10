@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 class AgencyController extends Controller
 {
     private $rules = [
+        'city_id' => 'required|exists:cities,id',
         'name' => 'required|string',
         'latitude' => 'required|numeric',
         'longitude' => 'required|numeric',
@@ -19,12 +20,19 @@ class AgencyController extends Controller
     private function get()
     {
         $agencies = [];
-        foreach (Agency::get() as $agency) {
-            $agencies[] = array_merge($agency->toArray(), [
-                'users' => $agency->users,
-                'latitude' => $agency->position->lat,
-                'longitude' => $agency->position->lng,
-            ]);
+        foreach (request()->user()->companies as $company) {
+            foreach ($company->countries as $country) {
+                foreach ($country->cities as $city) {
+                    foreach ($city->agencies as $agency) {
+                        $agencies[] = array_merge($agency->toArray(), [
+                            'users' => $agency->users,
+                            'latitude' => $agency->position->lat,
+                            'longitude' => $agency->position->lng,
+                            'city' => $agency->city->name . ', ' . $agency->city->country->name . ', ' . $agency->city->country->company->name
+                        ]);
+                    }
+                }
+            }
         }
 
         return $agencies;
@@ -35,9 +43,21 @@ class AgencyController extends Controller
     public function index()
     {
         $agencies = $this->get();
+        $cities = [];
+        foreach (request()->user()->companies as $company) {
+            foreach ($company->countries as $country) {
+                foreach ($country->cities as $city) {
+                    $cities[] = [
+                        'name' => $city->name . ', ' . $city->country->name . ', ' . $city->country->company->name,
+                        'country' => $city->country->name . ', ' . $city->country->company->name
+                    ];
+                }
+            }
+        }
 
         return response()->json([
-            'agencies' => $agencies
+            'agencies' => $agencies,
+            'cities' => $cities,
         ]);
     }
 

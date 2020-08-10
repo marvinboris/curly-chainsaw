@@ -33,6 +33,12 @@ const asyncAdminEmployees = asyncComponent(() => import('./containers/Backend/Ad
 
 const asyncAdminTasks = asyncComponent(() => import('./containers/Backend/Admin/Tasks'));
 
+const asyncAdminCompanies = asyncComponent(() => import('./containers/Backend/Admin/Companies'));
+
+const asyncAdminCountries = asyncComponent(() => import('./containers/Backend/Admin/Countries'));
+
+const asyncAdminCities = asyncComponent(() => import('./containers/Backend/Admin/Cities'));
+
 const asyncAdminAgencies = asyncComponent(() => import('./containers/Backend/Admin/Agencies'));
 
 const asyncAdminEventTypes = asyncComponent(() => import('./containers/Backend/Admin/EventTypes'));
@@ -85,6 +91,9 @@ class App extends Component {
                     <Route path="/admin/dashboard" component={asyncAdminDashboard} />
                     <Route path="/admin/tasks" component={asyncAdminTasks} />
                     <Route path="/admin/employees" component={asyncAdminEmployees} />
+                    <Route path="/admin/companies" component={asyncAdminCompanies} />
+                    <Route path="/admin/countries" component={asyncAdminCountries} />
+                    <Route path="/admin/cities" component={asyncAdminCities} />
                     <Route path="/admin/agencies" component={asyncAdminAgencies} />
                     <Route path="/admin/event-types" component={asyncAdminEventTypes} />
                     <Route path="/admin/jobs" component={asyncAdminJobs} />

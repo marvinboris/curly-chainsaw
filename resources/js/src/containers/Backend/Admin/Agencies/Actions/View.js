@@ -15,10 +15,11 @@ export default ({ agency }) => {
             <Col xs={12}>
                 <div className="text-green text-700 mb-2">
                     <FontAwesomeIcon icon={faUser} className="mr-2" fixedWidth />
-                        Agency details
+                        Branch details
                     </div>
                 <hr />
             </Col>
+            <I label="City">{agency.city}</I>
             <I label="Name">{agency.name}</I>
             <I label="Radius in meters">{agency.radius}</I>
             <I label="Latitude">{agency.latitude}</I>

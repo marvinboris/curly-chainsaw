@@ -29,7 +29,10 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function () {
         Route::get('dashboard', 'DashboardController@index')->name('dashboard');
 
         Route::apiResources([
-            'tasks' => 'TasksController',
+            'tasks' => 'TaskController',
+            'companies' => 'CompanyController',
+            'countries' => 'CountryController',
+            'cities' => 'CityController',
             'employees' => 'EmployeeController',
             'agencies' => 'AgencyController',
             'event-types' => 'EventTypeController',
