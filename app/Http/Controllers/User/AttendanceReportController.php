@@ -4,6 +4,7 @@ namespace App\Http\Controllers\User;
 
 use App\Cycle;
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\UtilController;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Stevebauman\Location\Location;
@@ -127,6 +128,10 @@ class AttendanceReportController extends Controller
     {
         $user = request()->user();
         $position = json_decode(request()->position);
+
+        return response()->json([
+            'message' => UtilController::message(request()->position),
+        ]);
 
         $lastCycle = $user->cycles()->latest()->first();
         if (!$lastCycle || $lastCycle->created_at->timestamp < $lastCycle->updated_at->timestamp) Cycle::create([
