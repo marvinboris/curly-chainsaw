@@ -56,7 +56,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 
 
-var position = [51.505, -0.09];
 
 var Add = /*#__PURE__*/function (_Component) {
   _inherits(Add, _Component);
@@ -75,11 +74,46 @@ var Add = /*#__PURE__*/function (_Component) {
     _this = _super.call.apply(_super, [this].concat(args));
 
     _defineProperty(_assertThisInitialized(_this), "state", {
+      company_id: '',
+      country_id: '',
       city_id: '',
+      user_id: '',
       name: '',
       latitude: '',
       longitude: '',
-      radius: ''
+      radius: '',
+      hasLocation: false,
+      latlng: {
+        lat: 51.505,
+        lng: -0.09
+      }
+    });
+
+    _defineProperty(_assertThisInitialized(_this), "getPosition", function (position) {
+      var _position$coords = position.coords,
+          lat = _position$coords.latitude,
+          lng = _position$coords.longitude;
+
+      _this.setState({
+        latlng: {
+          lat: lat,
+          lng: lng
+        }
+      });
+    });
+
+    _defineProperty(_assertThisInitialized(_this), "mapRef", /*#__PURE__*/Object(react__WEBPACK_IMPORTED_MODULE_0__["createRef"])());
+
+    _defineProperty(_assertThisInitialized(_this), "handleClick", function () {
+      var map = _this.mapRef.current;
+      if (map != null) map.leafletElement.locate();
+    });
+
+    _defineProperty(_assertThisInitialized(_this), "handleLocationFound", function (e) {
+      _this.setState({
+        hasLocation: true,
+        latlng: e.latlng
+      });
     });
 
     _defineProperty(_assertThisInitialized(_this), "inputChangedHandler", function (e) {
@@ -100,15 +134,57 @@ var Add = /*#__PURE__*/function (_Component) {
   }
 
   _createClass(Add, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      if (navigator.geolocation) navigator.geolocation.getCurrentPosition(this.getPosition);
+    }
+  }, {
     key: "render",
     value: function render() {
       var _this$state = this.state,
+          company_id = _this$state.company_id,
+          country_id = _this$state.country_id,
           city_id = _this$state.city_id,
+          user_id = _this$state.user_id,
           name = _this$state.name,
           latitude = _this$state.latitude,
           longitude = _this$state.longitude,
           radius = _this$state.radius;
-      var cities = this.props.backend.agencies.cities;
+      var companies = this.props.backend.agencies.companies;
+      var marker = this.state.hasLocation ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_leaflet__WEBPACK_IMPORTED_MODULE_5__["Marker"], {
+        position: this.state.latlng
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_leaflet__WEBPACK_IMPORTED_MODULE_5__["Popup"], null, "You are here")) : null;
+      var countries = [];
+      var cities = [];
+      var users = [];
+      if (company_id !== '') countries = companies.find(function (_ref) {
+        var id = _ref.id;
+        return +company_id === +id;
+      }).countries;
+      if (country_id !== '') cities = countries.find(function (_ref2) {
+        var id = _ref2.id;
+        return +country_id === +id;
+      }).cities;
+      if (user_id !== '') users = cities.find(function (_ref3) {
+        var id = _ref3.id;
+        return +city_id === +id;
+      }).users;
+      var companiesOptions = companies.sort(function (a, b) {
+        return a.name > b.name;
+      }).map(function (company) {
+        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
+          key: JSON.stringify(company),
+          value: company.id
+        }, company.name);
+      });
+      var countriesOptions = countries.sort(function (a, b) {
+        return a.name > b.name;
+      }).map(function (country) {
+        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
+          key: JSON.stringify(country),
+          value: country.id
+        }, country.name);
+      });
       var citiesOptions = cities.sort(function (a, b) {
         return a.name > b.name;
       }).map(function (city) {
@@ -117,22 +193,66 @@ var Add = /*#__PURE__*/function (_Component) {
           value: city.id
         }, city.name);
       });
+      var usersOptions = users.sort(function (a, b) {
+        return a.first_name > b.first_name;
+      }).map(function (user) {
+        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
+          key: JSON.stringify(user),
+          value: user.id
+        }, "".concat(user.first_name, " ").concat(user.last_name));
+      });
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_1__["Form"], {
         onSubmit: this.submitHandler,
         className: "row"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Backend_UI_Input_Input__WEBPACK_IMPORTED_MODULE_6__["default"], {
         className: "col-lg-6",
         type: "select",
-        name: "city_id",
-        placeholder: "Country",
+        name: "company_id",
+        placeholder: "Company",
         onChange: this.inputChangedHandler,
         icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_4__["faBuilding"],
         validation: {
           required: true
         },
         required: true,
+        value: company_id
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", null, "Select a company"), companiesOptions), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Backend_UI_Input_Input__WEBPACK_IMPORTED_MODULE_6__["default"], {
+        className: "col-lg-6",
+        type: "select",
+        name: "country_id",
+        placeholder: "Country",
+        onChange: this.inputChangedHandler,
+        icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_4__["faFlag"],
+        validation: {
+          required: true
+        },
+        required: true,
+        value: country_id
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", null, "Select a country"), countriesOptions), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Backend_UI_Input_Input__WEBPACK_IMPORTED_MODULE_6__["default"], {
+        className: "col-lg-6",
+        type: "select",
+        name: "city_id",
+        placeholder: "City",
+        onChange: this.inputChangedHandler,
+        icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_4__["faCity"],
+        validation: {
+          required: true
+        },
+        required: true,
         value: city_id
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", null, "Select a city"), citiesOptions), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Backend_UI_Input_Input__WEBPACK_IMPORTED_MODULE_6__["default"], {
+        className: "col-lg-6",
+        type: "select",
+        name: "user_id",
+        placeholder: "Representative",
+        onChange: this.inputChangedHandler,
+        icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_4__["faCity"],
+        validation: {
+          required: true
+        },
+        required: true,
+        value: user_id
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", null, "Select representative"), usersOptions), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Backend_UI_Input_Input__WEBPACK_IMPORTED_MODULE_6__["default"], {
         className: "col-lg-6",
         type: "text",
         name: "name",
@@ -183,14 +303,16 @@ var Add = /*#__PURE__*/function (_Component) {
       }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_1__["FormGroup"], {
         className: "col-12"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_leaflet__WEBPACK_IMPORTED_MODULE_5__["Map"], {
-        center: position,
+        center: this.state.latlng,
+        length: 4,
+        onClick: this.handleClick,
+        onLocationfound: this.handleLocationFound,
+        ref: this.mapRef,
         zoom: 13
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_leaflet__WEBPACK_IMPORTED_MODULE_5__["TileLayer"], {
         url: "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
         attribution: "\xA9 <a href=\"http://osm.org/copyright\">OpenStreetMap</a> contributors"
-      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_leaflet__WEBPACK_IMPORTED_MODULE_5__["Marker"], {
-        position: position
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_leaflet__WEBPACK_IMPORTED_MODULE_5__["Popup"], null, "A pretty CSS3 popup.", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), "Easily customizable.")))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_1__["FormGroup"], {
+      }), marker)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_1__["FormGroup"], {
         className: "col-12"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_UI_Button_BetweenButton_BetweenButton__WEBPACK_IMPORTED_MODULE_7__["default"], {
         color: "brokenblue",
@@ -302,6 +424,8 @@ var Edit = /*#__PURE__*/function (_Component) {
     _this = _super.call.apply(_super, [this].concat(args));
 
     _defineProperty(_assertThisInitialized(_this), "state", {
+      company_id: '',
+      country_id: '',
       city_id: '',
       name: '',
       latitude: '',
@@ -334,12 +458,40 @@ var Edit = /*#__PURE__*/function (_Component) {
     key: "render",
     value: function render() {
       var _this$state = this.state,
+          company_id = _this$state.company_id,
+          country_id = _this$state.country_id,
           city_id = _this$state.city_id,
           name = _this$state.name,
           latitude = _this$state.latitude,
           longitude = _this$state.longitude,
           radius = _this$state.radius;
-      var cities = this.props.backend.agencies.cities;
+      var companies = this.props.backend.agencies.companies;
+      var countries = [];
+      var cities = [];
+      if (company_id !== '') countries = companies.find(function (_ref) {
+        var id = _ref.id;
+        return +company_id === +id;
+      }).countries;
+      if (country_id !== '') cities = countries.find(function (_ref2) {
+        var id = _ref2.id;
+        return +country_id === +id;
+      }).cities;
+      var companiesOptions = companies.sort(function (a, b) {
+        return a.name > b.name;
+      }).map(function (company) {
+        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
+          key: JSON.stringify(company),
+          value: company.id
+        }, company.name);
+      });
+      var countriesOptions = countries.sort(function (a, b) {
+        return a.name > b.name;
+      }).map(function (country) {
+        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
+          key: JSON.stringify(country),
+          value: country.id
+        }, country.name);
+      });
       var citiesOptions = cities.sort(function (a, b) {
         return a.name > b.name;
       }).map(function (city) {
@@ -354,10 +506,34 @@ var Edit = /*#__PURE__*/function (_Component) {
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Backend_UI_Input_Input__WEBPACK_IMPORTED_MODULE_8__["default"], {
         className: "col-lg-6",
         type: "select",
+        name: "company_id",
+        placeholder: "Company",
+        onChange: this.inputChangedHandler,
+        icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_3__["faBuilding"],
+        validation: {
+          required: true
+        },
+        required: true,
+        value: company_id
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", null, "Select a company"), companiesOptions), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Backend_UI_Input_Input__WEBPACK_IMPORTED_MODULE_8__["default"], {
+        className: "col-lg-6",
+        type: "select",
+        name: "country_id",
+        placeholder: "Country",
+        onChange: this.inputChangedHandler,
+        icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_3__["faFlag"],
+        validation: {
+          required: true
+        },
+        required: true,
+        value: country_id
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", null, "Select a country"), countriesOptions), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Backend_UI_Input_Input__WEBPACK_IMPORTED_MODULE_8__["default"], {
+        className: "col-lg-6",
+        type: "select",
         name: "city_id",
         placeholder: "Country",
         onChange: this.inputChangedHandler,
-        icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_3__["faBuilding"],
+        icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_3__["faCity"],
         validation: {
           required: true
         },
@@ -493,6 +669,10 @@ var I = function I(_ref) {
     className: "mr-2",
     fixedWidth: true
   }), "Branch details"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("hr", null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(I, {
+    label: "Company"
+  }, agency.company), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(I, {
+    label: "Country"
+  }, agency.country), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(I, {
     label: "City"
   }, agency.city), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(I, {
     label: "Name"
@@ -692,6 +872,15 @@ var Index = /*#__PURE__*/function (_Component) {
               name: 'City',
               key: 'city'
             }, {
+              name: 'Country',
+              key: 'country'
+            }, {
+              name: 'Company',
+              key: 'company'
+            }, {
+              name: 'Representative',
+              key: 'representative'
+            }, {
               name: 'Name',
               key: 'name'
             }, {
@@ -725,7 +914,7 @@ var Index = /*#__PURE__*/function (_Component) {
       }, "Admin panel"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_UI_Titles_Subtitle_Subtitle__WEBPACK_IMPORTED_MODULE_8__["default"], {
         user: true
       }, "Branches")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "p-4 pb-0"
+        className: "Agencies p-4 pb-0"
       }, errors, feedback, content));
     }
   }]);

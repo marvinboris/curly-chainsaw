@@ -19,6 +19,7 @@ export default ({ city }) => {
                     </div>
                 <hr />
             </Col>
+            <I label="Company">{city.company}</I>
             <I label="Country">{city.country}</I>
             <I label="Name">{city.name}</I>
             <I label="Creation Date">{convertDate(city.created_at)}</I>

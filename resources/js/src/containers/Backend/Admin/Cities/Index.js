@@ -76,6 +76,7 @@ class Index extends Component {
                             <List array={data} data={JSON.stringify(cities)} bordered add="Add City" content={<Add />} icon={faCity} title="Cities" className="bg-white shadow-sm"
                                 fields={[
                                     { name: 'Country', key: 'country' },
+                                    { name: 'Company', key: 'company' },
                                     { name: 'Name', key: 'name' },
                                     { name: 'Creation Date', key: 'created_at' },
                                     { name: 'Action', key: 'action', fixed: true }

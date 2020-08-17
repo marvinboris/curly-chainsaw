@@ -66,16 +66,20 @@ export const getAttendanceReport = () => async dispatch => {
     }
 };
 
-export const postClock = () => async dispatch => {
+export const postClock = position => async dispatch => {
     dispatch(attendanceReportStart());
 
     try {
+        const form = new FormData();
+        form.append('position', JSON.stringify(position));
+
         const token = localStorage.getItem('token');
         const res = await fetch(prefix + 'user/attendance-report/clock', {
             method: 'POST',
             headers: {
                 Authorization: token
-            }
+            },
+            body: form,
         });
         const resData = await res.json();
         if (res.status === 422) throw new Error(Object.values(resData.errors).join('\n'));

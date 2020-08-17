@@ -82,6 +82,9 @@ class Index extends Component {
                             <List array={data} data={JSON.stringify(agencies)} bordered add="Add Branch" content={<Add />} icon={faCodeBranch} title="Branches" className="bg-white shadow-sm"
                                 fields={[
                                     { name: 'City', key: 'city' },
+                                    { name: 'Country', key: 'country' },
+                                    { name: 'Company', key: 'company' },
+                                    { name: 'Representative', key: 'representative' },
                                     { name: 'Name', key: 'name' },
                                     { name: 'Latitude', key: 'lat' },
                                     { name: 'Longitude', key: 'lng' },
@@ -102,7 +105,7 @@ class Index extends Component {
                     <SpecialTitle user icon={faCodeBranch}>Admin panel</SpecialTitle>
                     <Subtitle user>Branches</Subtitle>
                 </div>
-                <div className="p-4 pb-0">
+                <div className="Agencies p-4 pb-0">
                     {errors}
                     {feedback}
                     {content}

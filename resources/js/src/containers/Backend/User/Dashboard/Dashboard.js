@@ -34,6 +34,8 @@ class Dashboard extends Component {
         tasks: null, attendanceReport: null, calendar: null, chatBox: null, messages: null,
         workTimeTracker: null,
 
+        position: null,
+
         interval: null,
     }
 
@@ -47,6 +49,8 @@ class Dashboard extends Component {
     }
 
     componentDidMount() {
+        if (navigator.geolocation) navigator.geolocation.getCurrentPosition(this.getPosition);
+
         this.props.get();
     }
 
@@ -98,6 +102,16 @@ class Dashboard extends Component {
     componentWillUnmount() {
         clearInterval(this.state.interval);
         this.props.reset();
+    }
+
+    getPosition = position => {
+        this.setState({ position: position.coords });
+    }
+
+    clock = () => {
+        const { position } = this.state;
+        if (position) this.props.onPostClock(this.state.position);
+        else alert('Please allow geolocation.');
     }
 
     render() {
@@ -178,7 +192,7 @@ class Dashboard extends Component {
                         children: <div className="d-inline-block text-300 text-small text-blue text-center">
                             <div className="pb-2">You need to Clock {status ? 'out' : 'in'}</div>
                             <div>
-                                <BetweenButton onClick={this.props.onPostClock} color={status ? "pink" : "green"} icon={status ? faTimes : faSignInAlt}>Clock {status ? 'Out' : 'In'}</BetweenButton>
+                                <BetweenButton onClick={this.clock} color={status ? "pink" : "green"} icon={status ? faTimes : faSignInAlt}>Clock {status ? 'Out' : 'In'}</BetweenButton>
                             </div>
                         </div>,
                         icon: faStopwatch,
@@ -380,7 +394,7 @@ const mapStateToProps = state => ({ ...state });
 const mapDispatchToProps = dispatch => ({
     get: () => dispatch(actions.getUserDashboard()),
     reset: () => dispatch(actions.dashboardReset()),
-    onPostClock: () => dispatch(actions.postClock()),
+    onPostClock: position => dispatch(actions.postClock(position)),
 });
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Dashboard));

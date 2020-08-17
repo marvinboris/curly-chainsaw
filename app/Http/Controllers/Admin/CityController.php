@@ -23,7 +23,9 @@ class CityController extends Controller
                 foreach ($country->cities as $city) {
                     $cities[] = array_merge($city->toArray(), [
                         'agencies' => $city->agencies,
-                        'country' => $city->country->name . ', ' . $country->company->name,
+                        'country' => $city->country->name,
+                        'company' => $city->country->company->name,
+                        'company_id' => $city->country->company->id,
                     ]);
                 }
             }
@@ -35,20 +37,20 @@ class CityController extends Controller
     public function index()
     {
         $cities = $this->get();
-        $countries = [];
-
+        $companies = [];
         foreach (request()->user()->companies as $company) {
+            $countries = [];
             foreach ($company->countries as $country) {
-                $countries[] = [
-                    'name' => $country->name . ', ' . $country->company->name,
-                    'company' => $company->name,
-                ];
+                $countries[] = $country->toArray();
             }
+            $companies[] = array_merge($company->toArray(), [
+                'countries' => $countries,
+            ]);
         }
 
         return response()->json([
             'cities' => $cities,
-            'countries' => $countries,
+            'companies' => $companies,
         ]);
     }
 

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { faCheck, faTimes, faPaperPlane, faClock, faCode, faSignature, faList, faBuilding, faUserTie, faBatteryHalf, faRulerVertical, faRulerHorizontal, faRuler } from '@fortawesome/free-solid-svg-icons';
+import { faCheck, faTimes, faPaperPlane, faClock, faCode, faSignature, faList, faBuilding, faUserTie, faBatteryHalf, faRulerVertical, faRulerHorizontal, faRuler, faFlag, faCity } from '@fortawesome/free-solid-svg-icons';
 import { FormGroup, Label, CustomInput, Form, Alert, Button } from 'reactstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Parser } from 'html-to-react';
@@ -15,6 +15,8 @@ import { updateObject, parseMoment } from '../../../../../shared/utility';
 
 class Edit extends Component {
     state = {
+        company_id: '',
+        country_id: '',
         city_id: '',
         name: '',
         latitude: '',
@@ -40,13 +42,28 @@ class Edit extends Component {
     }
 
     render() {
-        const { city_id, name, latitude, longitude, radius } = this.state;
-        const { backend: { agencies: { cities } } } = this.props;
+        const { company_id, country_id, city_id, name, latitude, longitude, radius } = this.state;
+        const { backend: { agencies: { companies } } } = this.props;
+        let countries = [];
+        let cities = [];
 
+        if (company_id !== '') countries = companies.find(({ id }) => +company_id === +id).countries;
+        if (country_id !== '') cities = countries.find(({ id }) => +country_id === +id).cities;
+
+        const companiesOptions = companies.sort((a, b) => a.name > b.name).map(company => <option key={JSON.stringify(company)} value={company.id}>{company.name}</option>);
+        const countriesOptions = countries.sort((a, b) => a.name > b.name).map(country => <option key={JSON.stringify(country)} value={country.id}>{country.name}</option>);
         const citiesOptions = cities.sort((a, b) => a.name > b.name).map(city => <option key={JSON.stringify(city)} value={city.id}>{city.name}</option>);
 
         return <Form onSubmit={this.submitHandler} className="row">
-            <Input className="col-lg-6" type="select" name="city_id" placeholder="Country" onChange={this.inputChangedHandler} icon={faBuilding} validation={{ required: true }} required value={city_id}>
+            <Input className="col-lg-6" type="select" name="company_id" placeholder="Company" onChange={this.inputChangedHandler} icon={faBuilding} validation={{ required: true }} required value={company_id}>
+                <option>Select a company</option>
+                {companiesOptions}
+            </Input>
+            <Input className="col-lg-6" type="select" name="country_id" placeholder="Country" onChange={this.inputChangedHandler} icon={faFlag} validation={{ required: true }} required value={country_id}>
+                <option>Select a country</option>
+                {countriesOptions}
+            </Input>
+            <Input className="col-lg-6" type="select" name="city_id" placeholder="Country" onChange={this.inputChangedHandler} icon={faCity} validation={{ required: true }} required value={city_id}>
                 <option>Select a city</option>
                 {citiesOptions}
             </Input>

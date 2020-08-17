@@ -28,7 +28,12 @@ class AgencyController extends Controller
                             'users' => $agency->users,
                             'latitude' => $agency->position->lat,
                             'longitude' => $agency->position->lng,
-                            'city' => $agency->city->name . ', ' . $agency->city->country->name . ', ' . $agency->city->country->company->name
+                            'city' => $agency->city->name,
+                            'country' => $agency->city->country->name,
+                            'country_id' => $agency->city->country->id,
+                            'company' => $agency->city->country->company->name,
+                            'company_id' => $agency->city->country->company->id,
+                            'representative' => $agency->user ? $agency->user->name : 'Undefined'
                         ]);
                     }
                 }
@@ -43,21 +48,26 @@ class AgencyController extends Controller
     public function index()
     {
         $agencies = $this->get();
-        $cities = [];
+        $companies = [];
         foreach (request()->user()->companies as $company) {
+            $countries = [];
             foreach ($company->countries as $country) {
+                $cities = [];
                 foreach ($country->cities as $city) {
-                    $cities[] = [
-                        'name' => $city->name . ', ' . $city->country->name . ', ' . $city->country->company->name,
-                        'country' => $city->country->name . ', ' . $city->country->company->name
-                    ];
+                    $cities[] = $city->toArray();
                 }
+                $countries[] = array_merge($country->toArray(), [
+                    'cities' => $cities,
+                ]);
             }
+            $companies[] = array_merge($company->toArray(), [
+                'countries' => $countries,
+            ]);
         }
 
         return response()->json([
             'agencies' => $agencies,
-            'cities' => $cities,
+            'companies' => $companies,
         ]);
     }
 

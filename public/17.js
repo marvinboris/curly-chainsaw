@@ -400,7 +400,19 @@ var Dashboard = /*#__PURE__*/function (_Component) {
       chatBox: null,
       messages: null,
       workTimeTracker: null,
+      position: null,
       interval: null
+    });
+
+    _defineProperty(_assertThisInitialized(_this), "getPosition", function (position) {
+      _this.setState({
+        position: position.coords
+      });
+    });
+
+    _defineProperty(_assertThisInitialized(_this), "clock", function () {
+      var position = _this.state.position;
+      if (position) _this.props.onPostClock(_this.state.position);else alert('Please allow geolocation.');
     });
 
     return _this;
@@ -409,6 +421,7 @@ var Dashboard = /*#__PURE__*/function (_Component) {
   _createClass(Dashboard, [{
     key: "componentDidMount",
     value: function componentDidMount() {
+      if (navigator.geolocation) navigator.geolocation.getCurrentPosition(this.getPosition);
       this.props.get();
     }
   }, {
@@ -602,7 +615,7 @@ var Dashboard = /*#__PURE__*/function (_Component) {
             }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
               className: "pb-2"
             }, "You need to Clock ", status ? 'out' : 'in'), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_UI_Button_BetweenButton_BetweenButton__WEBPACK_IMPORTED_MODULE_19__["default"], {
-              onClick: this.props.onPostClock,
+              onClick: this.clock,
               color: status ? "pink" : "green",
               icon: status ? _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_5__["faTimes"] : _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_5__["faSignInAlt"]
             }, "Clock ", status ? 'Out' : 'In'))),
@@ -991,8 +1004,8 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
     reset: function reset() {
       return dispatch(_store_actions__WEBPACK_IMPORTED_MODULE_20__["dashboardReset"]());
     },
-    onPostClock: function onPostClock() {
-      return dispatch(_store_actions__WEBPACK_IMPORTED_MODULE_20__["postClock"]());
+    onPostClock: function onPostClock(position) {
+      return dispatch(_store_actions__WEBPACK_IMPORTED_MODULE_20__["postClock"](position));
     }
   };
 };

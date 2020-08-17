@@ -14,6 +14,8 @@ import * as serviceWorker from './serviceWorker';
 import 'react-owl-carousel2/src/owl.carousel.css';
 import 'react-owl-carousel2/src/owl.theme.default.css';
 
+import 'leaflet/dist/leaflet.css';
+
 export const rootPath = '/api';
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;

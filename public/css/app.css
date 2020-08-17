@@ -33206,6 +33206,11 @@ body {
   height: calc(100vh - 105px);
 }
 
+.leaflet-container {
+  height: 180px;
+  width: 100%;
+}
+
 @media (min-width: 1600px) {
   .container-xl,
   .container-lg,

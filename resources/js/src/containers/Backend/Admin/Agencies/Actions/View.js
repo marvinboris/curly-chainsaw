@@ -19,6 +19,8 @@ export default ({ agency }) => {
                     </div>
                 <hr />
             </Col>
+            <I label="Company">{agency.company}</I>
+            <I label="Country">{agency.country}</I>
             <I label="City">{agency.city}</I>
             <I label="Name">{agency.name}</I>
             <I label="Radius in meters">{agency.radius}</I>

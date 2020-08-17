@@ -32,7 +32,13 @@ class EmployeeController extends Controller
                         foreach ($agency->users as $employee) {
                             $employees[] = array_merge($employee->toArray(), [
                                 'job' => $employee->job->name,
-                                'agency' => $employee->agency->name . ', ' . $employee->agency->city->name . ', ' . $employee->agency->city->country->name . ', ' . $employee->agency->city->country->company->name
+                                'agency' => $employee->agency->name,
+                                'city' => $employee->agency->city->name,
+                                'city_id' => $employee->agency->city->id,
+                                'country' => $employee->agency->city->country->name,
+                                'country_id' => $employee->agency->city->country->id,
+                                'company' => $employee->agency->city->country->company->name,
+                                'company_id' => $employee->agency->city->country->company->id,
                             ]);
                         }
                     }
@@ -48,25 +54,34 @@ class EmployeeController extends Controller
     public function index()
     {
         $employees = $this->get();
-
-        $agencies = [];
+        $companies = [];
         foreach (request()->user()->companies as $company) {
+            $countries = [];
             foreach ($company->countries as $country) {
+                $cities = [];
                 foreach ($country->cities as $city) {
+                    $agencies = [];
                     foreach ($city->agencies as $agency) {
-                        $agencies[] = [
-                            'name' => $agency->name . ', ' . $agency->city->name . ', ' . $agency->city->country->name . ', ' . $agency->city->country->company->name
-                        ];
+                        $agencies[] = $agency->toArray();
                     }
+                    $cities[] = array_merge($city->toArray(), [
+                        'agencies' => $agencies,
+                    ]);
                 }
+                $countries[] = array_merge($country->toArray(), [
+                    'cities' => $cities,
+                ]);
             }
+            $companies[] = array_merge($company->toArray(), [
+                'countries' => $countries,
+            ]);
         }
 
         $jobs = Job::all();
 
         return response()->json([
             'employees' => $employees,
-            'agencies' => $agencies,
+            'companies' => $companies,
             'jobs' => $jobs,
         ]);
     }

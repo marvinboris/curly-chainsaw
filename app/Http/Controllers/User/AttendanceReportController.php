@@ -126,17 +126,17 @@ class AttendanceReportController extends Controller
     public function clock()
     {
         $user = request()->user();
-        $location = new Location();
+        $position = json_decode(request()->position);
 
         $lastCycle = $user->cycles()->latest()->first();
         if (!$lastCycle || $lastCycle->created_at->timestamp < $lastCycle->updated_at->timestamp) Cycle::create([
             'user_id' => $user->id,
-            'clock_in_pos' => json_encode(array_merge($location->get()->toArray(), [
+            'clock_in_pos' => json_encode(array_merge($position, [
                 'browser' => Browser::browserName()
             ])),
         ]);
         else $lastCycle->update([
-            'clock_out_pos' => json_encode(array_merge($location->get()->toArray(), [
+            'clock_out_pos' => json_encode(array_merge($position, [
                 'browser' => Browser::browserName()
             ]))
         ]);

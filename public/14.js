@@ -109,6 +109,9 @@ var Add = /*#__PURE__*/function (_Component) {
     _this = _super.call.apply(_super, [this].concat(args));
 
     _defineProperty(_assertThisInitialized(_this), "state", {
+      company_id: '',
+      country_id: '',
+      city_id: '',
       agency_id: '',
       job_id: '',
       hired_on: '',
@@ -157,6 +160,9 @@ var Add = /*#__PURE__*/function (_Component) {
     key: "render",
     value: function render() {
       var _this$state = this.state,
+          company_id = _this$state.company_id,
+          country_id = _this$state.country_id,
+          city_id = _this$state.city_id,
           agency_id = _this$state.agency_id,
           job_id = _this$state.job_id,
           hired_on = _this$state.hired_on,
@@ -170,9 +176,48 @@ var Add = /*#__PURE__*/function (_Component) {
           code = _this$state.code;
       var _this$props = this.props,
           _this$props$backend$e = _this$props.backend.employees,
-          agencies = _this$props$backend$e.agencies,
+          companies = _this$props$backend$e.companies,
           jobs = _this$props$backend$e.jobs,
-          countries = _this$props.countries;
+          countriesSelection = _this$props.countries;
+      var countries = [];
+      var cities = [];
+      var agencies = [];
+      if (company_id !== '') countries = companies.find(function (_ref2) {
+        var id = _ref2.id;
+        return +company_id === +id;
+      }).countries;
+      if (country_id !== '') cities = countries.find(function (_ref3) {
+        var id = _ref3.id;
+        return +country_id === +id;
+      }).cities;
+      if (city_id !== '') agencies = cities.find(function (_ref4) {
+        var id = _ref4.id;
+        return +city_id === +id;
+      }).agencies;
+      var companiesOptions = companies.sort(function (a, b) {
+        return a.name > b.name;
+      }).map(function (company) {
+        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
+          key: JSON.stringify(company),
+          value: company.id
+        }, company.name);
+      });
+      var countriesOptions = countries.sort(function (a, b) {
+        return a.name > b.name;
+      }).map(function (country) {
+        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
+          key: JSON.stringify(country),
+          value: country.id
+        }, country.name);
+      });
+      var citiesOptions = cities.sort(function (a, b) {
+        return a.name > b.name;
+      }).map(function (city) {
+        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
+          key: JSON.stringify(city),
+          value: city.id
+        }, city.name);
+      });
       var agenciesOptions = agencies.sort(function (a, b) {
         return a.name > b.name;
       }).map(function (agency) {
@@ -189,10 +234,10 @@ var Add = /*#__PURE__*/function (_Component) {
           value: priority.id
         }, priority.name);
       });
-      var countriesOptions = countries.map(function (_ref2) {
-        var country = _ref2.country,
-            code = _ref2.code,
-            name = _ref2.name;
+      var countriesSelectionOptions = countriesSelection.map(function (_ref5) {
+        var country = _ref5.country,
+            code = _ref5.code,
+            name = _ref5.name;
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
           key: country,
           value: country,
@@ -205,16 +250,52 @@ var Add = /*#__PURE__*/function (_Component) {
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Backend_UI_Input_Input__WEBPACK_IMPORTED_MODULE_5__["default"], {
         className: "col-lg-6",
         type: "select",
-        name: "agency_id",
-        placeholder: "Agency",
+        name: "company_id",
+        placeholder: "Company",
         onChange: this.inputChangedHandler,
         icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_4__["faBuilding"],
         validation: {
           required: true
         },
         required: true,
+        value: company_id
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", null, "Select a company"), companiesOptions), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Backend_UI_Input_Input__WEBPACK_IMPORTED_MODULE_5__["default"], {
+        className: "col-lg-6",
+        type: "select",
+        name: "country_id",
+        placeholder: "Country",
+        onChange: this.inputChangedHandler,
+        icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_4__["faFlag"],
+        validation: {
+          required: true
+        },
+        required: true,
+        value: country_id
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", null, "Select a country"), countriesOptions), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Backend_UI_Input_Input__WEBPACK_IMPORTED_MODULE_5__["default"], {
+        className: "col-lg-6",
+        type: "select",
+        name: "city_id",
+        placeholder: "Company",
+        onChange: this.inputChangedHandler,
+        icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_4__["faCity"],
+        validation: {
+          required: true
+        },
+        required: true,
+        value: city_id
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", null, "Select a city"), citiesOptions), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Backend_UI_Input_Input__WEBPACK_IMPORTED_MODULE_5__["default"], {
+        className: "col-lg-6",
+        type: "select",
+        name: "agency_id",
+        placeholder: "Branch",
+        onChange: this.inputChangedHandler,
+        icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_4__["faCodeBranch"],
+        validation: {
+          required: true
+        },
+        required: true,
         value: agency_id
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", null, "Select an agency"), agenciesOptions), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Backend_UI_Input_Input__WEBPACK_IMPORTED_MODULE_5__["default"], {
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", null, "Select a branch"), agenciesOptions), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Backend_UI_Input_Input__WEBPACK_IMPORTED_MODULE_5__["default"], {
         className: "col-lg-6",
         type: "select",
         name: "job_id",
@@ -320,7 +401,7 @@ var Add = /*#__PURE__*/function (_Component) {
         name: "country",
         required: true,
         placeholder: "Select Country"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", null, "Select a country"), countriesOptions), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", null, "Select a country"), countriesSelectionOptions), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         type: "hidden",
         value: code,
         name: "code"
@@ -486,6 +567,9 @@ var Edit = /*#__PURE__*/function (_Component) {
     _this = _super.call.apply(_super, [this].concat(args));
 
     _defineProperty(_assertThisInitialized(_this), "state", {
+      company_id: '',
+      country_id: '',
+      city_id: '',
       agency_id: '',
       job_id: '',
       hired_on: '',
@@ -534,6 +618,9 @@ var Edit = /*#__PURE__*/function (_Component) {
     key: "render",
     value: function render() {
       var _this$state = this.state,
+          company_id = _this$state.company_id,
+          country_id = _this$state.country_id,
+          city_id = _this$state.city_id,
           agency_id = _this$state.agency_id,
           job_id = _this$state.job_id,
           hired_on = _this$state.hired_on,
@@ -547,29 +634,68 @@ var Edit = /*#__PURE__*/function (_Component) {
           code = _this$state.code;
       var _this$props = this.props,
           _this$props$backend$e = _this$props.backend.employees,
-          agencies = _this$props$backend$e.agencies,
+          companies = _this$props$backend$e.companies,
           jobs = _this$props$backend$e.jobs,
-          countries = _this$props.countries;
+          countriesSelection = _this$props.countries;
+      var countries = [];
+      var cities = [];
+      var agencies = [];
+      if (company_id !== '') countries = companies.find(function (_ref2) {
+        var id = _ref2.id;
+        return +company_id === +id;
+      }).countries;
+      if (country_id !== '') cities = countries.find(function (_ref3) {
+        var id = _ref3.id;
+        return +country_id === +id;
+      }).cities;
+      if (city_id !== '') agencies = cities.find(function (_ref4) {
+        var id = _ref4.id;
+        return +city_id === +id;
+      }).agencies;
+      var companiesOptions = companies.sort(function (a, b) {
+        return a.name > b.name;
+      }).map(function (company) {
+        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
+          key: JSON.stringify(company),
+          value: company.id
+        }, company.name);
+      });
+      var countriesOptions = countries.sort(function (a, b) {
+        return a.name > b.name;
+      }).map(function (country) {
+        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
+          key: JSON.stringify(country),
+          value: country.id
+        }, country.name);
+      });
+      var citiesOptions = cities.sort(function (a, b) {
+        return a.name > b.name;
+      }).map(function (city) {
+        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
+          key: JSON.stringify(city),
+          value: city.id
+        }, city.name);
+      });
       var agenciesOptions = agencies.sort(function (a, b) {
         return a.name > b.name;
-      }).map(function (item) {
+      }).map(function (agency) {
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
-          key: JSON.stringify(item),
-          value: item.id
-        }, item.name);
+          key: JSON.stringify(agency),
+          value: agency.id
+        }, agency.name);
       });
       var jobsOptions = jobs.sort(function (a, b) {
         return a.name > b.name;
-      }).map(function (item) {
+      }).map(function (priority) {
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
-          key: JSON.stringify(item),
-          value: item.id
-        }, item.name);
+          key: JSON.stringify(priority),
+          value: priority.id
+        }, priority.name);
       });
-      var countriesOptions = countries.map(function (_ref2) {
-        var country = _ref2.country,
-            code = _ref2.code,
-            name = _ref2.name;
+      var countriesSelectionOptions = countriesSelection.map(function (_ref5) {
+        var country = _ref5.country,
+            code = _ref5.code,
+            name = _ref5.name;
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
           key: country,
           value: country,
@@ -582,16 +708,52 @@ var Edit = /*#__PURE__*/function (_Component) {
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Backend_UI_Input_Input__WEBPACK_IMPORTED_MODULE_8__["default"], {
         className: "col-lg-6",
         type: "select",
-        name: "agency_id",
-        placeholder: "Agency",
+        name: "company_id",
+        placeholder: "Company",
         onChange: this.inputChangedHandler,
         icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_3__["faBuilding"],
         validation: {
           required: true
         },
         required: true,
+        value: company_id
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", null, "Select a company"), companiesOptions), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Backend_UI_Input_Input__WEBPACK_IMPORTED_MODULE_8__["default"], {
+        className: "col-lg-6",
+        type: "select",
+        name: "country_id",
+        placeholder: "Country",
+        onChange: this.inputChangedHandler,
+        icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_3__["faFlag"],
+        validation: {
+          required: true
+        },
+        required: true,
+        value: country_id
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", null, "Select a country"), countriesOptions), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Backend_UI_Input_Input__WEBPACK_IMPORTED_MODULE_8__["default"], {
+        className: "col-lg-6",
+        type: "select",
+        name: "city_id",
+        placeholder: "Company",
+        onChange: this.inputChangedHandler,
+        icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_3__["faCity"],
+        validation: {
+          required: true
+        },
+        required: true,
+        value: city_id
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", null, "Select a city"), citiesOptions), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Backend_UI_Input_Input__WEBPACK_IMPORTED_MODULE_8__["default"], {
+        className: "col-lg-6",
+        type: "select",
+        name: "agency_id",
+        placeholder: "Branch",
+        onChange: this.inputChangedHandler,
+        icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_3__["faCodeBranch"],
+        validation: {
+          required: true
+        },
+        required: true,
         value: agency_id
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", null, "Select an agency"), agenciesOptions), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Backend_UI_Input_Input__WEBPACK_IMPORTED_MODULE_8__["default"], {
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", null, "Select a branch"), agenciesOptions), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Backend_UI_Input_Input__WEBPACK_IMPORTED_MODULE_8__["default"], {
         className: "col-lg-6",
         type: "select",
         name: "job_id",
@@ -697,7 +859,7 @@ var Edit = /*#__PURE__*/function (_Component) {
         name: "country",
         required: true,
         placeholder: "Select Country"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", null, "Select a country"), countriesOptions), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", null, "Select a country"), countriesSelectionOptions), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         type: "hidden",
         value: code,
         name: "code"
