@@ -102,6 +102,11 @@ class User extends Authenticatable
         return $this->hasMany('App\Cycle');
     }
 
+    public function name()
+    {
+        return ucwords(strtolower($this->first_name . ' ' . $this->last_name));
+    }
+
     public function role()
     {
         return 'user';

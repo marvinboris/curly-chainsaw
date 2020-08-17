@@ -15,7 +15,6 @@ class Add extends Component {
         company_id: '',
         country_id: '',
         city_id: '',
-        user_id: '',
         name: '',
         latitude: '',
         longitude: '',
@@ -62,7 +61,7 @@ class Add extends Component {
     }
 
     render() {
-        const { company_id, country_id, city_id, user_id, name, latitude, longitude, radius } = this.state;
+        const { company_id, country_id, city_id, name, latitude, longitude, radius } = this.state;
         const { backend: { agencies: { companies } } } = this.props;
 
         const marker = this.state.hasLocation ? (
@@ -73,16 +72,13 @@ class Add extends Component {
 
         let countries = [];
         let cities = [];
-        let users = [];
 
         if (company_id !== '') countries = companies.find(({ id }) => +company_id === +id).countries;
         if (country_id !== '') cities = countries.find(({ id }) => +country_id === +id).cities;
-        if (user_id !== '') users = cities.find(({ id }) => +city_id === +id).users;
 
         const companiesOptions = companies.sort((a, b) => a.name > b.name).map(company => <option key={JSON.stringify(company)} value={company.id}>{company.name}</option>);
         const countriesOptions = countries.sort((a, b) => a.name > b.name).map(country => <option key={JSON.stringify(country)} value={country.id}>{country.name}</option>);
         const citiesOptions = cities.sort((a, b) => a.name > b.name).map(city => <option key={JSON.stringify(city)} value={city.id}>{city.name}</option>);
-        const usersOptions = users.sort((a, b) => a.first_name > b.first_name).map(user => <option key={JSON.stringify(user)} value={user.id}>{`${user.first_name} ${user.last_name}`}</option>);
 
         return <Form onSubmit={this.submitHandler} className="row">
             <Input className="col-lg-6" type="select" name="company_id" placeholder="Company" onChange={this.inputChangedHandler} icon={faBuilding} validation={{ required: true }} required value={company_id}>
@@ -96,10 +92,6 @@ class Add extends Component {
             <Input className="col-lg-6" type="select" name="city_id" placeholder="City" onChange={this.inputChangedHandler} icon={faCity} validation={{ required: true }} required value={city_id}>
                 <option>Select a city</option>
                 {citiesOptions}
-            </Input>
-            <Input className="col-lg-6" type="select" name="user_id" placeholder="Representative" onChange={this.inputChangedHandler} icon={faCity} validation={{ required: true }} required value={user_id}>
-                <option>Select representative</option>
-                {usersOptions}
             </Input>
             <Input className="col-lg-6" type="text" name="name" placeholder="Name" onChange={this.inputChangedHandler} icon={faBuilding} validation={{ required: true }} required value={name} />
             <Input className="col-lg-6" type="number" name="radius" placeholder="Radius in meters(m)" onChange={this.inputChangedHandler} icon={faRuler} validation={{ required: true }} required value={radius} />

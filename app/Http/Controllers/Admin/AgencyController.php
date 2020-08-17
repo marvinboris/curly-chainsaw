@@ -11,6 +11,7 @@ class AgencyController extends Controller
 {
     private $rules = [
         'city_id' => 'required|exists:cities,id',
+        'user_id' => 'nullable|exists:users,id',
         'name' => 'required|string',
         'latitude' => 'required|numeric',
         'longitude' => 'required|numeric',
@@ -24,8 +25,15 @@ class AgencyController extends Controller
             foreach ($company->countries as $country) {
                 foreach ($country->cities as $city) {
                     foreach ($city->agencies as $agency) {
+                        $users = [];
+                        foreach ($agency->users as $user) {
+                            $users[] = array_merge($user->toArray(), [
+                                'name' => $user->name(),
+                            ]);
+                        }
+
                         $agencies[] = array_merge($agency->toArray(), [
-                            'users' => $agency->users,
+                            'users' => $users,
                             'latitude' => $agency->position->lat,
                             'longitude' => $agency->position->lng,
                             'city' => $agency->city->name,
@@ -33,7 +41,7 @@ class AgencyController extends Controller
                             'country_id' => $agency->city->country->id,
                             'company' => $agency->city->country->company->name,
                             'company_id' => $agency->city->country->company->id,
-                            'representative' => $agency->user ? $agency->user->name : 'Undefined'
+                            'representative' => $agency->user ? $agency->user->name() : 'Undefined'
                         ]);
                     }
                 }
@@ -75,7 +83,7 @@ class AgencyController extends Controller
     {
         $request->validate($this->rules);
 
-        Agency::create(array_merge($request->only(['radius', 'name']), [
+        Agency::create(array_merge($request->all(), [
             'position' => json_encode([
                 'lat' => $request->latitude,
                 'lng' => $request->longitude,
@@ -86,7 +94,7 @@ class AgencyController extends Controller
 
         return response()->json([
             'agencies' => $agencies,
-            'message' => UtilController::message('Successfully created agency.', 'success'),
+            'message' => UtilController::message('Successfully created branch.', 'success'),
         ]);
     }
 
@@ -95,12 +103,12 @@ class AgencyController extends Controller
         $agency = Agency::find($id);
 
         if (!$agency) return response()->json([
-            'message' => UtilController::message('Agency does not exist.', 'danger'),
+            'message' => UtilController::message('Branch does not exist.', 'danger'),
         ]);
 
         $request->validate($this->rules);
 
-        $agency->update(array_merge($request->only(['radius', 'name']), [
+        $agency->update(array_merge($request->all(), [
             'position' => json_encode([
                 'lat' => $request->latitude,
                 'lng' => $request->longitude,
@@ -111,7 +119,7 @@ class AgencyController extends Controller
 
         return response()->json([
             'agencies' => $agencies,
-            'message' => UtilController::message('Successfully updated agency.', 'success'),
+            'message' => UtilController::message('Successfully updated branch.', 'success'),
         ]);
     }
 
@@ -120,7 +128,7 @@ class AgencyController extends Controller
         $agency = Agency::find($id);
 
         if (!$agency) return response()->json([
-            'message' => UtilController::message('Agency does not exist.', 'danger'),
+            'message' => UtilController::message('Branch does not exist.', 'danger'),
         ]);
 
         $agency->delete();
@@ -129,7 +137,7 @@ class AgencyController extends Controller
 
         return response()->json([
             'agencies' => $agencies,
-            'message' => UtilController::message('Successfully deleted agency.', 'success'),
+            'message' => UtilController::message('Successfully deleted branch.', 'success'),
         ]);
     }
 }

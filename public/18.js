@@ -77,7 +77,6 @@ var Add = /*#__PURE__*/function (_Component) {
       company_id: '',
       country_id: '',
       city_id: '',
-      user_id: '',
       name: '',
       latitude: '',
       longitude: '',
@@ -145,7 +144,6 @@ var Add = /*#__PURE__*/function (_Component) {
           company_id = _this$state.company_id,
           country_id = _this$state.country_id,
           city_id = _this$state.city_id,
-          user_id = _this$state.user_id,
           name = _this$state.name,
           latitude = _this$state.latitude,
           longitude = _this$state.longitude,
@@ -156,7 +154,6 @@ var Add = /*#__PURE__*/function (_Component) {
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_leaflet__WEBPACK_IMPORTED_MODULE_5__["Popup"], null, "You are here")) : null;
       var countries = [];
       var cities = [];
-      var users = [];
       if (company_id !== '') countries = companies.find(function (_ref) {
         var id = _ref.id;
         return +company_id === +id;
@@ -165,10 +162,6 @@ var Add = /*#__PURE__*/function (_Component) {
         var id = _ref2.id;
         return +country_id === +id;
       }).cities;
-      if (user_id !== '') users = cities.find(function (_ref3) {
-        var id = _ref3.id;
-        return +city_id === +id;
-      }).users;
       var companiesOptions = companies.sort(function (a, b) {
         return a.name > b.name;
       }).map(function (company) {
@@ -192,14 +185,6 @@ var Add = /*#__PURE__*/function (_Component) {
           key: JSON.stringify(city),
           value: city.id
         }, city.name);
-      });
-      var usersOptions = users.sort(function (a, b) {
-        return a.first_name > b.first_name;
-      }).map(function (user) {
-        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
-          key: JSON.stringify(user),
-          value: user.id
-        }, "".concat(user.first_name, " ").concat(user.last_name));
       });
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_1__["Form"], {
         onSubmit: this.submitHandler,
@@ -241,18 +226,6 @@ var Add = /*#__PURE__*/function (_Component) {
         required: true,
         value: city_id
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", null, "Select a city"), citiesOptions), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Backend_UI_Input_Input__WEBPACK_IMPORTED_MODULE_6__["default"], {
-        className: "col-lg-6",
-        type: "select",
-        name: "user_id",
-        placeholder: "Representative",
-        onChange: this.inputChangedHandler,
-        icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_4__["faCity"],
-        validation: {
-          required: true
-        },
-        required: true,
-        value: user_id
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", null, "Select representative"), usersOptions), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Backend_UI_Input_Input__WEBPACK_IMPORTED_MODULE_6__["default"], {
         className: "col-lg-6",
         type: "text",
         name: "name",
@@ -427,6 +400,7 @@ var Edit = /*#__PURE__*/function (_Component) {
       company_id: '',
       country_id: '',
       city_id: '',
+      user_id: '',
       name: '',
       latitude: '',
       longitude: '',
@@ -461,11 +435,14 @@ var Edit = /*#__PURE__*/function (_Component) {
           company_id = _this$state.company_id,
           country_id = _this$state.country_id,
           city_id = _this$state.city_id,
+          user_id = _this$state.user_id,
           name = _this$state.name,
           latitude = _this$state.latitude,
           longitude = _this$state.longitude,
           radius = _this$state.radius;
-      var companies = this.props.backend.agencies.companies;
+      var _this$props = this.props,
+          companies = _this$props.backend.agencies.companies,
+          users = _this$props.agency.users;
       var countries = [];
       var cities = [];
       if (company_id !== '') countries = companies.find(function (_ref) {
@@ -500,6 +477,14 @@ var Edit = /*#__PURE__*/function (_Component) {
           value: city.id
         }, city.name);
       });
+      var usersOptions = users.sort(function (a, b) {
+        return a.name > b.name;
+      }).map(function (user) {
+        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
+          key: JSON.stringify(user),
+          value: user.id
+        }, user.name);
+      });
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_4__["Form"], {
         onSubmit: this.submitHandler,
         className: "row"
@@ -531,7 +516,7 @@ var Edit = /*#__PURE__*/function (_Component) {
         className: "col-lg-6",
         type: "select",
         name: "city_id",
-        placeholder: "Country",
+        placeholder: "City",
         onChange: this.inputChangedHandler,
         icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_3__["faCity"],
         validation: {
@@ -540,6 +525,18 @@ var Edit = /*#__PURE__*/function (_Component) {
         required: true,
         value: city_id
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", null, "Select a city"), citiesOptions), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Backend_UI_Input_Input__WEBPACK_IMPORTED_MODULE_8__["default"], {
+        className: "col-lg-6",
+        type: "select",
+        name: "user_id",
+        placeholder: "Representative",
+        onChange: this.inputChangedHandler,
+        icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_3__["faUserTie"],
+        validation: {
+          required: true
+        },
+        required: true,
+        value: user_id
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", null, "Select representative"), usersOptions), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Backend_UI_Input_Input__WEBPACK_IMPORTED_MODULE_8__["default"], {
         className: "col-lg-6",
         type: "text",
         name: "name",
