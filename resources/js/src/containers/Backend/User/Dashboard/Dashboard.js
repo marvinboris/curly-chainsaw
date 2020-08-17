@@ -105,7 +105,8 @@ class Dashboard extends Component {
     }
 
     getPosition = position => {
-        this.setState({ position: position.coords });
+        const { latitude, longitude } = position.coords;
+        this.setState({ position: { latitude, longitude } });
     }
 
     clock = () => {

@@ -405,8 +405,15 @@ var Dashboard = /*#__PURE__*/function (_Component) {
     });
 
     _defineProperty(_assertThisInitialized(_this), "getPosition", function (position) {
+      var _position$coords = position.coords,
+          latitude = _position$coords.latitude,
+          longitude = _position$coords.longitude;
+
       _this.setState({
-        position: position.coords
+        position: {
+          latitude: latitude,
+          longitude: longitude
+        }
       });
     });
 
