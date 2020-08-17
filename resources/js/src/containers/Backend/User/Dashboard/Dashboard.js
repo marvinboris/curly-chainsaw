@@ -20,6 +20,7 @@ import Delete from '../../../../components/Backend/UI/Delete/Delete';
 import Counter from '../../../../components/Backend/UI/Counter/Counter';
 import WithTooltip from '../../../../components/UI/WithTooltip/WithTooltip';
 import BetweenButton from '../../../../components/UI/Button/BetweenButton/BetweenButton';
+import Feedback from '../../../../components/Feedback/Feedback';
 
 import * as actions from '../../../../store/actions';
 import { updateObject, convertDate, timeFromTimestamp, convertTime } from '../../../../shared/utility';
@@ -111,17 +112,17 @@ class Dashboard extends Component {
 
     clock = () => {
         const { position } = this.state;
-        console.log({ position });
         if (position) this.props.onPostClock(this.state.position);
         else alert('Please allow geolocation.');
     }
 
     render() {
         let { blocksData, tasks, attendanceReport, calendar, chatBox, messages, workTimeTracker } = this.state;
-        let { auth: { data: { job } }, backend: { dashboard: { loading, error } } } = this.props;
+        let { auth: { data: { job } }, backend: { dashboard: { loading, error, message } } } = this.props;
 
         let content = null;
         let errors = null;
+        let feedback = null;
 
         const colors = ['orange', 'green'];
         const texts = ['Pending', 'Completed'];
@@ -131,6 +132,8 @@ class Dashboard extends Component {
             <CustomSpinner />
         </Col>;
         else {
+            feedback = <Feedback message={message} />;
+
             errors = <>
                 <Error err={error} />
             </>;
@@ -384,6 +387,7 @@ class Dashboard extends Component {
                 </div>
                 <div className="p-4 pb-0">
                     {errors}
+                    {feedback}
                     {content}
                 </div>
             </>
