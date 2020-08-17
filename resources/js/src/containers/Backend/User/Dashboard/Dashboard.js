@@ -110,6 +110,7 @@ class Dashboard extends Component {
 
     clock = () => {
         const { position } = this.state;
+        console.log({ position });
         if (position) this.props.onPostClock(this.state.position);
         else alert('Please allow geolocation.');
     }

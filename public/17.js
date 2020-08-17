@@ -412,6 +412,9 @@ var Dashboard = /*#__PURE__*/function (_Component) {
 
     _defineProperty(_assertThisInitialized(_this), "clock", function () {
       var position = _this.state.position;
+      console.log({
+        position: position
+      });
       if (position) _this.props.onPostClock(_this.state.position);else alert('Please allow geolocation.');
     });
 
