@@ -129,6 +129,15 @@ class AttendanceReportController extends Controller
         $user = request()->user();
         $position = json_decode(request()->position, true);
 
+        $agency = $user->agency;
+
+        $lat = $position['latitude'];
+        $lng = $position['longitude'];
+
+        $distance = pi() * $agency->radius * sqrt(($agency->position->lat - $lat) ** 2 + ($agency->position->lng - $lng) ** 2) / 180;
+
+        $position['in'] = $distance <= $agency->radius;
+
         $lastCycle = $user->cycles()->latest()->first();
         if (!$lastCycle || $lastCycle->created_at->timestamp < $lastCycle->updated_at->timestamp) Cycle::create([
             'user_id' => $user->id,

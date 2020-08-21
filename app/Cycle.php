@@ -14,4 +14,14 @@ class Cycle extends Model
     {
         return $this->belongsTo('App\User');
     }
+
+    public function getClockInPosAttribute($value)
+    {
+        return json_decode($value);
+    }
+
+    public function getClockOutPosAttribute($value)
+    {
+        return json_decode($value);
+    }
 }

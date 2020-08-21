@@ -736,9 +736,35 @@ var Dashboard = /*#__PURE__*/function (_Component) {
             return Object(_shared_utility__WEBPACK_IMPORTED_MODULE_22__["updateObject"])(day, {
               clock_in_date: Object(_shared_utility__WEBPACK_IMPORTED_MODULE_22__["convertDate"])(day.clock_in),
               clock_out_date: Object(_shared_utility__WEBPACK_IMPORTED_MODULE_22__["convertDate"])(day.clock_out),
+              clock_in_time: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+                className: "position-relative"
+              }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+                className: "mr-2"
+              }, Object(_shared_utility__WEBPACK_IMPORTED_MODULE_22__["convertTime"])(day.clock_in)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_3__["Button"], {
+                active: true,
+                style: {
+                  cursor: 'unset'
+                },
+                size: "sm",
+                color: day.clock_in_pos["in"] ? 'green' : 'pink'
+              }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_4__["FontAwesomeIcon"], {
+                icon: day.clock_in_pos["in"] ? _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_5__["faCheckCircle"] : _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_5__["faTimes"]
+              }))),
+              clock_out_time: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+                className: "position-relative"
+              }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+                className: "mr-2"
+              }, Object(_shared_utility__WEBPACK_IMPORTED_MODULE_22__["convertTime"])(day.clock_out)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_3__["Button"], {
+                active: true,
+                style: {
+                  cursor: 'unset'
+                },
+                size: "sm",
+                color: day.clock_out_pos && day.clock_out_pos["in"] ? 'green' : 'pink'
+              }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_4__["FontAwesomeIcon"], {
+                icon: day.clock_out_pos && day.clock_out_pos["in"] ? _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_5__["faCheckCircle"] : _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_5__["faTimes"]
+              }))),
               time: Object(_shared_utility__WEBPACK_IMPORTED_MODULE_22__["timeFromTimestamp"])(day.time),
-              clock_in_time: Object(_shared_utility__WEBPACK_IMPORTED_MODULE_22__["convertTime"])(day.clock_in),
-              clock_out_time: Object(_shared_utility__WEBPACK_IMPORTED_MODULE_22__["convertTime"])(day.clock_out),
               status: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_3__["Badge"], {
                 color: colors[day.status],
                 className: "badge-block position-static"
