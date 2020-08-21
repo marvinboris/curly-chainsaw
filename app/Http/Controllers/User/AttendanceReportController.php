@@ -165,7 +165,8 @@ class AttendanceReportController extends Controller
 
         return response()->json([
             'workedTime' => $workedTime,
-            'status' => $status
+            'status' => $status,
+            'distance' => $distance,
         ]);
     }
 }
