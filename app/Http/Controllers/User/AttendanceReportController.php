@@ -167,6 +167,8 @@ class AttendanceReportController extends Controller
             'workedTime' => $workedTime,
             'status' => $status,
             'distance' => $distance,
+            'employee_position' => $position,
+            'agency_position' => $agency->position,
         ]);
     }
 }
