@@ -134,7 +134,7 @@ class AttendanceReportController extends Controller
         $lat = $position['latitude'];
         $lng = $position['longitude'];
 
-        $distance = pi() * $agency->radius * sqrt(($agency->position->lat - $lat) ** 2 + ($agency->position->lng - $lng) ** 2) / 180;
+        $distance = pi() * 6.378 * (10 ** 6) * sqrt(($agency->position->lat - $lat) ** 2 + ($agency->position->lng - $lng) ** 2) / 180;
 
         $position['in'] = $distance <= $agency->radius;
 
