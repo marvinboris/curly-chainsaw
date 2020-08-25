@@ -735,7 +735,7 @@ var Dashboard = /*#__PURE__*/function (_Component) {
             // const editContent = <Edit day={updateObject(day, { page_status: 'dashboard' })} />;
             return Object(_shared_utility__WEBPACK_IMPORTED_MODULE_22__["updateObject"])(day, {
               clock_in_date: Object(_shared_utility__WEBPACK_IMPORTED_MODULE_22__["convertDate"])(day.clock_in),
-              clock_out_date: Object(_shared_utility__WEBPACK_IMPORTED_MODULE_22__["convertDate"])(day.clock_out),
+              clock_out_date: day.clock_out_pos ? Object(_shared_utility__WEBPACK_IMPORTED_MODULE_22__["convertDate"])(day.clock_out) : 'Undefined',
               clock_in_time: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
                 className: "position-relative"
               }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
