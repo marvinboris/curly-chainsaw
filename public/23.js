@@ -72,7 +72,8 @@ var Add = /*#__PURE__*/function (_Component) {
     _this = _super.call.apply(_super, [this].concat(args));
 
     _defineProperty(_assertThisInitialized(_this), "state", {
-      name: ''
+      name: '',
+      hours_per_week: ''
     });
 
     _defineProperty(_assertThisInitialized(_this), "inputChangedHandler", function (e) {
@@ -95,7 +96,9 @@ var Add = /*#__PURE__*/function (_Component) {
   _createClass(Add, [{
     key: "render",
     value: function render() {
-      var name = this.state.name;
+      var _this$state = this.state,
+          name = _this$state.name,
+          hours_per_week = _this$state.hours_per_week;
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_1__["Form"], {
         onSubmit: this.submitHandler,
         className: "row"
@@ -111,6 +114,18 @@ var Add = /*#__PURE__*/function (_Component) {
         },
         required: true,
         value: name
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Backend_UI_Input_Input__WEBPACK_IMPORTED_MODULE_5__["default"], {
+        className: "col-lg-6",
+        type: "text",
+        name: "hours_per_week",
+        placeholder: "Hours per Week",
+        onChange: this.inputChangedHandler,
+        icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_4__["faClock"],
+        validation: {
+          required: true
+        },
+        required: true,
+        value: hours_per_week
       }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_1__["FormGroup"], {
         className: "col-12"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_UI_Button_BetweenButton_BetweenButton__WEBPACK_IMPORTED_MODULE_6__["default"], {
@@ -224,6 +239,7 @@ var Edit = /*#__PURE__*/function (_Component) {
 
     _defineProperty(_assertThisInitialized(_this), "state", {
       name: '',
+      hours_per_week: '',
       id: ''
     });
 
@@ -250,7 +266,9 @@ var Edit = /*#__PURE__*/function (_Component) {
   _createClass(Edit, [{
     key: "render",
     value: function render() {
-      var name = this.state.name;
+      var _this$state = this.state,
+          name = _this$state.name,
+          hours_per_week = _this$state.hours_per_week;
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_4__["Form"], {
         onSubmit: this.submitHandler,
         className: "row"
@@ -266,6 +284,18 @@ var Edit = /*#__PURE__*/function (_Component) {
         },
         required: true,
         value: name
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Backend_UI_Input_Input__WEBPACK_IMPORTED_MODULE_8__["default"], {
+        className: "col-lg-6",
+        type: "text",
+        name: "hours_per_week",
+        placeholder: "Hours per Week",
+        onChange: this.inputChangedHandler,
+        icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_3__["faClock"],
+        validation: {
+          required: true
+        },
+        required: true,
+        value: hours_per_week
       }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_4__["FormGroup"], {
         className: "col-12"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_UI_Button_BetweenButton_BetweenButton__WEBPACK_IMPORTED_MODULE_9__["default"], {
@@ -533,6 +563,9 @@ var Index = /*#__PURE__*/function (_Component) {
             fields: [{
               name: 'Name',
               key: 'name'
+            }, {
+              name: 'Hours per Week',
+              key: 'hours_per_week'
             }, {
               name: 'Creation Date',
               key: 'created_at'

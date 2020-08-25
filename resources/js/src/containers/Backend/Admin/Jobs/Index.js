@@ -76,6 +76,7 @@ class Index extends Component {
                             <List array={data} data={JSON.stringify(jobs)} bordered add="Add Job" content={<Add />} icon={faUserTag} title="Jobs" className="bg-white shadow-sm"
                                 fields={[
                                     { name: 'Name', key: 'name' },
+                                    { name: 'Hours per Week', key: 'hours_per_week' },
                                     { name: 'Creation Date', key: 'created_at' },
                                     { name: 'Action', key: 'action', fixed: true }
                                 ]} />
