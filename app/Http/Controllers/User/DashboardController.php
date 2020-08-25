@@ -89,9 +89,9 @@ class DashboardController extends Controller
                 'time' => $dayTime,
                 'status' => $dayStatus,
                 'clock_in' => $cycle->created_at,
-                'clock_out' => $cycle->clock_out_pos ?? $cycle->updated_at,
+                'clock_out' => $cycle->clock_out_pos ? $cycle->updated_at : null,
                 'clock_in_pos' => $cycle->clock_in_pos,
-                'clock_out_pos' => $cycle->clock_out_pos ?? $cycle->clock_out_pos,
+                'clock_out_pos' => $cycle->clock_out_pos,
             ];
         }
 
