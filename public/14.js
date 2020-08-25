@@ -737,7 +737,7 @@ var Dashboard = /*#__PURE__*/function (_Component) {
               clock_in_date: Object(_shared_utility__WEBPACK_IMPORTED_MODULE_22__["convertDate"])(day.clock_in),
               clock_out_date: day.clock_out_pos ? Object(_shared_utility__WEBPACK_IMPORTED_MODULE_22__["convertDate"])(day.clock_out) : 'Undefined',
               clock_in_time: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-                className: "position-relative text-right"
+                className: "position-relative d-flex justify-content-between align-items-center"
               }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
                 className: "mr-2"
               }, Object(_shared_utility__WEBPACK_IMPORTED_MODULE_22__["convertTime"])(day.clock_in)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_3__["Button"], {
@@ -751,7 +751,7 @@ var Dashboard = /*#__PURE__*/function (_Component) {
                 icon: day.clock_in_pos["in"] ? _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_5__["faCheckCircle"] : _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_5__["faTimes"]
               }))),
               clock_out_time: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-                className: "position-relative text-right"
+                className: "position-relative d-flex justify-content-between align-items-center"
               }, day.clock_out && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
                 className: "mr-2"
               }, Object(_shared_utility__WEBPACK_IMPORTED_MODULE_22__["convertTime"])(day.clock_out)), day.clock_out_pos ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_3__["Button"], {
