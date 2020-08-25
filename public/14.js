@@ -784,7 +784,17 @@ var Dashboard = /*#__PURE__*/function (_Component) {
                 icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_5__["faSpinner"],
                 className: "fa-spin"
               }))),
-              time: Object(_shared_utility__WEBPACK_IMPORTED_MODULE_22__["timeFromTimestamp"])(day.time),
+              time: day.clock_out_pos ? Object(_shared_utility__WEBPACK_IMPORTED_MODULE_22__["timeFromTimestamp"])(day.time) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_3__["Button"], {
+                active: true,
+                style: {
+                  cursor: 'unset'
+                },
+                size: "sm",
+                color: "orange"
+              }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_4__["FontAwesomeIcon"], {
+                icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_5__["faSpinner"],
+                className: "fa-spin"
+              })),
               status: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_3__["Badge"], {
                 color: colors[day.status],
                 className: "badge-block position-static"

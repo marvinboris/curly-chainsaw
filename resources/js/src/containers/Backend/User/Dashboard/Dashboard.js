@@ -253,7 +253,7 @@ class Dashboard extends Component {
                                 <Button active style={{ cursor: 'unset' }} size="sm" color="orange"><FontAwesomeIcon icon={faSpinner} className="fa-spin" /></Button>
                             }
                         </div>,
-                        time: timeFromTimestamp(day.time),
+                        time: day.clock_out_pos ? timeFromTimestamp(day.time) : <Button active style={{ cursor: 'unset' }} size="sm" color="orange"><FontAwesomeIcon icon={faSpinner} className="fa-spin" /></Button>,
                         status: <Badge color={colors[day.status]} className="badge-block position-static"><FontAwesomeIcon icon={icons[day.status]} className={day.status === 0 ? "fa-spin" : ""} fixedWidth /> {texts[day.status]}</Badge>,
                     });
                 });
