@@ -242,11 +242,11 @@ class Dashboard extends Component {
                     return updateObject(day, {
                         clock_in_date: convertDate(day.clock_in),
                         clock_out_date: day.clock_out_pos ? convertDate(day.clock_out) : 'Undefined',
-                        clock_in_time: <div className="position-relative">
+                        clock_in_time: <div className="position-relative text-right">
                             <span className="mr-2">{convertTime(day.clock_in)}</span>
                             <Button active style={{ cursor: 'unset' }} size="sm" color={day.clock_in_pos.in ? 'green' : 'pink'}><FontAwesomeIcon icon={day.clock_in_pos.in ? faCheckCircle : faTimes} /></Button>
                         </div>,
-                        clock_out_time: <div className="position-relative">
+                        clock_out_time: <div className="position-relative text-right">
                             {day.clock_out && <span className="mr-2">{convertTime(day.clock_out)}</span>}
                             {day.clock_out_pos ?
                                 <Button active style={{ cursor: 'unset' }} size="sm" color={day.clock_out_pos.in ? 'green' : 'pink'}><FontAwesomeIcon icon={day.clock_out_pos.in ? faCheckCircle : faTimes} /></Button> :
