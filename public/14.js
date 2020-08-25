@@ -752,17 +752,27 @@ var Dashboard = /*#__PURE__*/function (_Component) {
               }))),
               clock_out_time: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
                 className: "position-relative"
-              }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+              }, day.clock_out && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
                 className: "mr-2"
-              }, Object(_shared_utility__WEBPACK_IMPORTED_MODULE_22__["convertTime"])(day.clock_out)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_3__["Button"], {
+              }, Object(_shared_utility__WEBPACK_IMPORTED_MODULE_22__["convertTime"])(day.clock_out)), day.clock_out_pos ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_3__["Button"], {
                 active: true,
                 style: {
                   cursor: 'unset'
                 },
                 size: "sm",
-                color: day.clock_out_pos && day.clock_out_pos["in"] ? 'green' : 'pink'
+                color: day.clock_out_pos["in"] ? 'green' : 'pink'
               }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_4__["FontAwesomeIcon"], {
-                icon: day.clock_out_pos && day.clock_out_pos["in"] ? _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_5__["faCheckCircle"] : _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_5__["faTimes"]
+                icon: day.clock_out_pos["in"] ? _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_5__["faCheckCircle"] : _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_5__["faTimes"]
+              })) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_3__["Button"], {
+                active: true,
+                style: {
+                  cursor: 'unset'
+                },
+                size: "sm",
+                color: "orange"
+              }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_4__["FontAwesomeIcon"], {
+                icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_5__["faSpinner"],
+                className: "fa-spin"
               }))),
               time: Object(_shared_utility__WEBPACK_IMPORTED_MODULE_22__["timeFromTimestamp"])(day.time),
               status: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_3__["Badge"], {

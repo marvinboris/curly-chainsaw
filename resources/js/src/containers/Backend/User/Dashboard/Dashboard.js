@@ -247,8 +247,11 @@ class Dashboard extends Component {
                             <Button active style={{ cursor: 'unset' }} size="sm" color={day.clock_in_pos.in ? 'green' : 'pink'}><FontAwesomeIcon icon={day.clock_in_pos.in ? faCheckCircle : faTimes} /></Button>
                         </div>,
                         clock_out_time: <div className="position-relative">
-                            <span className="mr-2">{convertTime(day.clock_out)}</span>
-                            <Button active style={{ cursor: 'unset' }} size="sm" color={(day.clock_out_pos && day.clock_out_pos.in) ? 'green' : 'pink'}><FontAwesomeIcon icon={(day.clock_out_pos && day.clock_out_pos.in) ? faCheckCircle : faTimes} /></Button>
+                            {day.clock_out && <span className="mr-2">{convertTime(day.clock_out)}</span>}
+                            {day.clock_out_pos ?
+                                <Button active style={{ cursor: 'unset' }} size="sm" color={day.clock_out_pos.in ? 'green' : 'pink'}><FontAwesomeIcon icon={day.clock_out_pos.in ? faCheckCircle : faTimes} /></Button> :
+                                <Button active style={{ cursor: 'unset' }} size="sm" color="orange"><FontAwesomeIcon icon={faSpinner} className="fa-spin" /></Button>
+                            }
                         </div>,
                         time: timeFromTimestamp(day.time),
                         status: <Badge color={colors[day.status]} className="badge-block position-static"><FontAwesomeIcon icon={icons[day.status]} className={day.status === 0 ? "fa-spin" : ""} fixedWidth /> {texts[day.status]}</Badge>,

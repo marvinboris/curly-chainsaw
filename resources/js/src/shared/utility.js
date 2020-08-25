@@ -5,6 +5,7 @@ export const updateObject = (oldObject, updatedProps) => ({
 export const parseMoment = item => item.format('YYYY-MM-DD HH:mm:ss');
 
 export const convertDate = date => {
+    if (!date) return 'Undefined';
     const d = new Date(date)
     const dtf = new Intl.DateTimeFormat('en', { year: 'numeric', month: 'short', day: '2-digit' });
 
@@ -14,6 +15,7 @@ export const convertDate = date => {
 const twoDigits = number => number < 10 ? '0' + number : number;
 
 export const convertTime = date => {
+    if (!date) return 'Undefined';
     const d = new Date(date);
     const hours = d.getHours();
     const minutes = d.getMinutes();
