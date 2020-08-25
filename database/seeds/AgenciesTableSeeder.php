@@ -18,8 +18,8 @@ class AgenciesTableSeeder extends Seeder
                 'city_id' => City::first()->id,
                 'name' => 'Direction Générale',
                 'position' => json_encode([
-                    'lat' => 4.6298411,
-                    'lng' => 11.7068294,
+                    'lat' => 4.0249011999999995,
+                    'lng' => 9.6994657,
                 ]),
                 'radius' => 20,
             ]
