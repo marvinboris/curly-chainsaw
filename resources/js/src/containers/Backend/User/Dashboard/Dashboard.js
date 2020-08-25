@@ -253,7 +253,10 @@ class Dashboard extends Component {
                                 <Button active style={{ cursor: 'unset' }} size="sm" color="orange"><FontAwesomeIcon icon={faSpinner} className="fa-spin" /></Button>
                             }
                         </div>,
-                        time: day.clock_out_pos ? timeFromTimestamp(day.time) : <Button active style={{ cursor: 'unset' }} size="sm" color="orange"><FontAwesomeIcon icon={faSpinner} className="fa-spin" /></Button>,
+                        time: <div className="d-flex justify-content-between align-items-center">
+                            {timeFromTimestamp(day.time)}
+                            {!day.clock_out_pos && <Button active style={{ cursor: 'unset' }} size="sm" color="orange"><FontAwesomeIcon icon={faSpinner} className="fa-spin" /></Button>}
+                        </div>,
                         status: <Badge color={colors[day.status]} className="badge-block position-static"><FontAwesomeIcon icon={icons[day.status]} className={day.status === 0 ? "fa-spin" : ""} fixedWidth /> {texts[day.status]}</Badge>,
                     });
                 });
