@@ -62,7 +62,8 @@ class App extends Component {
     }
 
     render() {
-        const { auth: { token, role } } = this.props;
+        const { auth: { role } } = this.props;
+        const isAuthenticated = localStorage.getItem('token') !== null;
 
         let routes = (
             <Switch>
@@ -76,7 +77,7 @@ class App extends Component {
             </Switch>
         );
 
-        if (token !== null) {
+        if (isAuthenticated) {
             routes = (
                 <Switch>
                     <Route path="/user/dashboard" component={asyncUserDashboard} />

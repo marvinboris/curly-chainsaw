@@ -23,12 +23,12 @@ class AuthController extends Controller
         $user = User::whereEmail($request->email)->first();
 
         $credentials = ['email' => $user->email, 'password' => $request->password];
-        if (!$user->email_verified_at) return response()->json([
-            'message' => [
-                'type' => 'danger',
-                'content' => 'Please, check your mailbox and click on the activation link.'
-            ]
-        ], 403);
+        // if (!$user->email_verified_at) return response()->json([
+        //     'message' => [
+        //         'type' => 'danger',
+        //         'content' => 'Please, check your mailbox and click on the activation link.'
+        //     ]
+        // ], 403);
         if ($user->is_active === 0) return response()->json([
             'message' => [
                 'type' => 'danger',

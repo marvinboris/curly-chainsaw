@@ -11,7 +11,6 @@ class CompanyController extends Controller
 {
     //
     private $rules = [
-        'admin_id' => 'required|exists:admins,id',
         'name' => 'required|string',
     ];
 
@@ -42,7 +41,7 @@ class CompanyController extends Controller
     {
         $request->validate($this->rules);
 
-        Company::create($request->all());
+        Company::create($request->all() + ['admin_id' => $request->user()->id]);
 
         $companies = $this->get();
 

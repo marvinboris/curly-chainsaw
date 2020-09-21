@@ -47,6 +47,7 @@
         "react-copy-to-clipboard": "^5.0.2",
         "react-datetime-inputs": "0.0.6",
         "react-datetime-picker": "^3.0.2",
+        "react-google-recaptcha": "^2.1.0",
         "react-leaflet": "^2.7.0",
         "react-owl": "^1.0.0",
         "react-owl-carousel2": "^0.3.0",
