@@ -28,6 +28,10 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function () {
     Route::middleware('auth:admin')->group(function () {
         Route::get('dashboard', 'DashboardController@index')->name('dashboard');
 
+        Route::prefix('employees')->name('employees.')->group(function () {
+            Route::get('{employee}', 'EmployeeController@show')->name('show');
+        });
+
         Route::apiResources([
             'tasks' => 'TaskController',
             'companies' => 'CompanyController',

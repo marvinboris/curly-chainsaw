@@ -75,7 +75,7 @@ class Index extends Component {
                     const country = countries.find(({ country }) => country === employee.country);
 
                     return updateObject(employee, {
-                        name: `${employee.first_name} ${employee.last_name}`,
+                        name: <Link to={`/admin/employees/${employee.id}`} className="text-decoration-none">{`${employee.first_name} ${employee.last_name}`}</Link>,
                         last_login: convertDate(employee.last_login),
                         hired_on: convertDate(employee.hired_on),
                         country: <div className="d-flex align-items-center">

@@ -30,6 +30,7 @@ const asyncUserArchiveMessages = asyncComponent(() => import('./containers/Backe
 const asyncAdminDashboard = asyncComponent(() => import('./containers/Backend/Admin/Dashboard/Dashboard'));
 
 const asyncAdminEmployees = asyncComponent(() => import('./containers/Backend/Admin/Employees'));
+const asyncAdminEmployeesShow = asyncComponent(() => import('./containers/Backend/Admin/Employees/Show'));
 
 const asyncAdminTasks = asyncComponent(() => import('./containers/Backend/Admin/Tasks'));
 
@@ -91,6 +92,7 @@ class App extends Component {
 
                     <Route path="/admin/dashboard" component={asyncAdminDashboard} />
                     <Route path="/admin/tasks" component={asyncAdminTasks} />
+                    <Route path="/admin/employees/:employeeId" component={asyncAdminEmployeesShow} />
                     <Route path="/admin/employees" component={asyncAdminEmployees} />
                     <Route path="/admin/companies" component={asyncAdminCompanies} />
                     <Route path="/admin/countries" component={asyncAdminCountries} />

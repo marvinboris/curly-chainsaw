@@ -1,9 +1,9 @@
 (window["webpackJsonp"] = window["webpackJsonp"] || []).push([[20],{
 
-/***/ "./resources/js/src/containers/Backend/Admin/Companies/Actions/Add.js":
-/*!****************************************************************************!*\
-  !*** ./resources/js/src/containers/Backend/Admin/Companies/Actions/Add.js ***!
-  \****************************************************************************/
+/***/ "./resources/js/src/containers/Backend/Admin/Cities/Actions/Add.js":
+/*!*************************************************************************!*\
+  !*** ./resources/js/src/containers/Backend/Admin/Cities/Actions/Add.js ***!
+  \*************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -72,6 +72,8 @@ var Add = /*#__PURE__*/function (_Component) {
     _this = _super.call.apply(_super, [this].concat(args));
 
     _defineProperty(_assertThisInitialized(_this), "state", {
+      company_id: '',
+      country_id: '',
       name: ''
     });
 
@@ -95,11 +97,60 @@ var Add = /*#__PURE__*/function (_Component) {
   _createClass(Add, [{
     key: "render",
     value: function render() {
-      var name = this.state.name;
+      var _this$state = this.state,
+          company_id = _this$state.company_id,
+          country_id = _this$state.country_id,
+          name = _this$state.name;
+      var companies = this.props.backend.cities.companies;
+      var countries = [];
+      if (company_id !== '') countries = companies.find(function (_ref) {
+        var id = _ref.id;
+        return +company_id === +id;
+      }).countries;
+      var companiesOptions = companies.sort(function (a, b) {
+        return a.name > b.name;
+      }).map(function (company) {
+        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
+          key: JSON.stringify(company),
+          value: company.id
+        }, company.name);
+      });
+      var countriesOptions = countries.sort(function (a, b) {
+        return a.name > b.name;
+      }).map(function (country) {
+        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
+          key: JSON.stringify(country),
+          value: country.id
+        }, country.name);
+      });
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_1__["Form"], {
         onSubmit: this.submitHandler,
         className: "row"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Backend_UI_Input_Input__WEBPACK_IMPORTED_MODULE_5__["default"], {
+        className: "col-lg-6",
+        type: "select",
+        name: "company_id",
+        placeholder: "Company",
+        onChange: this.inputChangedHandler,
+        icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_4__["faBuilding"],
+        validation: {
+          required: true
+        },
+        required: true,
+        value: company_id
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", null, "Select a company"), companiesOptions), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Backend_UI_Input_Input__WEBPACK_IMPORTED_MODULE_5__["default"], {
+        className: "col-lg-6",
+        type: "select",
+        name: "country_id",
+        placeholder: "Country",
+        onChange: this.inputChangedHandler,
+        icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_4__["faFlag"],
+        validation: {
+          required: true
+        },
+        required: true,
+        value: country_id
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", null, "Select a country"), countriesOptions), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Backend_UI_Input_Input__WEBPACK_IMPORTED_MODULE_5__["default"], {
         className: "col-lg-6",
         type: "text",
         name: "name",
@@ -132,7 +183,7 @@ var mapStateToProps = function mapStateToProps(state) {
 var mapDispatchToProps = function mapDispatchToProps(dispatch) {
   return {
     onSubmit: function onSubmit(data) {
-      return dispatch(_store_actions__WEBPACK_IMPORTED_MODULE_7__["postCompanies"](data));
+      return dispatch(_store_actions__WEBPACK_IMPORTED_MODULE_7__["postCities"](data));
     }
   };
 };
@@ -141,10 +192,10 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
 
 /***/ }),
 
-/***/ "./resources/js/src/containers/Backend/Admin/Companies/Actions/Edit.js":
-/*!*****************************************************************************!*\
-  !*** ./resources/js/src/containers/Backend/Admin/Companies/Actions/Edit.js ***!
-  \*****************************************************************************/
+/***/ "./resources/js/src/containers/Backend/Admin/Cities/Actions/Edit.js":
+/*!**************************************************************************!*\
+  !*** ./resources/js/src/containers/Backend/Admin/Cities/Actions/Edit.js ***!
+  \**************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -223,6 +274,8 @@ var Edit = /*#__PURE__*/function (_Component) {
     _this = _super.call.apply(_super, [this].concat(args));
 
     _defineProperty(_assertThisInitialized(_this), "state", {
+      company_id: '',
+      country_id: '',
       name: '',
       id: ''
     });
@@ -250,11 +303,60 @@ var Edit = /*#__PURE__*/function (_Component) {
   _createClass(Edit, [{
     key: "render",
     value: function render() {
-      var name = this.state.name;
+      var _this$state = this.state,
+          company_id = _this$state.company_id,
+          country_id = _this$state.country_id,
+          name = _this$state.name;
+      var companies = this.props.backend.cities.companies;
+      var countries = [];
+      if (company_id !== '') countries = companies.find(function (_ref) {
+        var id = _ref.id;
+        return +company_id === +id;
+      }).countries;
+      var companiesOptions = companies.sort(function (a, b) {
+        return a.name > b.name;
+      }).map(function (company) {
+        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
+          key: JSON.stringify(company),
+          value: company.id
+        }, company.name);
+      });
+      var countriesOptions = countries.sort(function (a, b) {
+        return a.name > b.name;
+      }).map(function (country) {
+        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
+          key: JSON.stringify(country),
+          value: country.id
+        }, country.name);
+      });
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_4__["Form"], {
         onSubmit: this.submitHandler,
         className: "row"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Backend_UI_Input_Input__WEBPACK_IMPORTED_MODULE_8__["default"], {
+        className: "col-lg-6",
+        type: "select",
+        name: "company_id",
+        placeholder: "Company",
+        onChange: this.inputChangedHandler,
+        icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_3__["faBuilding"],
+        validation: {
+          required: true
+        },
+        required: true,
+        value: company_id
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", null, "Select a company"), companiesOptions), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Backend_UI_Input_Input__WEBPACK_IMPORTED_MODULE_8__["default"], {
+        className: "col-lg-6",
+        type: "select",
+        name: "country_id",
+        placeholder: "Country",
+        onChange: this.inputChangedHandler,
+        icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_3__["faFlag"],
+        validation: {
+          required: true
+        },
+        required: true,
+        value: country_id
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", null, "Select a country"), countriesOptions), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Backend_UI_Input_Input__WEBPACK_IMPORTED_MODULE_8__["default"], {
         className: "col-lg-6",
         type: "text",
         name: "name",
@@ -276,7 +378,7 @@ var Edit = /*#__PURE__*/function (_Component) {
   }], [{
     key: "getDerivedStateFromProps",
     value: function getDerivedStateFromProps(nextProps, prevState) {
-      if (nextProps.company && prevState.name === '') return Object(_shared_utility__WEBPACK_IMPORTED_MODULE_11__["updateObject"])(prevState, _objectSpread({}, nextProps.company));
+      if (nextProps.city && prevState.name === '') return Object(_shared_utility__WEBPACK_IMPORTED_MODULE_11__["updateObject"])(prevState, _objectSpread({}, nextProps.city));
       return prevState;
     }
   }]);
@@ -291,7 +393,7 @@ var mapStateToProps = function mapStateToProps(state) {
 var mapDispatchToProps = function mapDispatchToProps(dispatch) {
   return {
     submit: function submit(id, data) {
-      return dispatch(_store_actions__WEBPACK_IMPORTED_MODULE_10__["patchCompanies"](id, data));
+      return dispatch(_store_actions__WEBPACK_IMPORTED_MODULE_10__["patchCities"](id, data));
     }
   };
 };
@@ -300,10 +402,10 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
 
 /***/ }),
 
-/***/ "./resources/js/src/containers/Backend/Admin/Companies/Actions/View.js":
-/*!*****************************************************************************!*\
-  !*** ./resources/js/src/containers/Backend/Admin/Companies/Actions/View.js ***!
-  \*****************************************************************************/
+/***/ "./resources/js/src/containers/Backend/Admin/Cities/Actions/View.js":
+/*!**************************************************************************!*\
+  !*** ./resources/js/src/containers/Backend/Admin/Cities/Actions/View.js ***!
+  \**************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -336,7 +438,7 @@ var I = function I(_ref) {
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (function (_ref2) {
-  var company = _ref2.company;
+  var city = _ref2.city;
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_3__["Row"], {
     className: "m-0 p-3 rounded bg-green-20"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_3__["Col"], {
@@ -347,19 +449,23 @@ var I = function I(_ref) {
     icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_2__["faUser"],
     className: "mr-2",
     fixedWidth: true
-  }), "Company details"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("hr", null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(I, {
+  }), "City details"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("hr", null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(I, {
+    label: "Company"
+  }, city.company), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(I, {
+    label: "Country"
+  }, city.country), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(I, {
     label: "Name"
-  }, company.name), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(I, {
+  }, city.name), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(I, {
     label: "Creation Date"
-  }, Object(_shared_utility__WEBPACK_IMPORTED_MODULE_4__["convertDate"])(company.created_at))));
+  }, Object(_shared_utility__WEBPACK_IMPORTED_MODULE_4__["convertDate"])(city.created_at))));
 });
 
 /***/ }),
 
-/***/ "./resources/js/src/containers/Backend/Admin/Companies/index.js":
-/*!**********************************************************************!*\
-  !*** ./resources/js/src/containers/Backend/Admin/Companies/index.js ***!
-  \**********************************************************************/
+/***/ "./resources/js/src/containers/Backend/Admin/Cities/index.js":
+/*!*******************************************************************!*\
+  !*** ./resources/js/src/containers/Backend/Admin/Cities/index.js ***!
+  \*******************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -383,9 +489,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_Backend_UI_Delete_Delete__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../../../../components/Backend/UI/Delete/Delete */ "./resources/js/src/components/Backend/UI/Delete/Delete.js");
 /* harmony import */ var _components_Backend_UI_View_View__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ../../../../components/Backend/UI/View/View */ "./resources/js/src/components/Backend/UI/View/View.js");
 /* harmony import */ var _components_Backend_UI_Counter_Counter__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ../../../../components/Backend/UI/Counter/Counter */ "./resources/js/src/components/Backend/UI/Counter/Counter.js");
-/* harmony import */ var _Actions_Edit__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./Actions/Edit */ "./resources/js/src/containers/Backend/Admin/Companies/Actions/Edit.js");
-/* harmony import */ var _Actions_Add__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./Actions/Add */ "./resources/js/src/containers/Backend/Admin/Companies/Actions/Add.js");
-/* harmony import */ var _Actions_View__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./Actions/View */ "./resources/js/src/containers/Backend/Admin/Companies/Actions/View.js");
+/* harmony import */ var _Actions_Edit__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./Actions/Edit */ "./resources/js/src/containers/Backend/Admin/Cities/Actions/Edit.js");
+/* harmony import */ var _Actions_Add__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./Actions/Add */ "./resources/js/src/containers/Backend/Admin/Cities/Actions/Add.js");
+/* harmony import */ var _Actions_View__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./Actions/View */ "./resources/js/src/containers/Backend/Admin/Cities/Actions/View.js");
 /* harmony import */ var _store_actions__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ../../../../store/actions */ "./resources/js/src/store/actions/index.js");
 /* harmony import */ var _shared_utility__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ../../../../shared/utility */ "./resources/js/src/shared/utility.js");
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
@@ -466,11 +572,11 @@ var Index = /*#__PURE__*/function (_Component) {
     value: function render() {
       var _this = this;
 
-      var _this$props$backend$c = this.props.backend.companies,
+      var _this$props$backend$c = this.props.backend.cities,
           loading = _this$props$backend$c.loading,
           error = _this$props$backend$c.error,
           message = _this$props$backend$c.message,
-          companies = _this$props$backend$c.companies;
+          cities = _this$props$backend$c.cities;
       var content;
       var errors;
       var feedback;
@@ -481,30 +587,30 @@ var Index = /*#__PURE__*/function (_Component) {
           err: error
         }));
 
-        if (companies) {
+        if (cities) {
           feedback = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Feedback_Feedback__WEBPACK_IMPORTED_MODULE_13__["default"], {
             message: message
           });
-          var data = companies.map(function (company) {
+          var data = cities.map(function (city) {
             var viewContent = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Actions_View__WEBPACK_IMPORTED_MODULE_19__["default"], {
-              company: company
+              city: city
             });
             var editContent = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Actions_Edit__WEBPACK_IMPORTED_MODULE_17__["default"], {
-              company: company
+              city: city
             });
-            return Object(_shared_utility__WEBPACK_IMPORTED_MODULE_21__["updateObject"])(company, {
-              created_at: Object(_shared_utility__WEBPACK_IMPORTED_MODULE_21__["convertDate"])(company.created_at),
+            return Object(_shared_utility__WEBPACK_IMPORTED_MODULE_21__["updateObject"])(city, {
+              created_at: Object(_shared_utility__WEBPACK_IMPORTED_MODULE_21__["convertDate"])(city.created_at),
               action: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
                 className: "text-center"
               }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Backend_UI_View_View__WEBPACK_IMPORTED_MODULE_15__["default"], {
-                title: 'Company details: ' + company.name,
+                title: 'City details: ' + city.name,
                 content: viewContent
               }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_4__["FontAwesomeIcon"], {
                 icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_5__["faEye"],
                 className: "text-green mr-2",
                 fixedWidth: true
               })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Backend_UI_View_View__WEBPACK_IMPORTED_MODULE_15__["default"], {
-                title: 'Company edit: ' + company.name,
+                title: 'City edit: ' + city.name,
                 content: editContent
               }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_4__["FontAwesomeIcon"], {
                 icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_5__["faEdit"],
@@ -512,7 +618,7 @@ var Index = /*#__PURE__*/function (_Component) {
                 fixedWidth: true
               })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Backend_UI_Delete_Delete__WEBPACK_IMPORTED_MODULE_14__["default"], {
                 deleteAction: function deleteAction() {
-                  return _this.props["delete"](company.id);
+                  return _this.props["delete"](city.id);
                 }
               }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_4__["FontAwesomeIcon"], {
                 icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_5__["faTrash"],
@@ -523,14 +629,20 @@ var Index = /*#__PURE__*/function (_Component) {
           });
           content = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_3__["Row"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Backend_UI_List_List__WEBPACK_IMPORTED_MODULE_9__["default"], {
             array: data,
-            data: JSON.stringify(companies),
+            data: JSON.stringify(cities),
             bordered: true,
-            add: "Add Company",
+            add: "Add City",
             content: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Actions_Add__WEBPACK_IMPORTED_MODULE_18__["default"], null),
-            icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_5__["faBuilding"],
-            title: "Companies",
+            icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_5__["faCity"],
+            title: "Cities",
             className: "bg-white shadow-sm",
             fields: [{
+              name: 'Country',
+              key: 'country'
+            }, {
+              name: 'Company',
+              key: 'company'
+            }, {
               name: 'Name',
               key: 'name'
             }, {
@@ -547,14 +659,14 @@ var Index = /*#__PURE__*/function (_Component) {
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "bg-white py-4 pl-5 pr-4 position-relative"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Backend_UI_Breadcrumb_Breadcrumb__WEBPACK_IMPORTED_MODULE_6__["default"], {
-        main: "Companies",
+        main: "Cities",
         icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_5__["faBuilding"]
       }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_UI_Titles_SpecialTitle_SpecialTitle__WEBPACK_IMPORTED_MODULE_7__["default"], {
         user: true,
         icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_5__["faBuilding"]
       }, "Admin panel"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_UI_Titles_Subtitle_Subtitle__WEBPACK_IMPORTED_MODULE_8__["default"], {
         user: true
-      }, "Companies")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, "Cities")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "p-4 pb-0"
       }, errors, feedback, content));
     }
@@ -570,16 +682,16 @@ var mapStateToProps = function mapStateToProps(state) {
 var mapDispatchToProps = function mapDispatchToProps(dispatch) {
   return {
     get: function get() {
-      return dispatch(_store_actions__WEBPACK_IMPORTED_MODULE_20__["getCompanies"]());
+      return dispatch(_store_actions__WEBPACK_IMPORTED_MODULE_20__["getCities"]());
     },
     "delete": function _delete(id) {
-      return dispatch(_store_actions__WEBPACK_IMPORTED_MODULE_20__["deleteCompanies"](id));
+      return dispatch(_store_actions__WEBPACK_IMPORTED_MODULE_20__["deleteCities"](id));
     },
     patch: function patch(id, data) {
-      return dispatch(_store_actions__WEBPACK_IMPORTED_MODULE_20__["patchCompanies"](id, data));
+      return dispatch(_store_actions__WEBPACK_IMPORTED_MODULE_20__["patchCities"](id, data));
     },
     reset: function reset() {
-      return dispatch(_store_actions__WEBPACK_IMPORTED_MODULE_20__["companiesReset"]());
+      return dispatch(_store_actions__WEBPACK_IMPORTED_MODULE_20__["citiesReset"]());
     }
   };
 };

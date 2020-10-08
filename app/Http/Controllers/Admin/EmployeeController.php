@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Controllers\UtilController;
 use App\Job;
 use App\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
@@ -83,6 +84,88 @@ class EmployeeController extends Controller
             'employees' => $employees,
             'companies' => $companies,
             'jobs' => $jobs,
+        ]);
+    }
+
+    public function show($id)
+    {
+        $user = User::find($id);
+        if (!$user) return response()->json([
+            'message' => UtilController::message('User does not exist.', 'danger'),
+        ]);
+
+        $attendanceReport = [];
+        foreach ($user->cycles()->latest()->get() as $cycle) {
+            $dayTime = 0;
+            $dayStatus = false;
+
+            $diff = $cycle->updated_at->timestamp - $cycle->created_at->timestamp;
+            if ($diff > 0) $dayTime += $diff;
+            else {
+                $dayTime += time() - $cycle->created_at->timestamp;
+                $dayStatus = true;
+            }
+
+            $attendanceReport[] = [
+                'time' => $dayTime,
+                'status' => $dayStatus,
+                'clock_in' => $cycle->created_at,
+                'clock_out' => $cycle->updated_at,
+            ];
+        }
+
+        $year = Carbon::today()->year;
+
+        $weeksObject = [];
+
+        $DAYS_PER_WEEK = Carbon::DAYS_PER_WEEK;
+        $WEEKS_PER_YEAR = Carbon::WEEKS_PER_YEAR;
+
+        $workedTime = 0;
+
+        for ($i = 0; $i <= $WEEKS_PER_YEAR; $i++) {
+            $addWeeks = $i;
+
+            for ($j = 0; $j < $DAYS_PER_WEEK; $j++) {
+                $addDays = $j;
+
+                $day = Carbon::today()->firstOfYear()->addWeeks($addWeeks)->addDays($addDays);
+
+                if ($day->year === Carbon::today()->year) {
+                    $dayTime = 0;
+                    $cycles = $user->cycles()->whereDate('created_at', $day)->get();
+
+                    if (count($cycles) > 0) {
+                        foreach ($cycles as $cycle) {
+                            $diff = $cycle->updated_at->timestamp - $cycle->created_at->timestamp;
+                            if ($diff > 0) $dayTime += $diff;
+                            else {
+                                $dayTime += time() - $cycle->created_at->timestamp;
+                            }
+                        }
+                    }
+
+                    $workedTime += $dayTime;
+
+                    if ($day->dayOfWeek === 0) {
+                        $weeksObject[$day->weekOfYear - 1] = [
+                            'time' => $workedTime,
+                            'year' => $year,
+                        ];
+                        $workedTime = 0;
+                    }
+                }
+            }
+        }
+
+        $weeks = [];
+        foreach ($weeksObject as $week) {
+            $weeks[] = $week;
+        }
+
+        return response()->json([
+            'attendanceReport' => $attendanceReport,
+            'weeks' => $weeks,
         ]);
     }
 

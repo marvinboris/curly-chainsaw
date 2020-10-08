@@ -56,6 +56,7 @@ export {
 
     employeesReset,
     getEmployees,
+    getEmployee,
     postEmployees,
     patchEmployees,
     deleteEmployees,

@@ -1,9 +1,9 @@
 (window["webpackJsonp"] = window["webpackJsonp"] || []).push([[23],{
 
-/***/ "./resources/js/src/containers/Backend/Admin/Jobs/Actions/Add.js":
-/*!***********************************************************************!*\
-  !*** ./resources/js/src/containers/Backend/Admin/Jobs/Actions/Add.js ***!
-  \***********************************************************************/
+/***/ "./resources/js/src/containers/Backend/Admin/EventTypes/Actions/Add.js":
+/*!*****************************************************************************!*\
+  !*** ./resources/js/src/containers/Backend/Admin/EventTypes/Actions/Add.js ***!
+  \*****************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -72,8 +72,7 @@ var Add = /*#__PURE__*/function (_Component) {
     _this = _super.call.apply(_super, [this].concat(args));
 
     _defineProperty(_assertThisInitialized(_this), "state", {
-      name: '',
-      hours_per_week: ''
+      name: ''
     });
 
     _defineProperty(_assertThisInitialized(_this), "inputChangedHandler", function (e) {
@@ -96,9 +95,7 @@ var Add = /*#__PURE__*/function (_Component) {
   _createClass(Add, [{
     key: "render",
     value: function render() {
-      var _this$state = this.state,
-          name = _this$state.name,
-          hours_per_week = _this$state.hours_per_week;
+      var name = this.state.name;
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_1__["Form"], {
         onSubmit: this.submitHandler,
         className: "row"
@@ -114,18 +111,6 @@ var Add = /*#__PURE__*/function (_Component) {
         },
         required: true,
         value: name
-      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Backend_UI_Input_Input__WEBPACK_IMPORTED_MODULE_5__["default"], {
-        className: "col-lg-6",
-        type: "text",
-        name: "hours_per_week",
-        placeholder: "Hours per Week",
-        onChange: this.inputChangedHandler,
-        icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_4__["faClock"],
-        validation: {
-          required: true
-        },
-        required: true,
-        value: hours_per_week
       }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_1__["FormGroup"], {
         className: "col-12"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_UI_Button_BetweenButton_BetweenButton__WEBPACK_IMPORTED_MODULE_6__["default"], {
@@ -147,7 +132,7 @@ var mapStateToProps = function mapStateToProps(state) {
 var mapDispatchToProps = function mapDispatchToProps(dispatch) {
   return {
     onSubmit: function onSubmit(data) {
-      return dispatch(_store_actions__WEBPACK_IMPORTED_MODULE_7__["postJobs"](data));
+      return dispatch(_store_actions__WEBPACK_IMPORTED_MODULE_7__["postEventTypes"](data));
     }
   };
 };
@@ -156,10 +141,10 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
 
 /***/ }),
 
-/***/ "./resources/js/src/containers/Backend/Admin/Jobs/Actions/Edit.js":
-/*!************************************************************************!*\
-  !*** ./resources/js/src/containers/Backend/Admin/Jobs/Actions/Edit.js ***!
-  \************************************************************************/
+/***/ "./resources/js/src/containers/Backend/Admin/EventTypes/Actions/Edit.js":
+/*!******************************************************************************!*\
+  !*** ./resources/js/src/containers/Backend/Admin/EventTypes/Actions/Edit.js ***!
+  \******************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -239,7 +224,6 @@ var Edit = /*#__PURE__*/function (_Component) {
 
     _defineProperty(_assertThisInitialized(_this), "state", {
       name: '',
-      hours_per_week: '',
       id: ''
     });
 
@@ -266,9 +250,7 @@ var Edit = /*#__PURE__*/function (_Component) {
   _createClass(Edit, [{
     key: "render",
     value: function render() {
-      var _this$state = this.state,
-          name = _this$state.name,
-          hours_per_week = _this$state.hours_per_week;
+      var name = this.state.name;
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_4__["Form"], {
         onSubmit: this.submitHandler,
         className: "row"
@@ -284,18 +266,6 @@ var Edit = /*#__PURE__*/function (_Component) {
         },
         required: true,
         value: name
-      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Backend_UI_Input_Input__WEBPACK_IMPORTED_MODULE_8__["default"], {
-        className: "col-lg-6",
-        type: "text",
-        name: "hours_per_week",
-        placeholder: "Hours per Week",
-        onChange: this.inputChangedHandler,
-        icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_3__["faClock"],
-        validation: {
-          required: true
-        },
-        required: true,
-        value: hours_per_week
       }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_4__["FormGroup"], {
         className: "col-12"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_UI_Button_BetweenButton_BetweenButton__WEBPACK_IMPORTED_MODULE_9__["default"], {
@@ -306,7 +276,7 @@ var Edit = /*#__PURE__*/function (_Component) {
   }], [{
     key: "getDerivedStateFromProps",
     value: function getDerivedStateFromProps(nextProps, prevState) {
-      if (nextProps.job && prevState.name === '') return Object(_shared_utility__WEBPACK_IMPORTED_MODULE_11__["updateObject"])(prevState, _objectSpread({}, nextProps.job));
+      if (nextProps.eventType && prevState.name === '') return Object(_shared_utility__WEBPACK_IMPORTED_MODULE_11__["updateObject"])(prevState, _objectSpread({}, nextProps.eventType));
       return prevState;
     }
   }]);
@@ -321,7 +291,7 @@ var mapStateToProps = function mapStateToProps(state) {
 var mapDispatchToProps = function mapDispatchToProps(dispatch) {
   return {
     submit: function submit(id, data) {
-      return dispatch(_store_actions__WEBPACK_IMPORTED_MODULE_10__["patchJobs"](id, data));
+      return dispatch(_store_actions__WEBPACK_IMPORTED_MODULE_10__["patchEventTypes"](id, data));
     }
   };
 };
@@ -330,10 +300,10 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
 
 /***/ }),
 
-/***/ "./resources/js/src/containers/Backend/Admin/Jobs/Actions/View.js":
-/*!************************************************************************!*\
-  !*** ./resources/js/src/containers/Backend/Admin/Jobs/Actions/View.js ***!
-  \************************************************************************/
+/***/ "./resources/js/src/containers/Backend/Admin/EventTypes/Actions/View.js":
+/*!******************************************************************************!*\
+  !*** ./resources/js/src/containers/Backend/Admin/EventTypes/Actions/View.js ***!
+  \******************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -366,7 +336,7 @@ var I = function I(_ref) {
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (function (_ref2) {
-  var job = _ref2.job;
+  var eventType = _ref2.eventType;
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_3__["Row"], {
     className: "m-0 p-3 rounded bg-green-20"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_3__["Col"], {
@@ -377,19 +347,19 @@ var I = function I(_ref) {
     icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_2__["faUser"],
     className: "mr-2",
     fixedWidth: true
-  }), "Job details"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("hr", null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(I, {
+  }), "Event type details"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("hr", null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(I, {
     label: "Name"
-  }, job.name), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(I, {
+  }, eventType.name), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(I, {
     label: "Creation Date"
-  }, Object(_shared_utility__WEBPACK_IMPORTED_MODULE_4__["convertDate"])(job.created_at))));
+  }, Object(_shared_utility__WEBPACK_IMPORTED_MODULE_4__["convertDate"])(eventType.created_at))));
 });
 
 /***/ }),
 
-/***/ "./resources/js/src/containers/Backend/Admin/Jobs/index.js":
-/*!*****************************************************************!*\
-  !*** ./resources/js/src/containers/Backend/Admin/Jobs/index.js ***!
-  \*****************************************************************/
+/***/ "./resources/js/src/containers/Backend/Admin/EventTypes/index.js":
+/*!***********************************************************************!*\
+  !*** ./resources/js/src/containers/Backend/Admin/EventTypes/index.js ***!
+  \***********************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -413,9 +383,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_Backend_UI_Delete_Delete__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../../../../components/Backend/UI/Delete/Delete */ "./resources/js/src/components/Backend/UI/Delete/Delete.js");
 /* harmony import */ var _components_Backend_UI_View_View__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ../../../../components/Backend/UI/View/View */ "./resources/js/src/components/Backend/UI/View/View.js");
 /* harmony import */ var _components_Backend_UI_Counter_Counter__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ../../../../components/Backend/UI/Counter/Counter */ "./resources/js/src/components/Backend/UI/Counter/Counter.js");
-/* harmony import */ var _Actions_Edit__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./Actions/Edit */ "./resources/js/src/containers/Backend/Admin/Jobs/Actions/Edit.js");
-/* harmony import */ var _Actions_Add__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./Actions/Add */ "./resources/js/src/containers/Backend/Admin/Jobs/Actions/Add.js");
-/* harmony import */ var _Actions_View__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./Actions/View */ "./resources/js/src/containers/Backend/Admin/Jobs/Actions/View.js");
+/* harmony import */ var _Actions_Edit__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./Actions/Edit */ "./resources/js/src/containers/Backend/Admin/EventTypes/Actions/Edit.js");
+/* harmony import */ var _Actions_Add__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./Actions/Add */ "./resources/js/src/containers/Backend/Admin/EventTypes/Actions/Add.js");
+/* harmony import */ var _Actions_View__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./Actions/View */ "./resources/js/src/containers/Backend/Admin/EventTypes/Actions/View.js");
 /* harmony import */ var _store_actions__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ../../../../store/actions */ "./resources/js/src/store/actions/index.js");
 /* harmony import */ var _shared_utility__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ../../../../shared/utility */ "./resources/js/src/shared/utility.js");
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
@@ -496,11 +466,11 @@ var Index = /*#__PURE__*/function (_Component) {
     value: function render() {
       var _this = this;
 
-      var _this$props$backend$j = this.props.backend.jobs,
-          loading = _this$props$backend$j.loading,
-          error = _this$props$backend$j.error,
-          message = _this$props$backend$j.message,
-          jobs = _this$props$backend$j.jobs;
+      var _this$props$backend$e = this.props.backend.eventTypes,
+          loading = _this$props$backend$e.loading,
+          error = _this$props$backend$e.error,
+          message = _this$props$backend$e.message,
+          eventTypes = _this$props$backend$e.eventTypes;
       var content;
       var errors;
       var feedback;
@@ -511,30 +481,30 @@ var Index = /*#__PURE__*/function (_Component) {
           err: error
         }));
 
-        if (jobs) {
+        if (eventTypes) {
           feedback = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Feedback_Feedback__WEBPACK_IMPORTED_MODULE_13__["default"], {
             message: message
           });
-          var data = jobs.map(function (job) {
+          var data = eventTypes.map(function (eventType) {
             var viewContent = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Actions_View__WEBPACK_IMPORTED_MODULE_19__["default"], {
-              job: job
+              eventType: eventType
             });
             var editContent = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Actions_Edit__WEBPACK_IMPORTED_MODULE_17__["default"], {
-              job: job
+              eventType: eventType
             });
-            return Object(_shared_utility__WEBPACK_IMPORTED_MODULE_21__["updateObject"])(job, {
-              created_at: Object(_shared_utility__WEBPACK_IMPORTED_MODULE_21__["convertDate"])(job.created_at),
+            return Object(_shared_utility__WEBPACK_IMPORTED_MODULE_21__["updateObject"])(eventType, {
+              created_at: Object(_shared_utility__WEBPACK_IMPORTED_MODULE_21__["convertDate"])(eventType.created_at),
               action: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
                 className: "text-center"
               }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Backend_UI_View_View__WEBPACK_IMPORTED_MODULE_15__["default"], {
-                title: 'Job details: ' + job.name,
+                title: 'Event Type details: ' + eventType.name,
                 content: viewContent
               }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_4__["FontAwesomeIcon"], {
                 icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_5__["faEye"],
                 className: "text-green mr-2",
                 fixedWidth: true
               })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Backend_UI_View_View__WEBPACK_IMPORTED_MODULE_15__["default"], {
-                title: 'Job edit: ' + job.name,
+                title: 'Event Type edit: ' + eventType.name,
                 content: editContent
               }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_4__["FontAwesomeIcon"], {
                 icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_5__["faEdit"],
@@ -542,7 +512,7 @@ var Index = /*#__PURE__*/function (_Component) {
                 fixedWidth: true
               })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Backend_UI_Delete_Delete__WEBPACK_IMPORTED_MODULE_14__["default"], {
                 deleteAction: function deleteAction() {
-                  return _this.props["delete"](job.id);
+                  return _this.props["delete"](eventType.id);
                 }
               }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_4__["FontAwesomeIcon"], {
                 icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_5__["faTrash"],
@@ -553,19 +523,16 @@ var Index = /*#__PURE__*/function (_Component) {
           });
           content = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_3__["Row"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Backend_UI_List_List__WEBPACK_IMPORTED_MODULE_9__["default"], {
             array: data,
-            data: JSON.stringify(jobs),
+            data: JSON.stringify(eventTypes),
             bordered: true,
-            add: "Add Job",
+            add: "Add Event Type",
             content: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Actions_Add__WEBPACK_IMPORTED_MODULE_18__["default"], null),
-            icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_5__["faUserTag"],
-            title: "Jobs",
+            icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_5__["faBuilding"],
+            title: "Event Types",
             className: "bg-white shadow-sm",
             fields: [{
               name: 'Name',
               key: 'name'
-            }, {
-              name: 'Hours per Week',
-              key: 'hours_per_week'
             }, {
               name: 'Creation Date',
               key: 'created_at'
@@ -580,14 +547,14 @@ var Index = /*#__PURE__*/function (_Component) {
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "bg-white py-4 pl-5 pr-4 position-relative"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Backend_UI_Breadcrumb_Breadcrumb__WEBPACK_IMPORTED_MODULE_6__["default"], {
-        main: "Jobs",
-        icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_5__["faUserTag"]
+        main: "Event Types",
+        icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_5__["faBuilding"]
       }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_UI_Titles_SpecialTitle_SpecialTitle__WEBPACK_IMPORTED_MODULE_7__["default"], {
         user: true,
-        icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_5__["faUserTag"]
+        icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_5__["faBuilding"]
       }, "Admin panel"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_UI_Titles_Subtitle_Subtitle__WEBPACK_IMPORTED_MODULE_8__["default"], {
         user: true
-      }, "Jobs")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, "Event Types")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "p-4 pb-0"
       }, errors, feedback, content));
     }
@@ -603,16 +570,16 @@ var mapStateToProps = function mapStateToProps(state) {
 var mapDispatchToProps = function mapDispatchToProps(dispatch) {
   return {
     get: function get() {
-      return dispatch(_store_actions__WEBPACK_IMPORTED_MODULE_20__["getJobs"]());
+      return dispatch(_store_actions__WEBPACK_IMPORTED_MODULE_20__["getEventTypes"]());
     },
     "delete": function _delete(id) {
-      return dispatch(_store_actions__WEBPACK_IMPORTED_MODULE_20__["deleteJobs"](id));
+      return dispatch(_store_actions__WEBPACK_IMPORTED_MODULE_20__["deleteEventTypes"](id));
     },
     patch: function patch(id, data) {
-      return dispatch(_store_actions__WEBPACK_IMPORTED_MODULE_20__["patchJobs"](id, data));
+      return dispatch(_store_actions__WEBPACK_IMPORTED_MODULE_20__["patchEventTypes"](id, data));
     },
     reset: function reset() {
-      return dispatch(_store_actions__WEBPACK_IMPORTED_MODULE_20__["jobsReset"]());
+      return dispatch(_store_actions__WEBPACK_IMPORTED_MODULE_20__["eventTypesReset"]());
     }
   };
 };

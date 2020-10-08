@@ -1,9 +1,9 @@
 (window["webpackJsonp"] = window["webpackJsonp"] || []).push([[30],{
 
-/***/ "./resources/js/src/containers/Backend/User/Messages/Sent/index.js":
-/*!*************************************************************************!*\
-  !*** ./resources/js/src/containers/Backend/User/Messages/Sent/index.js ***!
-  \*************************************************************************/
+/***/ "./resources/js/src/containers/Backend/User/Messages/Archive/index.js":
+/*!****************************************************************************!*\
+  !*** ./resources/js/src/containers/Backend/User/Messages/Archive/index.js ***!
+  \****************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -84,18 +84,18 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
 
 
 
-var Sent = /*#__PURE__*/function (_Component) {
-  _inherits(Sent, _Component);
+var Archive = /*#__PURE__*/function (_Component) {
+  _inherits(Archive, _Component);
 
-  var _super = _createSuper(Sent);
+  var _super = _createSuper(Archive);
 
-  function Sent() {
-    _classCallCheck(this, Sent);
+  function Archive() {
+    _classCallCheck(this, Archive);
 
     return _super.apply(this, arguments);
   }
 
-  _createClass(Sent, [{
+  _createClass(Archive, [{
     key: "componentDidMount",
     value: function componentDidMount() {
       this.props.get();
@@ -179,11 +179,14 @@ var Sent = /*#__PURE__*/function (_Component) {
             add: "New Message",
             content: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Actions_Add__WEBPACK_IMPORTED_MODULE_18__["default"], null),
             icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_5__["faEnvelope"],
-            title: "Sent Messages",
+            title: "Archived Messages",
             className: "bg-white shadow-sm",
             fields: [{
               name: 'Received Date',
               key: 'created_at'
+            }, {
+              name: 'Sender',
+              key: 'sender'
             }, {
               name: 'Receiver',
               key: 'receiver'
@@ -204,20 +207,20 @@ var Sent = /*#__PURE__*/function (_Component) {
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "bg-white py-4 pl-5 pr-4 position-relative"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Backend_UI_Breadcrumb_Breadcrumb__WEBPACK_IMPORTED_MODULE_6__["default"], {
-        main: "Sent Messages",
+        main: "Archived Messages",
         icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_5__["faEnvelope"]
       }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_UI_Titles_SpecialTitle_SpecialTitle__WEBPACK_IMPORTED_MODULE_7__["default"], {
         user: true,
         icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_5__["faEnvelope"]
       }, "Employee panel"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_UI_Titles_Subtitle_Subtitle__WEBPACK_IMPORTED_MODULE_8__["default"], {
         user: true
-      }, "Sent Messages")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, "Archived Messages")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "p-4 pb-0"
       }, errors, feedback, content));
     }
   }]);
 
-  return Sent;
+  return Archive;
 }(react__WEBPACK_IMPORTED_MODULE_0__["Component"]);
 
 var mapStateToProps = function mapStateToProps(state) {
@@ -227,7 +230,7 @@ var mapStateToProps = function mapStateToProps(state) {
 var mapDispatchToProps = function mapDispatchToProps(dispatch) {
   return {
     get: function get() {
-      return dispatch(_store_actions__WEBPACK_IMPORTED_MODULE_20__["getSentMessages"]());
+      return dispatch(_store_actions__WEBPACK_IMPORTED_MODULE_20__["getArchiveMessages"]());
     },
     "delete": function _delete(id) {
       return dispatch(_store_actions__WEBPACK_IMPORTED_MODULE_20__["deleteMessages"](id));
@@ -241,7 +244,7 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
   };
 };
 
-/* harmony default export */ __webpack_exports__["default"] = (Object(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["withRouter"])(Object(react_redux__WEBPACK_IMPORTED_MODULE_1__["connect"])(mapStateToProps, mapDispatchToProps)(Sent)));
+/* harmony default export */ __webpack_exports__["default"] = (Object(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["withRouter"])(Object(react_redux__WEBPACK_IMPORTED_MODULE_1__["connect"])(mapStateToProps, mapDispatchToProps)(Archive)));
 
 /***/ })
 

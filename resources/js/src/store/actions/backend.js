@@ -292,6 +292,24 @@ export const getEmployees = () => async dispatch => {
     }
 };
 
+export const getEmployee = id => async dispatch => {
+    dispatch(employeesStart());
+
+    try {
+        const token = localStorage.getItem('token');
+        const res = await fetch(`${prefix}admin/employees/${id}`, {
+            headers: {
+                Authorization: token
+            }
+        });
+        const resData = await res.json();
+        dispatch(employeesSuccess(resData));
+    } catch (error) {
+        console.log(error);
+        dispatch(employeesFail(error));
+    }
+};
+
 export const postEmployees = data => async dispatch => {
     dispatch(employeesStart());
 
